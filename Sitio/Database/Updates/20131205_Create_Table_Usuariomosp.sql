@@ -1,0 +1,8 @@
+CREATE TABLE ssp.usuariomosp (
+   IdUsuario INT(10) UNSIGNED AUTO_INCREMENT NOT NULL,
+   ApellidoNombre VARCHAR(50) CHARACTER SET utf8 NOT NULL,
+   Username VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+   Password VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+   IdPlanilla VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (IdUsuario)
+) ENGINE = InnoDB ROW_FORMAT = DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;

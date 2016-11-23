@@ -1,0 +1,11 @@
+﻿CREATE TABLE ssp.alarmatablero (
+   IdAlarmaTablero INT UNSIGNED AUTO_INCREMENT NOT NULL,
+   IdAlarma INT UNSIGNED NOT NULL,
+   IdObra INT UNSIGNED NOT NULL,
+   IdCertificacion INT UNSIGNED,
+   FechaHora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_alarmatablero_alarma FOREIGN KEY (IdAlarma) REFERENCES ssp.alarma (IdAlarma) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_alarmatablero_obra FOREIGN KEY (IdObra) REFERENCES ssp.obra (IdObra) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_alarmatablero_certificacion FOREIGN KEY (IdCertificacion) REFERENCES ssp.certificacion (IdCertificacion) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  PRIMARY KEY (IdAlarmaTablero)
+) ENGINE = InnoDB ROW_FORMAT = DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;

@@ -1,0 +1,119 @@
+<%@  Title="S.G.O. - Aniverario" %>
+<com:TContent ID="MainContent">
+<script language='javascript'>
+	(function($) {
+		$(document).ready(function() {
+		    $('#container').scroll(function() {
+		    	var s = $('#sticker');
+		        var windowposTop = $('#container').scrollTop();
+		        var windowposLeft = $('#container').scrollLeft();
+		        var contentPadding = parseInt($('#content').css('padding-left'));
+
+		        if (windowposTop >= 480) {
+		     		s.css('top', -5);
+		     		s.css('left', contentPadding - windowposLeft);
+		     		s.css('position', 'fixed');
+		        } else {
+		            s.css('top', 0);
+		            s.css('left', 0);
+		            s.css('position', 'relative');
+		        }
+
+		    });
+		    
+	});} ) ( jQuery );
+</script>
+	<div style="float: right; margin-right: 40px; margin-top: 40px;">
+		<com:TActiveImageButton
+		    ID="btnPdf"
+		    Text="Exportar a PDF"
+		    ImageUrl="themes/serviciospublicos/images/pdf.png"
+		    OnClick="btnPdf_OnClick"
+		    ClientSide.OnLoading="Element.show('callback_status')"
+        	ClientSide.OnComplete="Element.hide('callback_status')" />	
+	</div>
+	<span class="maintitle">Aniversario de <com:TLabel ID="lblLocalidad" /></span>
+	<br /><br />
+	<span class="maintitle2">Localidad: </span>
+	<com:TLabel  ID="lblLocalidad2" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Aniversario: </span>
+	<com:TLabel  ID="lblAniversario" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Categoría: </span>
+	<com:TLabel  ID="lblCategoria" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Autoridades: </span>
+	<com:TLabel  ID="lblAutoridades" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Habitantes: </span>
+	<com:TLabel  ID="lblHabitantes" CssClass="maintitle2" /><br />
+	<br />
+	<table>
+		<tr>
+			<td align="center" width="250px">
+				<com:TImage ID="imgEscudo" Height="200px" />
+			</td>
+			<td align="center" width="250px">
+				<com:TImage ID="imgLocalidad" Height="200px" />
+			</td>
+			<td align="center" width="250px">
+				<com:TImage ID="imgAutoridad" Height="200px" />
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<com:TLabel  ID="lblEscudo" Style="font-size: 12px;" />
+			</td>
+			<td align="center">
+				<com:TLabel  ID="lblLocalidad3" Style="font-size: 12px;" />
+			</td>
+			<td align="center">
+				<com:TLabel  ID="lblAutoridades2" Style="font-size: 12px;" />
+			</td>
+		</tr>
+	</table>
+	<br />
+	<span class="maintitle2">Cantidad de Obras: </span>
+	<com:TLabel  ID="lblTotalObras" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Monto Total: </span>
+	<com:TLabel  ID="lblTotalMonto" CssClass="maintitle2" /><br />
+	<span class="maintitle2">Organismo: </span>
+	<com:TActiveDropDownList
+		       		ID="ddlOrganismo"
+		       		ToolTip="Seleccione"
+		       		DataTextField="Nombre"
+		       		DatavalueField="IdOrganismo" />
+	<div id='sticker' style='width: 1300px;'>
+		<table class='TableForm'>
+			<thead>
+				<tr>
+					<th style='width: 50px;'>Organismo</th>
+					<th style='width: 200px;'>Obra</th>				
+					<th style='width: 50px;'>Monto Obra</th>
+					<th style='width: 50px;'>N. Ejecución</th>
+					<th style='width: 50px;'>Inauguracion</th>
+					<th style='width: 50px;'>Estado</th>					
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<div style='width: 1300px;'>
+		<com:TActiveDataGrid
+		    ID="dgDatos"
+			CssClass="TableForm"
+		    AlternatingItemStyle.BackColor="#EEEEEE"
+		    ItemStyle.CustomStyle="text-wrap: unrestricted";
+		    AlternatingItemStyle.CustomStyle="text-wrap: unrestricted";
+		    AutoGenerateColumns="false"
+            AllowPaging="false"
+			AllowCustomPaging="false"
+	        AllowSorting="false"
+	        ShowHeader="false">
+			
+			<com:TBoundColumn DataField="Organismo" HeaderText="Organismo" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 58px; min-width: 58px; max-width: 58px; word-wrap: break-word; text-wrap: unrestricted"/>
+			<com:TBoundColumn DataField="Obra" HeaderText="Obra" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 220px; min-width: 220px; max-width: 220px; word-wrap: break-word; text-wrap: unrestricted"/>
+			<com:TBoundColumn DataField="Monto" HeaderText="Monto Obra" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; text-wrap: unrestricted"/>
+			<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; text-wrap: unrestricted"/>
+			<com:TBoundColumn DataField="FechaFinalizacion" HeaderText="F.Fin." ItemStyle.HorizontalAlign="Center" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; text-wrap: unrestricted"/>
+			<com:TBoundColumn DataField="Estado" HeaderText="Estado" ItemStyle.VerticalAlign="Top" ItemStyle.CustomStyle="width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; text-wrap: unrestricted"/>
+
+	  	</com:TActiveDataGrid>
+	</div>
+</com:TContent>

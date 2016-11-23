@@ -1,0 +1,1 @@
+﻿ALTER TABLE certificacion ADD Alcance VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci AFTER IdOrdenTrabajo;

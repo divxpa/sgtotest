@@ -1,0 +1,54 @@
+20160823154537 	mmartinez	s:122:"Property 'CompromisoRecord::$IdResponsable' must not be null as defined by column 'IdResponsable' in table '`compromiso`'.";
+20160823160522 	mmartinez	s:122:"Property 'CompromisoRecord::$IdResponsable' must not be null as defined by column 'IdResponsable' in table '`compromiso`'.";
+20160823181932 	mmartinez	s:122:"Property 'CompromisoRecord::$IdResponsable' must not be null as defined by column 'IdResponsable' in table '`compromiso`'.";
+20160823184644 	mmartinez	s:106:"Property 'CompromisoRecord::$Fecha' must not be null as defined by column 'Fecha' in table '`compromiso`'.";
+20160823194445 	mmartinez	s:122:"Property 'CompromisoRecord::$FechaRegistro' must not be null as defined by column 'FechaRegistro' in table '`compromiso`'.";
+20160926145917 	mmartinez	s:104:"Property 'ContratoRecord::$IdObra' must not be null as defined by column 'IdObra' in table '`contrato`'.";
+20160926150449 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160926152546 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160926153037 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160926154334 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160927165122 	mmartinez	s:104:"Property 'ContratoRecord::$IdObra' must not be null as defined by column 'IdObra' in table '`contrato`'.";
+20160927190447 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160927190652 	mmartinez	s:59:"Component property 'ContratoRecord.Decreto' is not defined.";
+20160930191019 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20160930191532 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20160930200549 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003140107 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003142111 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003142246 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003142407 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003142426 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003143156 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003143235 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161003145040 	mmartinez	s:64:"Component property 'CompromisoRecord.Compromiso' is not defined.";
+20161108185922 	mmartinez	s:1707:"TDbCommand failed to execute the query SQL "select
+				  c.IdContrato,
+				  c.IdObra,
+				  concat(p.Cuit,' ',p.RazonSocial) as Proveedor,
+				  c.Numero,
+				  date_format(c.Fecha, '%d/%m/%Y') as Fecha,
+				  c.Monto,
+				  ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=c.IdContrato),0) as Alteracion,
+				  ifnull((select sum(Importe) from redeterminacion where IdContrato=c.IdContrato),0) as RedeterminacionPrecios,
+				  date_format(c.FechaBaseMonto, '%d/%m/%Y') as FechaBaseMonto,
+				  c.NormaLegalAutorizacion,
+				  c.NormaLegalAdjudicacion,
+				  c.PlazoEjecucion,
+				  date_format(c.FechaInicio, '%d/%m/%Y') as FechaInicio,
+				  ifnull((select sum(CantidadDias) from contratoplazo where IdContrato=c.IdContrato),0) as Ampliacion,
+				  date_format(ifnull((select max(NuevaFechaFinalizacion) from contratoplazo where IdContrato=c.IdContrato),c.FechaFinalizacion), '%d/%m/%Y') as FechaFinalizacion,
+				  ifnull((select sum(montoavance) from certificacion where IdContrato=c.IdContrato),0)/(c.Monto+ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=c.IdContrato),0))*100 as PorcentajeAvance,
+				  ifnull((select sum(montoavance) from certificacion where IdContrato=c.IdContrato),0) as MontoAvance
+				from
+				  contrato c inner join
+				  proveedor p on c.IdProveedor = p.IdProveedor
+				 where c.IdObra= 
+				order by
+				  c.Numero": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'order by
+				  c.Numero' at line 23";
+20161108190048 	mmartinez	s:136:"Property 'ContratoRecord::$NormaLegalAdjudicacion' must not be null as defined by column 'NormaLegalAdjudicacion' in table '`contrato`'.";
+20161108190345 	mmartinez	s:136:"Property 'ContratoRecord::$NormaLegalAdjudicacion' must not be null as defined by column 'NormaLegalAdjudicacion' in table '`contrato`'.";
+20161108191810 	mmartinez	s:133:"[Notice] Trying to get property of non-object (@line 657 in file C:\xampp\htdocs\sgo\Sitio\Web\protected\pages\Obra\UpdateAdmin.php).";
+20161109053651 	mmartinez	s:136:"Property 'ContratoRecord::$NormaLegalAdjudicacion' must not be null as defined by column 'NormaLegalAdjudicacion' in table '`contrato`'.";
+20161109095103 	mmartinez	s:136:"Property 'ContratoRecord::$NormaLegalAdjudicacion' must not be null as defined by column 'NormaLegalAdjudicacion' in table '`contrato`'.";

@@ -1,0 +1,1 @@
+﻿ALTER TABLE contrato CHANGE PlazoEjecucion PlazoEjecucion INT(5) UNSIGNED, CHANGE FechaInicio FechaInicio DATE, CHANGE FechaFinalizacion FechaFinalizacion DATE;
