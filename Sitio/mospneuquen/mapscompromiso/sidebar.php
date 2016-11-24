@@ -19,7 +19,7 @@
 	</ul>
 </div>
 <div class="titulo">
-<input type="checkbox" checked="checked" onclick="CheckUncheckGroup('organismo',this.checked);RefreshData();">
+<input type="checkbox" checked="checked" onclick="CheckUncheckGroup('compromisoorganismo',this.checked);RefreshData();">
 <span class="group">ORGANISMOS</span></div>
 <div class="subgroup">
 	<ul id="organismos">
@@ -30,9 +30,9 @@
 			while($row = mysql_fetch_object($query)) 
 			{ 
 		?>
-		<li style="color:<?php echo $row->Color; ?>">
-			<input id="organismo_<?php echo $row->IdCompromisoOrganismo; ?>" type="checkbox" checked="checked" onclick="RefreshData();"><?php echo $row->tag; ?>
-		</li>
+ 		<li style="color:<?php echo $row->Color; ?>">
+			<input id="organismo_<?php echo $row->IdCompromisoOrganismo; ?>" type="checkbox" checked="checked" onclick="RefreshData();"><?php echo $row->Tag; ?>
+		</li> 
 		<?php
 			}
 

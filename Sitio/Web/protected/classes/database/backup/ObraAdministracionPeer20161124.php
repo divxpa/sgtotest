@@ -1,4 +1,4 @@
-.<?php
+<?php
 class ObraAdministracionPeer
 {
 	public static function ObrasHome($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra='',$codigoOrganismo, $codigoObra){
@@ -137,7 +137,7 @@ class ObraAdministracionPeer
 				from
 				  localidad l
 				where
-				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo and o.poradministracion = 1)
+				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo)
 				order by
 				  l.Nombre";
 		return $sql;

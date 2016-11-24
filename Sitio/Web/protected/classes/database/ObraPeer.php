@@ -1,7 +1,82 @@
 <?php
 class ObraPeer
 {
-	public static function ObrasHome($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra=''){
+	public static function ObrasHome($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra='',
+		$codigoOrganismo, $codigoObra){
+
+		$arr_where = [];
+
+		$arr_where[] = "o.Activo = 1 and o.poradministracion = 0 ";
+
+		if ($idOrganismo != "") 
+			$arr_where[] = "(o.IdOrganismo=$idOrganismo OR o.IdComitente=$idOrganismo)";
+
+		if ($idLocalidad != "" && $idLocalidad != "0")
+			$arr_where[] = "exists(SELECT * from obralocalidad WHERE IdObra=o.IdObra AND IdLocalidad=$idLocalidad)";
+
+		if ($idFufi != "" && $idFufi != "0")
+			$arr_where[] = "exists(SELECT * from obrafuentefinanciamiento WHERE IdObra=o.IdObra AND IdFuenteFinanciamiento=$idFufi)";
+
+		if ($idEstado != "" && $idEstado != "0")
+			$arr_where[] = "o.IdEstadoObra=$idEstado";
+
+
+		if ($codigoOrganismo!="")
+			$arr_where[] = " (og.PrefijoCodigo = $codigoOrganismo) ";			
+
+
+		if($codigoObra!="")
+			$arr_where[] = " (o.Codigo = $codigoObra)";	
+
+		if ($busqueda != "")
+			$arr_where[] = "(o.Denominacion LIKE '%$busqueda%' OR o.Expediente LIKE '%$busqueda%')";
+
+		if($idObra!='')
+			$arr_where[] = "o.IdObra = $idObra";
+		
+		$where = sizeof($arr_where) ? "WHERE ".implode(" AND ", $arr_where) : "";
+
+
+		$sql = "SELECT
+				  o.IdObra,
+				  concat(og.PrefijoCodigo,'-',o.Codigo) AS Codigo,
+				  og.Nombre AS Organismo,
+				  og2.Nombre AS Comitente,
+				  o.Denominacion,
+				  tio.Descripcion AS TipoObra,
+				  fnLocalidadesxObra(o.IdObra, '<br />') AS Localidad,
+				  fnFufisxObra(o.IdObra) AS FuenteFinanciamiento,
+				  o.Expediente,
+				  o.CreditoPresupuestarioAprobado,
+				  @refuerzo_partida:= IFNULL((SELECT sum(Importe) FROM refuerzopartida WHERE IdObra=o.IdObra) ,0) AS RefuerzoPartida,
+				  o.CantidadBeneficiarios,
+				  o.PresupuestoOficial,
+				  date_format(o.FechaPresupuestoOficial,'%d/%m/%Y') AS FechaPresupuestoOficial,
+				  eo.Descripcion AS Estado,
+				  @monto:= IFNULL((SELECT sum(montoavance) FROM certificacion ce INNER JOIN contrato co ON ce.IdContrato=co.IdContrato WHERE co.IdObra=o.IdObra),0) AS MontoAvance,
+				  @monto / IFNULL((SELECT sum(Monto + IFNULL((SELECT sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) FROM alteracion WHERE IdContrato=contrato.IdContrato),0)) FROM contrato WHERE IdObra=o.IdObra), 0)*100 AS PorcentajeAvance,
+				  IFNULL(o.CreditoPresupuestarioAprobado, 0) + @refuerzo_partida - @monto
+				    - IFNULL((SELECT sum(redeterminacionprecios) FROM certificacion ce INNER JOIN contrato co ON ce.IdContrato=co.IdContrato WHERE co.IdObra=o.IdObra),0) 
+				    AS SaldoCreditoPresup,
+				  IFNULL((SELECT concat(substring(max(Periodo),5,2), '/', substring(max(Periodo),1,4)) FROM certificacion ce INNER JOIN contrato co ON ce.IdContrato=co.IdContrato WHERE co.IdObra=o.IdObra),'-') AS UltimoCertificado,
+				  (o.IdOrganismo = o.IdComitente OR o.IdComitente <> $idOrganismo) AS EditarVisible,
+				  IF(o.IdObra IN (13,16,25,26,27,130,131,147,177,266,267,272,274,275,294,298,301,303,304,330,333,336,346,436), 1, 2) AS Orden
+				FROM
+				  obra o
+				  INNER JOIN organismo  AS og  ON o.IdOrganismo = og.IdOrganismo 
+				  LEFT JOIN  tipoobra   AS tio ON o.IdTipoObra = tio.IdTipoObra 
+				  INNER JOIN estadoobra AS eo  ON o.IdEstadoObra = eo.IdEstadoObra 
+				  INNER JOIN organismo  AS og2 ON o.IdComitente = og2.IdOrganismo
+				$where
+				ORDER BY
+				  Orden, o.Codigo";
+		
+		//die(SQLFormatter::format($sql));
+		return $sql;
+
+	}
+
+	public static function ObrasHomeViejo($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra=''){
 		$where = "";
 
 		if($idOrganismo!=""){
@@ -235,7 +310,8 @@ class ObraPeer
 				from
 				  localidad l
 				where
-				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo)
+				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo and o.poradministracion = 0
+				  and o.activo = 1)
 				order by
 				  l.Nombre";
 		return $sql;
@@ -361,7 +437,7 @@ class ObraPeer
 				  left join contrato c on o.IdObra=c.IdObra
 				$where 
 				
-				group by o.IdObra
+				group by o.IdObra	
 				order by
 				  og.Nombre,
 				  eo.Descripcion,

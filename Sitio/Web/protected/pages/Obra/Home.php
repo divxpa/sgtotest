@@ -55,7 +55,7 @@ class Home extends PageBaseSP{
 
 		// $data = $this->CreateDataSource("ObraPeer","ObrasHome", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra);
 		//Agregado busqueda por codigo
-		$data = $this->CreateDataSource("ObraPeer","ObrasHome2", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra, $codigoOrganismo, $codigoObra);
+		$data = $this->CreateDataSource("ObraPeer","ObrasHome", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra, $codigoOrganismo, $codigoObra);
 
 
 		$this->lblTitulo->Text = "Obras (". count($data) . ")";

@@ -279,7 +279,7 @@ function HideShowLayout(checkbox, layoutIndex){
 
 function RefreshData(){
 	var i = 4;
-	var estado;
+	//var estado;
 	var zona;
 	var organismo;
 
@@ -296,7 +296,7 @@ function RefreshData(){
 			if(!organismo.checked){
 				hideLayout(i);
 			}
-			else{
+/*			else{
 				estado = document.getElementById("estado_" + ArrayLayoutsData[i][1]);
 
 				if(!estado.checked){
@@ -306,7 +306,7 @@ function RefreshData(){
 					showLayout(i);
 				}
 
-			}
+			}*/
 
 		/*}
 		else{
