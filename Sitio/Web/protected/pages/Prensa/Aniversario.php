@@ -105,7 +105,12 @@ class Aniversario extends PageBaseSP{
 		else{
 			$this->imgLocalidad->ImageUrl = "upload/localidad/no_image.jpg";
 		}
-	
+	if(!is_null($localidad->MarcaLocalidad) and $localidad->MarcaLocalidad!=""){
+			$this->imgMarca->ImageUrl = $localidad->MarcaLocalidad;
+		}
+		else{
+			$this->imgMarca->ImageUrl = "upload/localidad/marcaBlanca.png";
+		}
 		$selectedValues = $this->chkColumns->SelectedValues;
                 $this->setViewState("Columns",$selectedValues);
 		
@@ -147,6 +152,7 @@ class Aniversario extends PageBaseSP{
 					"FotoAutoridad" => $this->imgAutoridad->ImageUrl,
 					"CantidadObras" => $this->lblTotalObras->Text,
 					"MontoTotal" => $this->lblTotalMonto->Text,
+//                                        "Marca"=>  $this->imgMarca->ImageUrl,
 					/*"TotalBeneficiarios" => $this->lblTotalBeneficiarios->Text,
 					"TotalManoObra" => $this->lblTotalManoObra->Text,*/
 					"Obras" => $obras,

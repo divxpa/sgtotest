@@ -11,9 +11,9 @@ class Aniversario extends PageBaseSP{
 
 		if(!$this->IsPostBack){
 			$id = $this->Request["id"];
-                        $this->LoadDataRelated();
+            $this->LoadDataRelated();
 			$this->ddlOrganismo->SelectedValue = $this->GetSearchMemory($this->PagePath, $this->ddlOrganismo->ID);
-                        $this->ddlEstado->SelectedValue = $this->GetSearchMemory($this->PagePath, $this->ddlEstado->ID);
+			$this->ddlEstado->SelectedValue = $this->GetSearchMemory($this->PagePath, $this->ddlEstado->ID);
 
 			$this->Refresh($id);
 		}
@@ -43,8 +43,10 @@ class Aniversario extends PageBaseSP{
 
 		$finder = LocalidadRecord::finder();
 		$localidad = $finder->findByPk($id);
-                $idOrganismo = $this->ddlOrganismo->SelectedValue;
-                $idEstadoObra=  $this->ddlEstado->SelectedValue;
+		$idOrganismo = $this->ddlOrganismo->SelectedValue;
+        $idEstadoObra=  $this->ddlEstado->SelectedValue;
+        $fechaDesde = $this->ddlFechaDesde->SelectedValue;
+        $fechaHasta = $this->ddlFechaHasta->SelectedValue;
 		$this->lblLocalidad->Text = 
 		$this->lblLocalidad2->Text = $localidad->Nombre;
 		$fecha = explode("-", $localidad->Aniversario);
@@ -107,7 +109,8 @@ class Aniversario extends PageBaseSP{
 		$selectedValues = $this->chkColumns->SelectedValues;
                 $this->setViewState("Columns",$selectedValues);
 		
-                $data = $this->CreateDataSource("ObraPeer","ObrasByLocalidad", $id,$idOrganismo,$idEstadoObra);
+		$data = $this->CreateDataSource("ObraPeer","ObrasByLocalidad", $id,$idOrganismo,$idEstadoObra,$fechaDesde, $fechaHasta);
+
 //		echo"<pre>";print_r($data);echo"</pre>";exit;
 		$this->dgDatos->DataSource = $data;
 		$this->dgDatos->dataBind();
@@ -154,12 +157,11 @@ class Aniversario extends PageBaseSP{
 		$this->CallbackClient->callClientFunction("Imprimir",array($file));
 	}
 
-        	public function btnBuscar_OnClick($sender, $param)
+	public function btnBuscar_OnClick($sender, $param)
 	{
 		$this->SaveSearchMemory($this->PagePath, $this->ddlOrganismo->ID, $this->ddlOrganismo->SelectedValue);
-                $this->SaveSearchMemory($this->PagePath, $this->ddlEstado->ID, $this->ddlEstado->SelectedValue);
-
-//		$this->dgDatos->CurrentPageIndex = 0;
+        $this->SaveSearchMemory($this->PagePath, $this->ddlEstado->ID, $this->ddlEstado->SelectedValue);
+		//$this->dgDatos->CurrentPageIndex = 0;
 		$this->Refresh($this->Request["id"]);
 	}
          public function toggleColumnVisibility($sender,$param)

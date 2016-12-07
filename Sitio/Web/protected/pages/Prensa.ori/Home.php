@@ -18,7 +18,7 @@ class Home extends PageBaseSP{
 			foreach ($aniversarios as $a) {
 				$fecha = explode("-", $a["Aniversario"]);
 				$titulo = $a["Nombre"];
-				$nombre = "<a href=\"javascript:OpenWindow('?page=Prensa.Aniversario&id=".$a["IdLocalidad"]."', 1100, 600);\">".$a["Nombre"]."</a>";
+				$nombre = "<a href=\"javascript:OpenWindow('?page=Prensa.Aniversario&id=".$a["IdLocalidad"]."', 900, 600);\">".$a["Nombre"]."</a>";
 				$this->Calendario->addEvent($titulo, $nombre, intval($fecha[1]), intval($fecha[2]));
 			}
 
@@ -31,7 +31,7 @@ class Home extends PageBaseSP{
 	{
 		$idLocalidad = $this->ddlLocalidad->SelectedValue;
 		//echo "<script>alert('hola');</script>";
-		$this->Page->ClientScript->registerEndScript('openLocalidad', "OpenWindow('?page=Prensa.Aniversario&id=$idLocalidad', 1100, 600)");
+		$this->Page->ClientScript->registerEndScript('openLocalidad', "OpenWindow('?page=Prensa.Aniversario&id=$idLocalidad', 900, 600)");
 	}
 
 }
