@@ -7,22 +7,27 @@ class UpdateAdmin extends PageBaseSP{
 		if(!$this->IsPostBack){
 			$this->LoadDataRelated();
 			$id = $this->Request["id"];
+			$idc = $this->Request["idc"];
 
 			if (!is_null($id)) {
+				//Actualizar Obra
 				$this->lblAccion->Text = "Modificar Obra";
 				$this->Refresh($id);
 			}
 			else{
-				$idOrganismo = $this->Session["SPOrganismo"];
-				$codigo = $this->CreateDataSource("ObraPeer", "SiguienteCodigoObra", $idOrganismo);
-				$this->txtCodigo->Text = $codigo[0]["Codigo"];
+				//Crea Obra Nueva
+				$idOrganismo = $this->Session["SPOrganismo"];	//Obtiene el id del Organismo
+				$codigo = $this->CreateDataSource("ObraPeer", "SiguienteCodigoObra", $idOrganismo); //Obtiene el siguiente codigo de Obra
+				$this->txtCodigo->Text = $codigo[0]["Codigo"];	//Asigna el valor del codigo de la obra al txtCodigo
 			}
 
 		}
 
 	}
 
+	//Cargo los valores iniciales de la Obra.UpdateAdmin
 	public function LoadDataRelated(){
+		//Todo lo referido al Organismo
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Nombre'] = 'asc';
@@ -35,6 +40,7 @@ class UpdateAdmin extends PageBaseSP{
 		$this->ddlComitente->dataBind();
 		$this->ddlComitente->SelectedValue = $idOrganismo;
 
+		//Todo lo referido a las localidades
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Nombre'] = 'asc';
 		$finder = LocalidadRecord::finder();
@@ -80,6 +86,7 @@ class UpdateAdmin extends PageBaseSP{
 		$this->ddlLocalidad20->DataSource = $localidades;
 		$this->ddlLocalidad20->dataBind();
 
+		//Todo lo referido al estado de la obra
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Descripcion'] = 'asc';
 		$finder = EstadoObraRecord::finder();
@@ -87,6 +94,7 @@ class UpdateAdmin extends PageBaseSP{
 		$this->ddlEstado->DataSource = $estados;
 		$this->ddlEstado->dataBind();
 
+		//Todo lo referido a las fuentes de financiamiento
 		$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect");
 		$this->ddlFufi1->DataSource = $fuentesfinanciamiento;
 		$this->ddlFufi1->dataBind();
@@ -95,6 +103,7 @@ class UpdateAdmin extends PageBaseSP{
 		$this->ddlFufi3->DataSource = $fuentesfinanciamiento;
 		$this->ddlFufi3->dataBind();
 
+		//Todo lo referido al tipo de Obra
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Descripcion'] = 'asc';
 		$finder = TipoObraRecord::finder();
@@ -103,7 +112,9 @@ class UpdateAdmin extends PageBaseSP{
 		$this->ddlTipo->dataBind();
 	}
 
+	//Obtengo los valores de la Obra a Actualizar
 	public function Refresh($idObra){
+
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
@@ -358,7 +369,7 @@ class UpdateAdmin extends PageBaseSP{
 	public function btnAceptar_OnClick($sender, $param)
 	{
 
-		if($this->IsValid){
+		if($this->IsValid){//Si la pagina es Valida
 			$id = $this->Request["id"];
 			$idOrganismo = $this->Session["SPOrganismo"];
 
@@ -439,9 +450,66 @@ class UpdateAdmin extends PageBaseSP{
 			$obra->IdEstadoObra = $this->ddlEstado->SelectedValue;
 			$obra->DetalleEstado = mb_strtoupper($this->txtDetalleEstado->Text, 'utf-8');
 			$obra->MemoriaDescriptiva = mb_strtoupper($this->txtMemoriaDescriptiva->Text, 'utf-8');
+			//Ya guarde todos los datos del objeto Obra
+
+			//Guardar todos los datos del objeto contrato
+			$recalcula = false;
+			$idc = $this->Request["idc"];
+
+			if(!is_null($idc)){
+				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
+				$finder = ContratoRecord::finder();
+				$contrato = $finder->findByPk($idc);
+
+				if($contrato->Monto!=$this->txtMonto->Text){
+					$recalcula = true;
+				}
+
+			}
+			else{
+				$contrato = new ContratoRecord();
+				$contrato->IdObra = $idObra;
+			}
+
+			//$contrato->IdProveedor = $this->ddlProveedor->SelectedValue;
+			$contrato->IdProveedor = $this->txtIdProveedor->Text;
+			$contrato->Numero = $this->txtNumero->Text;
+			$fecha = explode("/", $this->dtpFecha->Text);
+			$contrato->Fecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			$contrato->Monto = $this->txtMonto->Text;
+			$fecha = explode("/", $this->dtpFechaBaseMonto->Text);
+			$contrato->FechaBaseMonto = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			$contrato->NormaLegalAutorizacion = $this->txtNLAutorizacion->Text;
+			$contrato->NormaLegalAdjudicacion = $this->txtNLAdjudicacion->Text;
+			
+			if($this->dtpFechaInicio->Text!=""){
+				$fecha = explode("/", $this->dtpFechaInicio->Text);
+				$contrato->FechaInicio = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			}
+			else{
+				$contrato->FechaInicio = null;
+			}
+
+			if($this->dtpFechaFinalizacion->Text!=""){
+				$fecha = explode("/", $this->dtpFechaFinalizacion->Text);
+				$contrato->FechaFinalizacion = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			}
+			else{
+				$contrato->FechaFinalizacion = null;
+			}
+
+			if($this->txtPlazoEjecucion->Text!=""){
+				$contrato->PlazoEjecucion = $this->txtPlazoEjecucion->Text;
+			}
+			else{
+				$contrato->PlazoEjecucion = null;
+			}
+			//Ya guarde todos los datos del objeto Obra
+
 
 			try{
-				$obra->save();
+				$obra->save();		//Guardo la obra en la BD
+				$contrato->save();	//Guardo el contrato en la BD
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
@@ -637,7 +705,7 @@ class UpdateAdmin extends PageBaseSP{
 					$nuevoEstado->save();
 				}
 
-				$this->Response->Redirect("?page=Obra.Home");
+				$this->Response->Redirect("?page=Obra.HomeAdmin");
 			}
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);

@@ -168,7 +168,7 @@
 						       	<com:TActiveHyperLink
 						            ID="hlEditar"
 						            ToolTip="Haga click aquí para editar"
-						            NavigateUrl="?page=Obra.UpdateAdmin&id=<%# $this->Parent->Data['IdObra']%>"
+						            NavigateUrl="?page=Obra.UpdateAdmin&id=<%# $this->Parent->Data['IdObra']%>&idc=<%# $this->Parent->Data['IdContrato']%>">"
 						            Visible="<%# $this->Parent->Data['EditarVisible']%>">
 						            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
 						    	</com:TActiveHyperLink>

@@ -149,6 +149,7 @@ class Update extends PageBaseSP{
 			$idObra = $this->Request["ido"];
 
 			if(!is_null($id)){
+				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
 				$finder = ContratoRecord::finder();
 				$contrato = $finder->findByPk($id);
 

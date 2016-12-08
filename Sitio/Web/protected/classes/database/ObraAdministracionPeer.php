@@ -80,6 +80,7 @@ class ObraAdministracionPeer
 
 		$sql = "select
 				  o.IdObra,
+				  contrato.IdContrato,
 				  concat(og.PrefijoCodigo,'-',o.Codigo) as Codigo,
 				  og.Nombre as Organismo,
 				  og2.Nombre as Comitente,
@@ -113,6 +114,7 @@ class ObraAdministracionPeer
 				  tipoobra tio on o.IdTipoObra = tio.IdTipoObra inner join
 				  estadoobra eo on o.IdEstadoObra=eo.IdEstadoObra inner join
 				  organismo og2 on o.IdComitente=og2.IdOrganismo
+				  left join contrato on o.IdObra = contrato.IdObra
 				$where
 					and o.PorAdministracion = 1 and o.activo = 1
 				order by

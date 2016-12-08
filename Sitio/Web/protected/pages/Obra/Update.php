@@ -4,9 +4,9 @@ class Update extends PageBaseSP{
 	public function onLoad($param){
 		parent::onLoad($param);
 
-		if(!$this->IsPostBack){
-			$this->LoadDataRelated();
-			$id = $this->Request["id"];
+		if(!$this->IsPostBack){				//Si es es Distinto de un Post
+			$this->LoadDataRelated();		//Cargo todos los valores iniciales de la pagina con los valores de la obra
+			$id = $this->Request["id"];		//al $id le asigno el valor del Request id
 
 			if (!is_null($id)) {
 				$this->lblAccion->Text = "Modificar Obra";
@@ -23,23 +23,23 @@ class Update extends PageBaseSP{
 	}
 
 	public function LoadDataRelated(){
-		$idOrganismo = $this->Session["SPOrganismo"];
-		$criteria = new TActiveRecordCriteria;
-		$criteria->OrdersBy['Nombre'] = 'asc';
-		$criteria = new TActiveRecordCriteria;
-		$criteria->Condition = 'IdOrganismo = :idorganismo OR Comitente=1 ';
-		$criteria->Parameters[':idorganismo'] = $idOrganismo;
-		$finder = OrganismoRecord::finder();
-		$organismos = $finder->findAll($criteria);
-		$this->ddlComitente->DataSource = $organismos;
-		$this->ddlComitente->dataBind();
-		$this->ddlComitente->SelectedValue = $idOrganismo;
+		$idOrganismo = $this->Session["SPOrganismo"]; 	//Obtengo el Organismo del Usuario de la sesion
+		$criteria = new TActiveRecordCriteria; 			//Creo una nueva instancia del criterio de la busqueda
+		$criteria->OrdersBy['Nombre'] = 'asc'; 			//Ordeno el resultado de la busqueda
+		$criteria = new TActiveRecordCriteria; 			//Creo una nueva instancia del criterio de la busqueda
+		$criteria->Condition = 'IdOrganismo = :idorganismo OR Comitente=1 ';	//Condicion del Where, que el organismo sea igual a idOrganismo o que Comitente = 1 //RESOLVER
+		$criteria->Parameters[':idorganismo'] = $idOrganismo;					//Parametros: idorganismo le asigno el organismo del usuario
+		$finder = OrganismoRecord::finder();			//Busco la Clase OrganismoRecord
+		$organismos = $finder->findAll($criteria);		//Busco todos los organismos
+		$this->ddlComitente->DataSource = $organismos;	//Cargo el Combo ddlComitente con todos los organismos
+		$this->ddlComitente->dataBind();				//Databind del ddlComitente
+		$this->ddlComitente->SelectedValue = $idOrganismo; //Selecciono el Organismo correspondiente al Organismo del usuario
 
-		$criteria = new TActiveRecordCriteria;
-		$criteria->OrdersBy['Nombre'] = 'asc';
-		$finder = LocalidadRecord::finder();
-		$localidades = $finder->findAll($criteria);
-		$this->ddlLocalidad1->DataSource = $localidades;
+		$criteria = new TActiveRecordCriteria;			//Creo una nueva instancia del criterio de la busqueda
+		$criteria->OrdersBy['Nombre'] = 'asc';			//Ordeno el resultado de la busqueda
+		$finder = LocalidadRecord::finder();			//Busco la Clase LocalidadRecord
+		$localidades = $finder->findAll($criteria);		//Busco todas las Localidades con el criterio de busqueda
+		$this->ddlLocalidad1->DataSource = $localidades;	//Cargo a todos los Combos con las localidades
 		$this->ddlLocalidad1->dataBind();
 		$this->ddlLocalidad2->DataSource = $localidades;
 		$this->ddlLocalidad2->dataBind();
@@ -80,15 +80,15 @@ class Update extends PageBaseSP{
 		$this->ddlLocalidad20->DataSource = $localidades;
 		$this->ddlLocalidad20->dataBind();
 
-		$criteria = new TActiveRecordCriteria;
-		$criteria->OrdersBy['Descripcion'] = 'asc';
-		$finder = EstadoObraRecord::finder();
-		$estados = $finder->findAll($criteria);
-		$this->ddlEstado->DataSource = $estados;
+		$criteria = new TActiveRecordCriteria;		//Creo una nueva instancia del criterio de la busqueda
+		$criteria->OrdersBy['Descripcion'] = 'asc'; //Ordeno el resultado de la busqueda
+		$finder = EstadoObraRecord::finder();		//Busco la Clase EstadoObraRecord
+		$estados = $finder->findAll($criteria);		//Busco todos los estados con el criterio de busqueda
+		$this->ddlEstado->DataSource = $estados;	//Cargo todos el combo con todos los estados
 		$this->ddlEstado->dataBind();
 
-		$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect");
-		$this->ddlFufi1->DataSource = $fuentesfinanciamiento;
+		$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect"); //Creo un DataSource con todas las FUFIS concatenadas Codigo + Descripcion
+		$this->ddlFufi1->DataSource = $fuentesfinanciamiento; //Cargo en los combos las fuentes de financiamiento
 		$this->ddlFufi1->dataBind();
 		$this->ddlFufi2->DataSource = $fuentesfinanciamiento;
 		$this->ddlFufi2->dataBind();
@@ -104,29 +104,29 @@ class Update extends PageBaseSP{
 	}
 
 	public function Refresh($idObra){
-		$idOrganismo = $this->Session["SPOrganismo"];
-		$finder = ObraRecord::finder();
-		$obra = $finder->findByPk($idObra);
+		$idOrganismo = $this->Session["SPOrganismo"];	//Obtengo ei Organismo del Usuario
+		$finder = ObraRecord::finder();					//Busco la Clase ObraRecord
+		$obra = $finder->findByPk($idObra);				//Busco la obra mediante el IdObra
 
-		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra)){
-			$this->Response->Redirect("?page=Obra.Home");
+		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra)){	//Controlo que la obra sea del mismo organismo 
+			$this->Response->Redirect("?page=Obra.Home");			//Redireccion al Home de Obra
 		}
-
-		$this->txtCodigo->Text = $obra->Codigo;
+		//Asigno los valores de la Obra a los campos correspondientes
+		$this->txtCodigo->Text = $obra->Codigo;						
 		$this->txtDenominacion->Text = $obra->Denominacion;
 		$this->txtExpediente->Text = $obra->Expediente;
 		$this->ddlComitente->SelectedValue = $obra->IdComitente;
 		$this->txtCreditoPresup->Text = $obra->CreditoPresupuestarioAprobado;
 
-		$criteria = new TActiveRecordCriteria;
-		$criteria->Condition = 'IdObra = :idobra ';
+		$criteria = new TActiveRecordCriteria;			//Creo una instancia del criterio de la busqueda
+		$criteria->Condition = 'IdObra = :idobra ';		//Como condicion coloco 
 		$criteria->Parameters[':idobra'] = $idObra;
 		$criteria->OrdersBy['IdFuenteFinanciamiento'] = 'asc';
 		$finder = ObraFuenteFinanciamientoRecord::finder();
-		$fufis = $finder->findAll($criteria);
-		$i = 1;
+		$fufis = $finder->findAll($criteria);			//Busco todas las fuentes de financiamiento de la obra
+		$i = 1;	
 
-		foreach($fufis as $f){
+		foreach($fufis as $f){	//Para cada fuente de financiamiento, selecciono un ddl con la fufi que tiene la obra
 			$controlName = "ddlFufi$i";
 			$this->$controlName->SelectedValue = $f->IdFuenteFinanciamiento;
 			$i++;
@@ -219,38 +219,38 @@ class Update extends PageBaseSP{
 	public function btnAceptar_OnClick($sender, $param)
 	{
 
-		if($this->IsValid){
-			$id = $this->Request["id"];
-			$idOrganismo = $this->Session["SPOrganismo"];
+		if($this->IsValid){									//Si la pagina es Valida
+			$id = $this->Request["id"];						//$id le asigna el Id
+			$idOrganismo = $this->Session["SPOrganismo"];	//Obtiene el Organismo de la sesion
 
-			if(!is_null($id)){
-				$finder = ObraRecord::finder();
-				$obra = $finder->findByPk($id);
+			if(!is_null($id)){								//Si $id no es null, actualizo la obra
+				$finder = ObraRecord::finder();				//Buscla la clase ObraRecord
+				$obra = $finder->findByPk($id);				//Obtiene la Obra por medio del Id
 
-				$criteria = new TActiveRecordCriteria;
-				$criteria->Condition = 'IdObra = :idobra ';
-				$criteria->Parameters[':idobra'] = $id;
-				$finder = ObraFuenteFinanciamientoRecord::finder();
-				$fufis = $finder->findAll($criteria);
+				$criteria = new TActiveRecordCriteria;		//Crea un criterio de busqueda
+				$criteria->Condition = 'IdObra = :idobra ';	//Condicion
+				$criteria->Parameters[':idobra'] = $id;		//Parametros
+				$finder = ObraFuenteFinanciamientoRecord::finder(); //Busca la clase ObraFuenteFinanciamiento
+				$fufis = $finder->findAll($criteria);				//Busca las FUFIS en base a los criterios de busqueda
 
-				foreach($fufis as $f){
+				foreach($fufis as $f){						//Borra todas las FUFIS de la OBRA
 					$f->delete();
 				}
 
-				$criteria = new TActiveRecordCriteria;
-				$criteria->Condition = 'IdObra = :idobra ';
-				$criteria->Parameters[':idobra'] = $id;
-				$finder = ObraLocalidadRecord::finder();
-				$localidades = $finder->findAll($criteria);
+				$criteria = new TActiveRecordCriteria;		//Crea un criterio de busqueda
+				$criteria->Condition = 'IdObra = :idobra ';	//Condicion
+				$criteria->Parameters[':idobra'] = $id;		//Parametros
+				$finder = ObraLocalidadRecord::finder();	//Busca la clase ObraLocalidadRecord
+				$localidades = $finder->findAll($criteria);	//Busco las localidades con el criterio de busqueda
 
-				foreach($localidades as $l){
+				foreach($localidades as $l){				//Borro todas las localidades de la OBRA
 					$l->delete();
 				}
 
 			}
-			else{
-				$obra = new ObraRecord();
-				$obra->IdOrganismo = $idOrganismo;
+			else{//La obra no existe, entonces la creo
+				$obra = new ObraRecord();	//Creo una nueva obra
+				$obra->IdOrganismo = $idOrganismo;	//a la Obra le asigno el Organismo
 			}
 
 			$obra->Codigo = $this->txtCodigo->Text;
