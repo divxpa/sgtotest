@@ -14,7 +14,8 @@ class LocalidadRecord extends TActiveRecord
 	public $FotoLocalidad;
 	public $Zona;
 	public $Habitantes;
-
+	public $MarcaLocalidad;
+	
 	public static function finder($className=__CLASS__)
 	{
 		return parent::finder($className);
