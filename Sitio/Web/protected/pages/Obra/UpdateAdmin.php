@@ -120,7 +120,7 @@ class UpdateAdmin extends PageBaseSP{
 		$obra = $finder->findByPk($idObra);
 
 		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra)){
-			$this->Response->Redirect("?page=Obra.HomeAdmin");
+			$this->Response->Redirect("?page=Obra.HomeAdmin");	
 		}
 
 		$this->txtCodigo->Text = $obra->Codigo;
@@ -450,28 +450,32 @@ class UpdateAdmin extends PageBaseSP{
 			$obra->IdEstadoObra = $this->ddlEstado->SelectedValue;
 			$obra->DetalleEstado = mb_strtoupper($this->txtDetalleEstado->Text, 'utf-8');
 			$obra->MemoriaDescriptiva = mb_strtoupper($this->txtMemoriaDescriptiva->Text, 'utf-8');
+			$obra->PorAdministracion = 1;
 			//Ya guarde todos los datos del objeto Obra
 
+			
+			try{
+				$obra->save();		//Guardo la obra en la BD
 			//Guardar todos los datos del objeto contrato
-			$recalcula = false;
+			//$recalcula = false;
 			$idc = $this->Request["idc"];
 
-			if(!is_null($idc)){
-				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
-				$finder = ContratoRecord::finder();
-				$contrato = $finder->findByPk($idc);
+			 if(!is_null($idc)){
+			// 	//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
+			 	$finder = ContratoRecord::finder();
+			 	$contrato = $finder->findByPk($idc);
 
-				if($contrato->Monto!=$this->txtMonto->Text){
-					$recalcula = true;
-				}
+			 	if($contrato->Monto!=$this->txtMonto->Text){
+			 		$recalcula = true;
+			 	}
 
-			}
-			else{
-				$contrato = new ContratoRecord();
-				$contrato->IdObra = $idObra;
-			}
+			 }
+			 else{
+			 	$contrato = new ContratoRecord();
+			 	$contrato->IdObra = $obra->IdObra;
+			 }
 
-			//$contrato->IdProveedor = $this->ddlProveedor->SelectedValue;
+
 			$contrato->IdProveedor = $this->txtIdProveedor->Text;
 			$contrato->Numero = $this->txtNumero->Text;
 			$fecha = explode("/", $this->dtpFecha->Text);
@@ -479,8 +483,8 @@ class UpdateAdmin extends PageBaseSP{
 			$contrato->Monto = $this->txtMonto->Text;
 			$fecha = explode("/", $this->dtpFechaBaseMonto->Text);
 			$contrato->FechaBaseMonto = $fecha[2]."-".$fecha[1]."-".$fecha[0];
-			$contrato->NormaLegalAutorizacion = $this->txtNLAutorizacion->Text;
-			$contrato->NormaLegalAdjudicacion = $this->txtNLAdjudicacion->Text;
+			$contrato->NormaLegalAutorizacion = $this->txtNConvenio->Text;
+			$contrato->NormaLegalAdjudicacion = $this->txtNConvenio->Text;
 			
 			if($this->dtpFechaInicio->Text!=""){
 				$fecha = explode("/", $this->dtpFechaInicio->Text);
@@ -505,11 +509,7 @@ class UpdateAdmin extends PageBaseSP{
 				$contrato->PlazoEjecucion = null;
 			}
 			//Ya guarde todos los datos del objeto Obra
-
-
-			try{
-				$obra->save();		//Guardo la obra en la BD
-				$contrato->save();	//Guardo el contrato en la BD
+			 	$contrato->save();	//Guardo el contrato en la BD
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
