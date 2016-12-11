@@ -906,7 +906,8 @@
 			        >
 					<com:TTemplateColumn ID="tcOrden" ItemStyle.Width="50px">
 			            <prop:ItemTemplate>
-			           
+			           		<com:THiddenField ID="hdnIdContratoItem" Value="<%# $this->Parent->Data['IdContratoItem']%>" />
+			            	<com:THiddenField ID="hdnIdContrato" Value="<%# $this->Parent->Data['IdContrato']%>" />
 			            	<com:TActiveTextBox
 					       		ID="txtOrden"
 								MaxLength="3"

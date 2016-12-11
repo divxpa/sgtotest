@@ -503,8 +503,8 @@ class UpdateAdmin extends PageBaseSP{
 			 	$contrato->save();	//Guardo el contrato en la BD
 
 			 	//$idObra= $obra->IdObra;
-			 	$idContrato= $contrato->IdContrato;
-			 	//$this->guardarItems($idContrato);
+			 	//$idContrato= $contrato->IdContrato;
+			 	$this->guardarItemsV2();
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
@@ -846,6 +846,54 @@ class UpdateAdmin extends PageBaseSP{
 		}				
 	 }
 
+	 public function guardarItemsV2(){
+	 	if($this->IsValid){
+
+			try{
+				foreach ($this->dgDatos->Items as $it) {
+				
+					if($it->tcOrden->txtOrden->Text!=""){
+						$idContratoItem = $it->tcOrden->hdnIdContratoItem->Value;
+						$idContrato = $it->tcOrden->hdnIdContrato->Value;
+
+						if($idContratoItem!=""){
+							$finder = ContratoItemRecord::finder();
+							$contratoitem = $finder->findByPk($idContratoItem);
+						}
+						else{
+							$contratoitem = new ContratoItemRecord();
+							$idContrato = $this->Request["idc"];
+							$contratoitem->IdContrato = $idContrato;
+						}
+
+						if($it->tcOrden->txtOrden->Text!=""){
+							$contratoitem->Orden = $it->tcOrden->txtOrden->Text;
+						}
+						else{
+							$contratoitem->Orden = 1;
+						}
+
+						if($it->tcItem->txtItem->Text!=""){
+							$contratoitem->Item = $it->tcItem->txtItem->Text;
+						}
+						else{
+							$contratoitem->Item = "Item de Prueba";
+						}
+
+						$contratoitem->Cantidad = $it->tcCantidad->txtCantidad->Text;
+						$contratoitem->UnidadMedida = $it->tcUnidadMedida->ddlUnidadDeMedida->SelectedValue;
+						$contratoitem->PrecioUnitario = $it->tcPrecioUnitario->txtPrecioUnitario->Text;
+						$contratoitem->PrecioTotal = $it->tcPrecioTotal->txtPrecioTotal->Text;
+						$contratoitem->save();
+					}
+				}
+			}
+			catch(exception $e){
+				$this->Log($e->getMessage(),true);
+			}
+
+		}
+	 }
 
 
 }
