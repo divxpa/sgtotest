@@ -1081,11 +1081,11 @@
 			        />
 			    <com:TActiveButtonColumn
 			        ID="DeleteColumn"
-			        HeaderText="Delete"
+			        HeaderText="Borrar"
 			        HeaderStyle.Width="50px"
 			        ItemStyle.HorizontalAlign="Center"
 			        ItemStyle.Font.Italic="false"
-			        Text="Delete"
+			        Text="Borrar"
 			        CommandName="delete"
 			        />
 			</com:TActiveDataGrid>
