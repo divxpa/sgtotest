@@ -874,26 +874,22 @@
 		</fieldset>
 	</div>
    	</com:TTabView>
-   	<com:TTabView Caption="Certificacion">
-   	<com:TActivePanel 
-			ID="pnlDatos" 
-			Display="Dynamic">
-			<div>	
-				<table class="TableForm" width="1200px">
-					<thead>
-						<tr>
-							<th width="10px" style="padding: 1px 2px;">Nº</th>
-							<th width="150px" style="padding: 1px 2px;">Item</th>
-							<th width="50px" style="padding: 1px 2px;">Cantidad</th>
-							<th width="50px" style="padding: 1px 2px;">Unidad de Medida</th>
-							<th width="50px" style="padding: 1px 2px;">Precio Unitario</th>
-							<th width="50px" style="padding: 1px 2px;">Precio Total</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-			<div style="overflow-y: auto;max-height:500px;">
-				<com:TActiveDataGrid
+   	<com:TTabView Caption="Items del Convenio">
+   	<div>	
+        <table class="TableForm" style="width: 1200">
+			<thead>
+				<tr>
+					<th width="50px" style="padding: 1px 2px;">Nº</th>
+					<th width="250px" style="padding: 1px 2px;">Item</th>
+					<th width="100px" style="padding: 1px 2px;">Cantidad</th>
+					<th width="100px" style="padding: 1px 2px;">Unidad de Medida</th>
+					<th width="65px" style="padding: 1px 2px;">Precio Unitario</th>
+					<th width="65px" style="padding: 1px 2px;">Precio Total</th>					
+				</tr>
+			</thead>
+		</table>
+    </div>
+			<com:TActiveDataGrid
 				    ID="dgDatos"
 				    AlternatingItemStyle.BackColor="#EEEEEE"
 				    AutoGenerateColumns="false"
@@ -908,9 +904,9 @@
 			        OnUpdateCommand="dgDatos_OnUpdateCommand"
 			        OnDeleteCommand="dgDatos_OnDeleteCommand"
 			        >
-					<com:TTemplateColumn ID="tcOrden" ItemStyle.Width="30px">
+					<com:TTemplateColumn ID="tcOrden" ItemStyle.Width="50px">
 			            <prop:ItemTemplate>
-						<com:THiddenField ID="hdnIdContrato" Value="<%# $this->Parent->Data['IdContrato']%>" />	
+			           
 			            	<com:TActiveTextBox
 					       		ID="txtOrden"
 								MaxLength="3"
@@ -924,11 +920,11 @@
 								ErrorMessage="Debe ingresar un número válido."
 								DataType="Integer"
 								Display="Dynamic"
-								Text="*"
+								Text="* Orden"
 								ValidationGroup="Register"/>
 			            </prop:ItemTemplate>
 	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcItem" ItemStyle.Width="150px">
+	             	<com:TTemplateColumn ID="tcItem" ItemStyle.Width="250px">
 	             		<prop:ItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtItem"
@@ -940,13 +936,13 @@
 						   	<com:TDataTypeValidator
 								ControlToValidate="txtItem"
 								ErrorMessage="Debe ingresar la descripcion del item."
-								DataType="Float"
+								DataType="String"
 								Display="Dynamic"
-								Text="*"
+								Text="* Item"
 								ValidationGroup="Register"/>
 						</prop:ItemTemplate>
 	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcCantidad" ItemStyle.Width="30px">
+	             	<com:TTemplateColumn ID="tcCantidad" ItemStyle.Width="100px">
 			            <prop:ItemTemplate>
 			            	<com:TActiveTextBox
 						   		ID="txtCantidad"
@@ -966,14 +962,13 @@
 								ValidationGroup="Register"/>
 			            </prop:ItemTemplate>
 	             	</com:TTemplateColumn>
-					<com:TTemplateColumn ID="tcUnidadMedida" ItemStyle.Width="150px">
+					<com:TTemplateColumn ID="tcUnidadMedida" ItemStyle.Width="100px">
 			            <prop:ItemTemplate>
 			            	<com:TActiveDropDownList
 					       		ID="ddlUnidadDeMedida"
 					       		ToolTip="Seleccione"
 					       		CssClass="medium"
 					       		Style="margin: 0px;"
-					       		OnSelectedIndexChanged="page.ddlUnidadDeMedida_OnSelectedIndexChanged"
 					       		ClientSide.OnLoading="Element.show('callback_status')"
 								ClientSide.OnComplete="Element.hide('callback_status')"
 								SelectedValue="<%# $this->Parent->Data['UnidadMedida']%>">
@@ -990,7 +985,7 @@
 					       	</com:TActiveDropDownList>
 			            </prop:ItemTemplate>
 	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcPrecioUnitario" ItemStyle.Width="150px">
+	             	<com:TTemplateColumn ID="tcPrecioUnitario" ItemStyle.Width="65px">
 	             		<prop:ItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtPrecioUnitario"
@@ -1010,7 +1005,7 @@
 								ValidationGroup="Register"/>
 						</prop:ItemTemplate>
 	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="150px">
+	             	<com:TTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="65px">
 	             		<prop:ItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtPrecioTotal"
@@ -1076,306 +1071,25 @@
 	                          ClientSide.OnComplete="Element.hide('callback_status')" />
 		                </prop:FooterTemplate>
 		            </com:TActiveTemplateColumn>
-			  	</com:TActiveDataGrid>
-		  	</div>
-			<com:TValidationSummary
-				ShowMessageBox="false"
-				ShowSummary="true"
-				ValidationGroup="Register"
-				Display="Dynamic"
-				CssClass="Summary"/>
-	</com:TActivePanel>
-	<com:TActivePanel>
-				<com:TActiveDataGrid
-				    ID="dgDetalle"
-					CssClass="TableForm"
-				    AlternatingItemStyle.BackColor="#EEEEEE"
-				    AutoGenerateColumns="false"
-		            AllowPaging="false"
-					AllowCustomPaging="false"
-			        AllowSorting="false"
-			        ShowFooter="true"
-			        Width="800px"
-			        OnItemDataBound="dgDetalle_OnItemDataBound"
-			        OnEditCommand="dgDetalle_OnEditCommand"
-			        OnDataBound="dgDetalle_OnDataBound"
-			        OnItemCommand="dgDetalle_OnItemCommand"
-			        OnCancelCommand="dgDetalle_OnCancelCommand"
-			        OnUpdateCommand="dgDetalle_OnUpdateCommand"
-			        OnDeleteCommand="dgDetalle_OnDeleteCommand">
-			        <com:TActiveTemplateColumn ID="tcIdDetalle" Visible="true">
-						<prop:ItemTemplate>
-							<com:TActiveLabel
-								ID="lblIdAsientoContableDetalle"
-								Text="<%# $this->parent->DataItem['IdAsientoContableDetalle'] %>" />
-						</prop:ItemTemplate>
-						<prop:EditItemTemplate>
-							<com:TActiveLabel
-								ID="lblIdAsientoContableDetalleEdit"
-								Text="<%# $this->parent->DataItem['IdAsientoContableDetalle'] %>" />
-						</prop:EditItemTemplate>
-						<prop:FooterTemplate>
+			    <com:TActiveEditCommandColumn
+			        HeaderText="Edit"
+			        HeaderStyle.Width="100px"
+			        UpdateText="Save"
+			        ItemStyle.HorizontalAlign="Center"
+			        ItemStyle.Font.Italic="false"
+			        />
+			    <com:TActiveButtonColumn
+			        ID="DeleteColumn"
+			        HeaderText="Delete"
+			        HeaderStyle.Width="50px"
+			        ItemStyle.HorizontalAlign="Center"
+			        ItemStyle.Font.Italic="false"
+			        Text="Delete"
+			        CommandName="delete"
+			        />
+			</com:TActiveDataGrid>
 
-	             		</prop:FooterTemplate>
-					</com:TActiveTemplateColumn>
-					<com:TActiveTemplateColumn ID="tcCuenta" HeaderText="Account" FooterStyle.VerticalAlign="Top">
-	                     <prop:ItemTemplate>
-	                     	 <com:TActiveLabel
-								ID="lblIdCuenta"
-								Text="<%# $this->parent->DataItem['IdCuenta'] %>"
-								Style="display:none;" />
-	                         <com:TActiveLabel
-	                             ID="lblCuenta"
-	                             Text="<%# $this->parent->DataItem['CuentaDesc'] %>" />
-	                     </prop:ItemTemplate>
-	                     <prop:EditItemTemplate>
-	                     	<com:TActiveTextBox
-	                     		ID="txtCuentaEdit"
-	                     		Style="display:none;"
-	                     		Text="<%# $this->parent->DataItem['IdCuenta'] %>" />
-							<com:TAutoComplete
-								ID="acpCuentaEdit"
-								Width="250px"
-								OnSuggest="Page.acpCuentaEdit_OnSuggest"
-								OnSuggestionSelected="Page.acpCuentaEdit_OnSuggestionSelected"
-		    					ResultPanel.CssClass="acomplete"
-		    					Suggestions.DataKeyField="IdElemento"
-		    					ToolTip="Enter search by code or name"
-		    					Text="<%# $this->parent->DataItem['CuentaDesc'] %>" >
-							    <prop:Suggestions.ItemTemplate>
-							    	<li><%# $this->Data['Elemento'] %></li>
-							    </prop:Suggestions.ItemTemplate>
-								<prop:ClientSide
-		                   			OnLoading="Element.show('callback_status')"
-		                   			OnComplete="Element.hide('callback_status')"/>
-							</com:TAutoComplete>
-							<com:TRequiredFieldValidator
-								ControlToValidate="txtCuentaEdit"
-								ErrorMessage="Account is required."
-								Display="Dynamic"
-								Text="*"
-								ValidationGroup="Edit"/>
-	                     </prop:EditItemTemplate>
-	                     <prop:FooterTemplate>
-	                     	<com:TActiveTextBox ID="txtCuentaAdd" Style="display:none;" />
-							<com:TAutoComplete
-								ID="acpCuentaAdd"
-								Width="250px"
-								OnSuggest="Page.acpCuentaAdd_OnSuggest"
-								OnSuggestionSelected="Page.acpCuentaAdd_OnSuggestionSelected"
-		    					ResultPanel.CssClass="acomplete"
-		    					Suggestions.DataKeyField="IdElemento"
-		    					ToolTip="Enter search by code or name" >
-							    <prop:Suggestions.ItemTemplate>
-							    	<li><%# $this->Data['Elemento'] %></li>
-							    </prop:Suggestions.ItemTemplate>
-								<prop:ClientSide
-		                   			OnLoading="Element.show('callback_status')"
-		                   			OnComplete="Element.hide('callback_status')"/>
-							</com:TAutoComplete>
-							<com:TRequiredFieldValidator
-								ControlToValidate="txtCuentaAdd"
-								ErrorMessage="Account is required."
-								Display="Dynamic"
-								Text="*"
-								ValidationGroup="Add"/><br />
-							<span style="width:100%;font-weight:bold;">TOTAL</span>
-	                     </prop:FooterTemplate>
-	                </com:TActiveTemplateColumn>
-	                <com:TActiveTemplateColumn ID="tcDebe" HeaderText="Debit" FooterStyle.VerticalAlign="Top" ItemStyle.HorizontalAlign="Right">
-						<prop:ItemTemplate>
-		                    <com:TActiveLabel
-		                        ID="lblDebe"
-		                        Text="<%# $this->parent->DataItem['Debe'] %>" />
-	                     </prop:ItemTemplate>
-	                     <prop:EditItemTemplate>
-	                     	<com:TActiveTextBox
-	                     		ID="txtDebeEdit"
-	                     		Text="<%# $this->parent->DataItem['Debe'] %>"
-								CssClass="small"
-								MaxLength="11"
-					            AutoTrim="True"
-					       		ToolTip="Enter debit amount"
-					       		AutoPostBack="True"
-					       		AutoCompleteType="Disabled"
-					       		OnTextChanged="Page.txtDebeEdit_OnTextChanged"
-					       		ClientSide.OnLoading="Element.show('callback_status')"
-		                   		ClientSide.OnComplete="Element.hide('callback_status')"/>
-		                   	<com:TDataTypeValidator
-							    ValidationGroup="Edit"
-							    ControlToValidate="txtDebeEdit"
-							    DataType="Float"
-							    Display="Dynamic"
-							    ErrorMessage="Enter a valid number"
-							    Text="*" />
-	                   		<com:TActiveCustomValidator
-					   		    ControlToValidate="txtDebeEdit"
-					 		    Text="*"
-								OnServerValidate="Page.txtDebeEdit_OnServerValidate"
-					      	    ErrorMessage="Debit or credit required."
-								Display="Dynamic"
-					        	ValidationGroup="Edit"/>
-					        <com:TCompareValidator
-							    ValidationGroup="Edit"
-							    ControlToValidate="txtDebeEdit"
-							    Display="Dynamic"
-							    ValueToCompare="0"
-							    DataType="Float"
-							    Operator="GreaterThan"
-							    Text="*"
-							    ErrorMessage="Enter a number greater than 0" />
-						 </prop:EditItemTemplate>
-						 <prop:FooterTemplate>
-						 	<com:TActiveTextBox
-	                     		ID="txtDebeAdd"
-								CssClass="small"
-								MaxLength="11"
-					            AutoTrim="True"
-					       		ToolTip="Enter debit amount"
-					       		AutoPostBack="True"
-					       		AutoCompleteType="Disabled"
-					       		OnTextChanged="Page.txtDebeAdd_OnTextChanged"
-					       		ClientSide.OnLoading="Element.show('callback_status')"
-		                   		ClientSide.OnComplete="Element.hide('callback_status')"/>
-		                   	<com:TDataTypeValidator
-							    ValidationGroup="Add"
-							    ControlToValidate="txtDebeAdd"
-							    DataType="Float"
-							    Display="Dynamic"
-							    ErrorMessage="Enter a valid number"
-							    Text="*" />
-	                   		<com:TActiveCustomValidator
-					   		    ControlToValidate="txtDebeAdd"
-					 		    Text="*"
-								OnServerValidate="Page.txtDebeAdd_OnServerValidate"
-					      	    ErrorMessage="Debit or credit required."
-								Display="Dynamic"
-					        	ValidationGroup="Add"/>
-					        <com:TCompareValidator
-							    ValidationGroup="Add"
-							    ControlToValidate="txtDebeAdd"
-							    Display="Dynamic"
-							    ValueToCompare="0"
-							    DataType="Float"
-							    Operator="GreaterThan"
-							    Text="*"
-							    ErrorMessage="Enter a number greater than 0" /><br />
-					       	<com:TActiveTextBox
-	                     		ID="txtDebeTotal"
-								CssClass="small"
-								Enabled="False"
-								Text="0,00"
-								Style="text-align:right;" />
-						 </prop:FooterTemplate>
-					</com:TActiveTemplateColumn>
-					<com:TActiveTemplateColumn ID="tcHaber" HeaderText="Credit" FooterStyle.VerticalAlign="Top" ItemStyle.HorizontalAlign="Right">
-	                	<prop:ItemTemplate>
-		                    <com:TActiveLabel
-		                        ID="lblHaber"
-		                        Text="<%# $this->parent->DataItem['Haber'] %>" />
-	                     </prop:ItemTemplate>
-	                     <prop:EditItemTemplate>
-	                     	<com:TActiveTextBox
-	                     		ID="txtHaberEdit"
-	                     		Text="<%# $this->parent->DataItem['Haber'] %>"
-								CssClass="small"
-								MaxLength="11"
-					            AutoTrim="True"
-					       		ToolTip="Enter credit amount"
-					       		AutoPostBack="True"
-					       		AutoCompleteType="Disabled"
-					       		OnTextChanged="Page.txtHaberEdit_OnTextChanged"
-					       		ClientSide.OnLoading="Element.show('callback_status')"
-		                   		ClientSide.OnComplete="Element.hide('callback_status')"/>
-		                   	<com:TDataTypeValidator
-							    ValidationGroup="Edit"
-							    ControlToValidate="txtHaberEdit"
-							    DataType="Float"
-							    Display="Dynamic"
-							    ErrorMessage="Enter a valid number"
-							    Text="*" />
-							<com:TCompareValidator
-							    ValidationGroup="Edit"
-							    ControlToValidate="txtHaberEdit"
-							    Display="Dynamic"
-							    ValueToCompare="0"
-							    DataType="Float"
-							    Operator="GreaterThan"
-							    Text="*"
-							    ErrorMessage="Enter a number greater than 0" />
-						 </prop:EditItemTemplate>
-						 <prop:FooterTemplate>
-						 	<com:TActiveTextBox
-	                     		ID="txtHaberAdd"
-								CssClass="small"
-								MaxLength="11"
-					            AutoTrim="True"
-					       		ToolTip="Enter credit amount"
-					       		AutoPostBack="True"
-					       		AutoCompleteType="Disabled"
-					       		OnTextChanged="Page.txtHaberAdd_OnTextChanged"
-					       		ClientSide.OnLoading="Element.show('callback_status')"
-		                   		ClientSide.OnComplete="Element.hide('callback_status')"/>
-		                   	<com:TDataTypeValidator
-							    ValidationGroup="Add"
-							    ControlToValidate="txtHaberAdd"
-							    DataType="Float"
-							    Display="Dynamic"
-							    ErrorMessage="Enter a valid number"
-							    Text="*" />
-							<com:TCompareValidator
-							    ValidationGroup="Add"
-							    ControlToValidate="txtHaberAdd"
-							    Display="Dynamic"
-							    ValueToCompare="0"
-							    DataType="Float"
-							    Operator="GreaterThan"
-							    Text="*"
-							    ErrorMessage="Enter a number greater than 0" /><br />
-					       	<com:TActiveTextBox
-	                     		ID="txtHaberTotal"
-								CssClass="small"
-								Enabled="False"
-								Text="0,00"
-								Style="text-align:right;" />
-						 </prop:FooterTemplate>
-					</com:TActiveTemplateColumn>
-					<com:TActiveTemplateColumn ID="tcLeyenda" HeaderText="Details" FooterStyle.VerticalAlign="Top">
-	                	<prop:ItemTemplate>
-		                    <com:TActiveLabel
-		                        ID="lblLeyenda"
-		                        Text="<%# $this->parent->DataItem['Leyenda'] %>" />
-	                     </prop:ItemTemplate>
-	                     <prop:EditItemTemplate>
-	                     	<com:TActiveTextBox
-	                     		ID="txtLeyendaEdit"
-	                     		Text="<%# $this->parent->DataItem['Leyenda'] %>"
-								CssClass="large"
-								MaxLength="100"
-					            AutoTrim="True"
-					       		ToolTip="Enter details"/>
-						 </prop:EditItemTemplate>
-						 <prop:FooterTemplate>
-						 	<com:TActiveTextBox
-	                     		ID="txtLeyendaAdd"
-								CssClass="large"
-								MaxLength="100"
-					            AutoTrim="True"
-					       		ToolTip="Enter details"/>
-						 </prop:FooterTemplate>
-					</com:TActiveTemplateColumn>
-
-			  	</com:TActiveDataGrid>
-		  	</com:TActivePanel>
-   </com:TTabView>
- </com:TTabPanel>
-
-
-	
-	<com:TValidationSummary
-		ShowMessageBox="false"
-		ShowSummary="true"
-		ValidationGroup="Register"
-		Display="Dynamic"
-		CssClass="Summary"/>
+ 
+   	</com:TTabView>
+</com:TTabPanel>   	
 </com:TContent>

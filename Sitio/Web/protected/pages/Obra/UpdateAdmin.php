@@ -4,7 +4,7 @@ class UpdateAdmin extends PageBaseSP{
 	public function onLoad($param){
 		parent::onLoad($param);
 
-		if(!$this->IsPostBack){
+		if(!$this->IsPostBack){			
 			$this->LoadDataRelated();
 			$id = $this->Request["id"];
 			$idc = $this->Request["idc"];
@@ -191,24 +191,24 @@ class UpdateAdmin extends PageBaseSP{
 			$this->lblRefuerzosPartida->Visible = false;
 		}
 
-	//Buscar el Contrato
-	$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
-	//$this->txtCodigo->Text = $data[0]["IdContrato"];
-	if(count($data)){	
-		$idContrato = $data[0]["IdContrato"];
-		$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
-		$this->RefreshItems($idContrato);//Cargar Items del Contrato
+		//Buscar el Contrato
+		$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
+		//$this->txtCodigo->Text = $data[0]["IdContrato"];
+		if(count($data)){	
+			$idContrato = $data[0]["IdContrato"];
+			$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
+			$this->RefreshItems($idContrato);//Cargar Items del Contrato
 	}
 
 	}
 
+	//Carga los Datos del Contrato
 	public function CargarContrato($idObra,$idContrato){
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
 
 		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
-			//$this->Response->Redirect("?page=Obra.Home");
 			$this->Response->Redirect("?page=Obra.HomeAdmin");
 		}
 
@@ -293,45 +293,36 @@ class UpdateAdmin extends PageBaseSP{
 		}
 	}
 
+	//Carga los Items Del Contrato
 	public function RefreshItems($idContrato)
 	{
 		$data = $this->CreateDataSource("ContratoPeer","ItemsByContrato", $idContrato);
 		$this->dgDatos->DataSource = $data;
+
+		if(count($data)<1){
+				//Si el contrato no tiene items, entonces lo inicializa vacio
+				//$items = $this->getViewState("Items", array());
+				$items = array(
+							array(
+								"IdContratoItem" =>"",
+								"IdContrato"=>"",
+								"Orden" => 1,
+								"Item" => "",
+								"Cantidad" => "",
+								"UnidadMedida" => "",
+								"PrecioUnitario" => "",
+								"PrecioTotal" => ""
+								)
+							);
+
+				$this->setViewState("Elementos", $items);
+				$this->dgDatos->DataSource = $items;
+				$this->dgDatos->dataBind();
+			
+    	}
+
 		$this->dgDatos->dataBind();
-
-		if(count($data)){
-			//$this->pnlConfirmar->Display = "Dynamic"; //
-			$this->pnlDatos->Display = "Dynamic";
-		}
-		else{
-			//$this->pnlConfirmar->Display = "Dynamic"; //
-			$this->pnlDatos->Display = "None";
-		}
-
-		//$this->CargarItems();
-	}
-
-	public function CargarItems(){
-
-		$order =
-		$item = 
-		$cantidad =
-		$unidadMedida =
-		$precioUnitario = 
-		$precioTotal = 0;
-		//$contador = 1;
-
-		foreach ($this ->dgDatos->Items as $it){
-			$orden =+ floatval ($it->tcOrden->txtOrden->Text);
-			$item =+ floatval ($it->tcItem->txtItem->Text);
-			$cantidad =+ floatval ($it->tcCantidad->txtCantidad->Text);
-			$precioUnitario =+ floatval ($it->tcPrecioUnitario->txtPrecioUnitario->Text);
-			$precioTotal =+ floatval ($it->tcPrecioTotal->txtPrecioTotal->Text);
-			//$contador =+ 1;
-		}
-
-	}
-
+}
 	public function cvCodigo_OnServerValidate($sender, $param)
 	{
 		$idOrganismo = $this->Session["SPOrganismo"];
@@ -456,12 +447,12 @@ class UpdateAdmin extends PageBaseSP{
 			
 			try{
 				$obra->save();		//Guardo la obra en la BD
-			//Guardar todos los datos del objeto contrato
-			//$recalcula = false;
+			// todos los datos del objeto contrato
+			//$recGuardaralcula = false;
 			$idc = $this->Request["idc"];
 
 			 if(!is_null($idc)){
-			// 	//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
+				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
 			 	$finder = ContratoRecord::finder();
 			 	$contrato = $finder->findByPk($idc);
 
@@ -510,6 +501,10 @@ class UpdateAdmin extends PageBaseSP{
 			}
 			//Ya guarde todos los datos del objeto Obra
 			 	$contrato->save();	//Guardo el contrato en la BD
+
+			 	//$idObra= $obra->IdObra;
+			 	$idContrato= $contrato->IdContrato;
+			 	//$this->guardarItems($idContrato);
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
@@ -739,8 +734,8 @@ class UpdateAdmin extends PageBaseSP{
 
 	}
 
-	// Contrato
-		public function dtpFechaInicio_OnTextChanged($sender, $param){
+
+	public function dtpFechaInicio_OnTextChanged($sender, $param){
 		$this->RecalcularFechaFinalizacion();
 	}
 
@@ -806,49 +801,52 @@ class UpdateAdmin extends PageBaseSP{
 		}
 
 	}
-	// Fin Contrato
 
-	//Agregar mas items
-	// public function dgDatos_OnItemCommand($sender, $param)
-	// {
+	//PRUEBAS
+	//PRUEBAS
+	//PRUEBAS
+	//PRUEBAS
+	//PRUEBAS
 
-	// 	if($param->CommandName == "Add"){
 
-	// 		if($this->IsValid){
-	// 			$items = $this->getViewState("Items", array());
-	// 			$items = array(
-	// 							"IdContratoItem" =>TActiveTemplateColumn ID="tceditar "",
-	// 							"Orden" => $this->dgDatos->Footer->tcOrden->txtOrden->Text,
-	// 							"Item" => $this->dgDatos->Footer->tcItem->txtItem->Text,
-	// 							"Cantidad" => $this->dgDatos->Footer->tcCantidad->txtCantidad->Text,
-	// 							"UnidadMedida" => $this->dgDatos->Footer->tcUnidadMedida->tcUnidadMedida->Text,
-	// 							"PrecioUnitario" => $this->dgDatos->Footer->tcPrecioUnitario->txtPrecioUnitario->Text,
-	// 							"PrecioTotal" => $this->dgDatos->Footer->tcPrecioTotal->txtPrecioTotal->Text
-	// 						);
-	// 			//tcItem
-	// 			//tcCantidad
-	// 			//tcUnidadMedida
-	// 			//tcPrecioUnitario
-	// 			//tcPrecioTotal
-	// 			//
-							
-	// 			$orden =+ floatval ($it->tcOrden->txtOrden->Text);
-	// 			$item =+ floatval ($it->tcItem->txtItem->Text);
-	// 			$cantidad =+ floatval ($it->tcCantidad->txtCantidad->Text);
-	// 			$precioUnitario =+ floatval ($it->tcPrecioUnitario->txtPrecioUnitario->Text);
-	// 			$precioTotal =+ floatval ($it->tcPrecioTotal->txtPrecioTotal->Text);
-	// 			//
+	 public function guardarItems($idContrato){
+	 	//Busco todos los contratoitems y los borro
+		$finder = ContratoRecord::finder();
+		$obra = $finder->findByPk($idContrato);
+		$criteria = new TActiveRecordCriteria;
+		$criteria->Condition = 'IdContrato = :idcontrato ';
+		$criteria->Parameters[':idcontrato'] = $idContrato;
+		$finder = ContratoItemRecord::finder();
+		$contratoitem = $finder->findAll($criteria);
 
-	// 			$items[] = $items;
-	// 			$this->setViewState("Elementos", $items);
-	// 			$this->dgDetalle->DataSource = $items;
-	// 			$this->dgDetalle->dataBind();
-	// 		}
+		foreach($contratoitem as $ci){
+		$ci->delete();
+		}
 
-	// 	}
+		try{
+			 	foreach ($this->dgDatos->Items as $it) {
+					
+					if($it->ItemType==TListItemType::Item or $it->ItemType==TListItemType::AlternatingItem){
 
-	// }
+						if($it->tcOrden->txtOrden->Text!=""){
+							$contratoitem->IdContrato =$idContrato;
+							$contratoitem->Orden = $this->txtOrden->Text;
+							$contratoitem->Cantidad = $this->txtCantidad->Text;
+							$contratoitem->Item = $this->txtItem->Text;
+							$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
+							$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
+							$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
+							$contratoitem->save();
+						}
+					}
+				}
+		}
+		catch(exception $e){
+			$this->Log($e->getMessage(),true);
+		}				
+	 }
+
+
 
 }
-
 ?>
