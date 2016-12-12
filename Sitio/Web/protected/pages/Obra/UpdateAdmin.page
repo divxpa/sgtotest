@@ -692,6 +692,46 @@
 				<table border="0" cellpadding="10px">
 					<tr>
 						<td valign="top">
+							<span class="maintitle2">Items del Convenio</span>
+							<com:THyperLink
+								ID="btnAgregarItems"
+					            NavigateUrl="?page=Obra.Contrato.Item.Update"
+						        ToolTip="Haga click aquí para agregar un nuevo item">
+					            <img src="themes/serviciospublicos/images/btn2nuevo.png" width="20px" height="20px" border="0"/>
+						    </com:THyperLink>
+							<com:TActiveDataGrid
+							    ID="dgItems"
+								CssClass="TableForm"
+							    AlternatingItemStyle.BackColor="#EEEEEE"
+							    AutoGenerateColumns="false"
+					            AllowPaging="false"
+								AllowCustomPaging="false"
+						        AllowSorting="false"
+						        Width="600px">
+								<com:TBoundColumn DataField="IdContratoItem" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn DataField="IdContrato" HeaderText="IdContrato" />
+								<com:TBoundColumn DataField="Orden" HeaderText="Orden" />
+								<com:TBoundColumn DataField="Item" HeaderText="Item" />
+								<com:TBoundColumn DataField="UnidadMedida" HeaderText="Unidad de Medida" />
+								<com:TBoundColumn DataField="PrecioUnitario" HeaderText="P. Unitario" />
+								<com:TBoundColumn DataField="PrecioTotal" HeaderText="P. Total" />
+								<com:TBoundColumn DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Right"/>
+								<com:TTemplateColumn ID="tcEditarItem" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+						            <prop:ItemTemplate>
+								       	<com:TActiveHyperLink
+								            ID="hlEditar"
+								            ToolTip="Haga click aquí para editar"
+								            NavigateUrl="?page=Obra.Contrato.Item.Update&id=<%# $this->Parent->Data['IdContratoItem']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
+								            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+								    	</com:TActiveHyperLink>
+						            </prop:ItemTemplate>
+				             	</com:TTemplateColumn>
+						  	</com:TActiveDataGrid>
+						  	<com:TLabel ID="lblItems" Text="No existen items cargados del convenio" />
+						</td>
+					<tr>
+					<tr>
+						<td valign="top">
 							<span class="maintitle2">Alteraciones de Contrato</span>
 							<com:THyperLink
 								ID="btnAgregarAlteracion"
@@ -897,17 +937,25 @@
 					AllowCustomPaging="false"
 			        AllowSorting="false"
 			        ShowHeader="false"
+			        ShowFooter="true"
 			        Width="1200px"
-					OnEditCommand="dgDatos_OnEditCommand"
+
+			        OnItemDataBound="dgDatos_OnItemDataBound"
+			        OnEditCommand="dgDatos_OnEditCommand"
+			        OnDataBound="dgDatos_OnDataBound"
 			        OnItemCommand="dgDatos_OnItemCommand"
 			        OnCancelCommand="dgDatos_OnCancelCommand"
 			        OnUpdateCommand="dgDatos_OnUpdateCommand"
-			        OnDeleteCommand="dgDatos_OnDeleteCommand"
+			        OnDeleteCommand="dgDatos_OnDeleteCommand">
 			        >
-					<com:TTemplateColumn ID="tcOrden" ItemStyle.Width="50px">
-			            <prop:ItemTemplate>
-			           		<com:THiddenField ID="hdnIdContratoItem" Value="<%# $this->Parent->Data['IdContratoItem']%>" />
+			        <com:TActiveTemplateColumn ID="tcID" ItemStyle.Width="50px">
+			        	<prop:ItemTemplate>
+			        	<com:THiddenField ID="hdnIdContratoItem" Value="<%# $this->Parent->Data['IdContratoItem']%>" />
 			            	<com:THiddenField ID="hdnIdContrato" Value="<%# $this->Parent->Data['IdContrato']%>" />
+			        	</prop:ItemTemplate>
+			        </com:TActiveTemplateColumn>
+					<com:TActiveTemplateColumn ID="tcOrden" ItemStyle.Width="50px" FooterStyle.VerticalAlign="Top">
+			            <prop:EditItemTemplate>			           		
 			            	<com:TActiveTextBox
 					       		ID="txtOrden"
 								MaxLength="3"
@@ -916,23 +964,33 @@
 					       		ToolTip="Ingrese el número de order"
 					       		Text="<%# $this->Parent->Data['Orden']%>"
 					       		Enabled="false"/>
-							<com:TDataTypeValidator
+							<com:TRequiredFieldValidator
 								ControlToValidate="txtOrden"
 								ErrorMessage="Debe ingresar un número válido."
-								DataType="Integer"
 								Display="Dynamic"
 								Text="* Orden"
 								ValidationGroup="Register"/>
-			            </prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcItem" ItemStyle.Width="250px">
-	             		<prop:ItemTemplate>
+			            </prop:EditItemTemplate>
+			            <prop:FooterTemplate>
+			            <com:TActiveTextBox ID="txtOrdenAdd" Style="display:yes;" />
+						<com:TRequiredFieldValidator
+								ControlToValidate="txtOrdenAdd"
+								ErrorMessage="Account is required."
+								Display="Dynamic"
+								Text=" * txtOrdenAdd"
+								ValidationGroup="Add"/><br />
+			            </prop:FooterTemplate>
+	             	</com:TActiveTemplateColumn>
+	             	<com:TActiveTemplateColumn ID="tcItem" ItemStyle.Width="250px" FooterStyle.VerticalAlign="Top">
+	             		<prop:EditItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtItem"
 								MaxLength="50"
 								CssClass="largest"
 								AutoTrim="True"
 						   		ToolTip="Ingrese la descripcion del Item"
+								AutoPostBack="True"
+					       		AutoCompleteType="Disabled"
 						   		Text="<%# $this->Parent->Data['Item'] %>"/>
 						   	<com:TDataTypeValidator
 								ControlToValidate="txtItem"
@@ -941,17 +999,25 @@
 								Display="Dynamic"
 								Text="* Item"
 								ValidationGroup="Register"/>
-						</prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcCantidad" ItemStyle.Width="100px">
-			            <prop:ItemTemplate>
+						</prop:EditItemTemplate>
+						<prop:FooterTemplate>
+							<com:TActiveTextBox
+	                     		ID="txtItemAdd"
+								CssClass="largest"
+								MaxLength="50"
+					            AutoTrim="True"
+					       		ToolTip="Ingrese la descripcion del Item"/>
+						</prop:FooterTemplate>
+	             	</com:TActiveTemplateColumn>
+	             	<com:TActiveTemplateColumn ID="tcCantidad" ItemStyle.Width="100px">
+			            <prop:EditItemTemplate>
 			            	<com:TActiveTextBox
 						   		ID="txtCantidad"
-								MaxLength="9"
-								CssClass="medium"
-								AutoTrim="True"
-						   		ToolTip="Ingrese la cantidad del item"
 						   		Text="<%# $this->Parent->Data['Cantidad']%>"
+						   		CssClass="medium"
+								MaxLength="9"								
+								AutoTrim="True"
+						   		ToolTip="Ingrese la cantidad del item"				   	
 								AutoCompleteType="Disabled"
 								Enabled="true" />
 						   	<com:TDataTypeValidator
@@ -959,11 +1025,64 @@
 								ErrorMessage="Debe ingresar un número válido."
 								DataType="Float"
 								Display="Dynamic"
-								Text="*"
-								ValidationGroup="Register"/>
-			            </prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-					<com:TTemplateColumn ID="tcUnidadMedida" ItemStyle.Width="100px">
+								Text="* txtCantidad"
+								ValidationGroup="Edit"/>
+							<com:TActiveCustomValidator
+					   		    ControlToValidate="txtCantidad"
+					 		    Text="*"
+					      	    ErrorMessage="Debit or credit required."
+								Display="Dynamic"
+					        	ValidationGroup="Edit"/>
+					        <com:TCompareValidator
+							    ValidationGroup="Edit"
+							    ControlToValidate="txtCantidad"
+							    Display="Dynamic"
+							    ValueToCompare="0"
+							    DataType="Float"
+							    Operator="GreaterThan"
+							    Text="*"
+							    ErrorMessage="Enter a number greater than 0" />
+			            </prop:EditItemTemplate>
+						<prop:FooterTemplate>
+						 	<com:TActiveTextBox
+	                     		ID="txtCantidadAdd"
+								CssClass="small"
+								MaxLength="11"
+					            AutoTrim="True"
+					       		ToolTip="Enter debit amount"
+					       		AutoPostBack="True"
+					       		AutoCompleteType="Disabled"/>
+		                   	<com:TDataTypeValidator
+							    ValidationGroup="Add"
+							    ControlToValidate="txtCantidadAdd"
+							    DataType="Float"
+							    Display="Dynamic"
+							    ErrorMessage="Enter a valid number"
+							    Text="*" />
+	                   		<com:TActiveCustomValidator
+					   		    ControlToValidate="txtCantidadAdd"
+					 		    Text="*"
+					      	    ErrorMessage="Debit or credit required."
+								Display="Dynamic"
+					        	ValidationGroup="Add"/>
+					        <com:TCompareValidator
+							    ValidationGroup="Add"
+							    ControlToValidate="txtCantidadAdd"
+							    Display="Dynamic"
+							    ValueToCompare="0"
+							    DataType="Float"
+							    Operator="GreaterThan"
+							    Text="*"
+							    ErrorMessage="Enter a number greater than 0" /><br />
+					       	<com:TActiveTextBox
+	                     		ID="txtDebeTotal"
+								CssClass="small"
+								Enabled="False"
+								Text="0,00"
+								Style="text-align:right;" />
+						 </prop:FooterTemplate>
+	             	</com:TActiveTemplateColumn>
+					<com:TActiveTemplateColumn ID="tcUnidadMedida" ItemStyle.Width="100px">
 			            <prop:ItemTemplate>
 			            	<com:TActiveDropDownList
 					       		ID="ddlUnidadDeMedida"
@@ -985,8 +1104,8 @@
 					       		<com:TListItem Value="9" Text="ha." />
 					       	</com:TActiveDropDownList>
 			            </prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcPrecioUnitario" ItemStyle.Width="65px">
+	             	</com:TActiveTemplateColumn>
+	             	<com:TActiveTemplateColumn ID="tcPrecioUnitario" ItemStyle.Width="65px">
 	             		<prop:ItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtPrecioUnitario"
@@ -1005,8 +1124,8 @@
 								Text="*"
 								ValidationGroup="Register"/>
 						</prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-	             	<com:TTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="65px">
+	             	</com:TActiveTemplateColumn>
+	             	<com:TActiveTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="65px">
 	             		<prop:ItemTemplate>
 		             		<com:TActiveTextBox
 						   		ID="txtPrecioTotal"
@@ -1025,20 +1144,20 @@
 								Text="*"
 								ValidationGroup="Register"/>
 						</prop:ItemTemplate>
-	             	</com:TTemplateColumn>
-					<com:TActiveTemplateColumn ID="tcEditar" HeaderText="" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" FooterStyle.VerticalAlign="Top">
-		        		<prop:ItemTemplate>
+	             	</com:TActiveTemplateColumn>
+					<com:TActiveTemplateColumn ID="tcEditar" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" FooterStyle.VerticalAlign="Top">
+					<prop:ItemTemplate>
 							<com:TActiveImageButton
 								ID="btnEditar"
 								CommandName="Edit"
-								Tooltip="Click to edit"
+								Tooltip="Click para editar"
 								ImageUrl="themes/sgc/images/btnEditar.png"
 								ClientSide.OnLoading="Element.show('callback_status')"
 	                          	ClientSide.OnComplete="Element.hide('callback_status')" />
 							<com:TActiveImageButton
 								ID="btnBorrar"
 								CommandName="Delete"
-								Tooltip="Click to delete"
+								Tooltip="Click para borrar"
 								ImageUrl="themes/sgc/images/btnBorrar.png"
 								Attributes.onclick="return confirm('¿Delete row?');"
 								ClientSide.OnLoading="Element.show('callback_status')"
@@ -1065,29 +1184,14 @@
 						  <com:TActiveImageButton
 							  ID="btnAgregar"
 							  CommandName="Add"
-							  ImageUrl="themes/sgc/images/btnAgregar2.png"
+							  ImageUrl="btnAgregar2.png"
 							  Tooltip="Add"
 							  ValidationGroup="Add"
 							  ClientSide.OnLoading="Element.show('callback_status')"
 	                          ClientSide.OnComplete="Element.hide('callback_status')" />
 		                </prop:FooterTemplate>
 		            </com:TActiveTemplateColumn>
-			    <com:TActiveEditCommandColumn
-			        HeaderText="Edit"
-			        HeaderStyle.Width="100px"
-			        UpdateText="Save"
-			        ItemStyle.HorizontalAlign="Center"
-			        ItemStyle.Font.Italic="false"
-			        />
-			    <com:TActiveButtonColumn
-			        ID="DeleteColumn"
-			        HeaderText="Borrar"
-			        HeaderStyle.Width="50px"
-			        ItemStyle.HorizontalAlign="Center"
-			        ItemStyle.Font.Italic="false"
-			        Text="Borrar"
-			        CommandName="delete"
-			        />
+   
 			</com:TActiveDataGrid>
 
  

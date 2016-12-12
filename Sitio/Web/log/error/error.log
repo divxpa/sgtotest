@@ -57,3 +57,8 @@
 20161208222033 	mmartinez	s:127:"[Notice] Undefined variable: idObra (@line 479 in file C:\xampp\htdocs\sgotest\Sitio\Web\protected\pages\Obra\UpdateAdmin.php).";
 20161208223551 	mmartinez	s:66:"Component property 'UpdateAdmin.txtNLAutorizacion' is not defined.";
 20161211094556 	mmartinez	s:546:"TDbCommand failed to execute the SQL statement "INSERT INTO `contratoitem`(`IdContrato`, `Item`, `Cantidad`, `UnidadMedida`, `PrecioUnitario`, `PrecioTotal`, `Orden`) VALUES (:IdContrato, :Item, :Cantidad, :UnidadMedida, :PrecioUnitario, :PrecioTotal, :Orden)": SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ssp`.`contratoitem`, CONSTRAINT `fk_contratoitem_contrato` FOREIGN KEY (`IdContrato`) REFERENCES `contrato` (`IdContrato`) ON DELETE NO ACTION ON UPDATE NO ACTION)";
+20161211140807 	mmartinez	s:65:"Component property 'TTableCell.hdnIdContratoItem' is not defined.";
+20161211161604 	mmartinez	s:56:"Component property 'TTableCell.txtOrden' is not defined.";
+20161211161655 	mmartinez	s:56:"Component property 'TTableCell.txtOrden' is not defined.";
+20161211161814 	mmartinez	s:56:"Component property 'TTableCell.txtOrden' is not defined.";
+20161211185054 	mmartinez	s:133:"[Notice] Undefined variable: ido (@line 86 in file C:\xampp\htdocs\sgtotest\Sitio\Web\protected\pages\Obra\Contrato\Item\Update.php).";
