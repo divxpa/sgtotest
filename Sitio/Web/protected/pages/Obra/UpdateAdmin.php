@@ -508,7 +508,7 @@ class UpdateAdmin extends PageBaseSP{
 				$contrato->PlazoEjecucion = null;
 			}
 			//Ya guarde todos los datos del objeto Obra
-			 	$contrato->save();	//Guardo el contrato en la BD
+			 	//Guardo el contrato en la BD
 
 			 	//$this->guardarItemsV2();
 
@@ -705,6 +705,7 @@ class UpdateAdmin extends PageBaseSP{
 					$nuevoEstado->DetalleEstado = mb_strtoupper($this->txtDetalleEstado->Text, 'utf-8');
 					$nuevoEstado->save();
 				}
+				$contrato->save();
 
 				$this->Response->Redirect("?page=Obra.HomeAdmin");
 			}

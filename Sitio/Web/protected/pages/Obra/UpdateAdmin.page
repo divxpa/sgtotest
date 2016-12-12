@@ -708,7 +708,7 @@
 								AllowCustomPaging="false"
 						        AllowSorting="false"
 						        Width="600px">
-								<com:TBoundColumn DataField="IdContratoItem" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn DataField="IdContratoItem" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
 								<com:TBoundColumn DataField="IdContrato" HeaderText="IdContrato" />
 								<com:TBoundColumn DataField="Orden" HeaderText="Orden" />
 								<com:TBoundColumn DataField="Item" HeaderText="Item" />
