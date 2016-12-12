@@ -3,7 +3,7 @@ class ContratoItemPadreRecord extends TActiveRecord
 {
 	const TABLE='contratoitempadre';
 
-	public $IdContratoItemPadre;
+	public $idContratoItemPadre;
 	public $IdContrato;
 	public $Orden;
 	public $Item;

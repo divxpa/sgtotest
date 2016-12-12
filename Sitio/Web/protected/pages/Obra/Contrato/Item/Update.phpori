@@ -163,17 +163,6 @@ class Update extends PageBaseSP{
 		}
 	}
 
-	public function selectionChanged($sender,$param)
-    {
-       if ($this->ddlItemPadre->SelectedValue!="0"){
-       		$this->pnlItem->Display = "Dynamic";
-       }
-       else{
-       		$this->pnlItem->Display = "None";
-       }
-
-    }
-
 }
 
 ?>

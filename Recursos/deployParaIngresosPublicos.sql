@@ -13,8 +13,8 @@ INSERT INTO rolpagina (IdRol, IdPagina) VALUES (10, 55);
 ALTER TABLE `contratoitem` ADD COLUMN `IdContratoItemPadre` int(10) unsigned NOT NULL;
 
 
--- Agregar Columna IdContratoItemPadre //VEEEEEEEEER
+-- Agregar Columna IdContratoItemPadre 
 ALTER TABLE `contratoitem`
-ADD COLUMN `IdContratoItemPadre` INT(20) unsigned NOT NULL,
+ADD COLUMN `IdContratoItemPadre` INT(20) unsigned,
 ADD CONSTRAINT `fk_contratoitem_contratoitempadre` FOREIGN KEY (`IdContratoItemPadre`)
 REFERENCES `contratoitempadre` (`idContratoItemPadre`) ON DELETE NO ACTION ON UPDATE NO ACTION

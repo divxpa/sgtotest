@@ -43,8 +43,6 @@
 				<span class="label">El Item es una Subcategoria de</span>
 				<com:TDropDownList 
 				ID="ddlItemPadre"
-				AutoPostBack="true"
-				OnSelectedIndexChanged="selectionChanged"
 				ToolTip="Seleccione"
 		       		PromptValue="0"
 		       		PromptText="Seleccione"
@@ -66,7 +64,6 @@
 				CssClass="largest"
 				MaxLength="50"
 	            AutoTrim="True"
-	            Enabled="False"
 	       		ToolTip="Ingrese el orden del Item"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtOrden"
@@ -114,6 +111,19 @@
 				AutoTrim="True"
 		   		ToolTip="Ingrese el precio unitario"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtCantidad"
+				ErrorMessage="Debe ingresar la cantidad"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
+		   	<com:TDataTypeValidator
+				ControlToValidate="txtCantidad"
+				ErrorMessage="Debe ingresar la cantidad"
+				DataType="Float"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
 			</br>
 			<span class="label required">Precio Unitario</span>
 	       	<com:TTextBox
@@ -123,6 +133,19 @@
 				AutoTrim="True"
 		   		ToolTip="Ingrese el precio unitario"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtPrecioUnitario"
+				ErrorMessage="Debe ingresar el precio unitario"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
+		   	<com:TDataTypeValidator
+				ControlToValidate="txtPrecioUnitario"
+				ErrorMessage="Debe ingresar un precio valido"
+				DataType="Float"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
 			</br>
 			<span class="label required">Precio Total</span>
 	       	<com:TTextBox
@@ -132,6 +155,19 @@
 				AutoTrim="True"
 		   		ToolTip="Ingrese el precio unitario"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtPrecioTotal"
+				ErrorMessage="Debe ingresar el precio unitario"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
+		   	<com:TDataTypeValidator
+				ControlToValidate="txtPrecioTotal"
+				ErrorMessage="Debe ingresar un precio valido"
+				DataType="Float"
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
 			</com:TActivePanel>	
 			<com:TActivePanel 
 				ID="pnlBorrarItem"
