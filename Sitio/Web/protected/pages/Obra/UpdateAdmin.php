@@ -4,7 +4,7 @@ class UpdateAdmin extends PageBaseSP{
 	public function onLoad($param){
 		parent::onLoad($param);
 
-		if(!$this->IsPostBack){
+		if(!$this->IsPostBack){			
 			$this->LoadDataRelated();
 			$id = $this->Request["id"];
 			$idc = $this->Request["idc"];
@@ -15,14 +15,11 @@ class UpdateAdmin extends PageBaseSP{
 				$this->Refresh($id);
 			}
 			else{
-				//Crea Obra Nueva
-				$idOrganismo = $this->Session["SPOrganismo"];	//Obtiene el id del Organismo
-				$codigo = $this->CreateDataSource("ObraPeer", "SiguienteCodigoObra", $idOrganismo); //Obtiene el siguiente codigo de Obra
-				$this->txtCodigo->Text = $codigo[0]["Codigo"];	//Asigna el valor del codigo de la obra al txtCodigo
+				$idOrganismo = $this->Session["SPOrganismo"];
+				$codigo = $this->CreateDataSource("ObraPeer", "SiguienteCodigoObra", $idOrganismo);
+				$this->txtCodigo->Text = $codigo[0]["Codigo"];
 			}
-
 		}
-
 	}
 
 	//Cargo los valores iniciales de la Obra.UpdateAdmin
@@ -191,24 +188,24 @@ class UpdateAdmin extends PageBaseSP{
 			$this->lblRefuerzosPartida->Visible = false;
 		}
 
-	//Buscar el Contrato
-	$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
-	//$this->txtCodigo->Text = $data[0]["IdContrato"];
-	if(count($data)){	
-		$idContrato = $data[0]["IdContrato"];
-		$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
-		$this->RefreshItems($idContrato);//Cargar Items del Contrato
+		//Buscar el Contrato
+		$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
+		//$this->txtCodigo->Text = $data[0]["IdContrato"];
+		if(count($data)){	
+			$idContrato = $data[0]["IdContrato"];
+			$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
+			//$this->RefreshItems($idContrato);//Cargar Items del Contrato
 	}
 
 	}
 
+	//Carga los Datos del Contrato
 	public function CargarContrato($idObra,$idContrato){
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
 
 		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
-			//$this->Response->Redirect("?page=Obra.Home");
 			$this->Response->Redirect("?page=Obra.HomeAdmin");
 		}
 
@@ -228,8 +225,6 @@ class UpdateAdmin extends PageBaseSP{
 		$fecha = explode("-",$contrato->FechaBaseMonto);
 		$this->dtpFechaBaseMonto->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
 		$this->txtNConvenio->Text = $contrato->NormaLegalAutorizacion;
-		// $this->txtNLAutorizacion->Text = $contrato->NormaLegalAutorizacion;
-		// $this->txtNLAdjudicacion->Text = $contrato->NormaLegalAdjudicacion;
 		
 		if(!is_null($contrato->FechaInicio)){
 			$fecha = explode("-",$contrato->FechaInicio);
@@ -242,7 +237,18 @@ class UpdateAdmin extends PageBaseSP{
 		 }
 		
 		 $this->txtPlazoEjecucion->Text = $contrato->PlazoEjecucion;
-		 $this->pnlModificacionContrato->Visible = true;
+
+		 $this->pnlItemsDelConvenio->Visible = true;
+		 //$this->pnlModificacionContrato->Visible = true;
+
+
+		 $this->btnAgregarItems->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		 $data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
+		 $this->dgItems->DataSource = $data;
+		 $this->dgItems->dataBind();		 
+		 if(count($data)){
+		 	$this->lblItems->Visible = false;
+		 }
 
 		 $this->btnAgregarAlteracion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
 		 $data = $this->CreateDataSource("ContratoPeer","AlteracionesByContrato", $idContrato);
@@ -293,44 +299,36 @@ class UpdateAdmin extends PageBaseSP{
 		}
 	}
 
-	public function RefreshItems($idContrato)
-	{
-		$data = $this->CreateDataSource("ContratoPeer","ItemsByContrato", $idContrato);
-		$this->dgDatos->DataSource = $data;
-		$this->dgDatos->dataBind();
+	//Carga los Items Del Contrato
+	// public function RefreshItems($idContrato)
+	// {
+	// 	$data = $this->CreateDataSource("ContratoPeer","ItemsByContrato", $idContrato);
+	// 	$this->dgDatos->DataSource = $data;
 
-		if(count($data)){
-			//$this->pnlConfirmar->Display = "Dynamic"; //
-			$this->pnlDatos->Display = "Dynamic";
-		}
-		else{
-			//$this->pnlConfirmar->Display = "Dynamic"; //
-			$this->pnlDatos->Display = "None";
-		}
+	// 	if(count($data)<1){
+	// 			//Si el contrato no tiene items, entonces lo inicializa vacio
+	// 			//$items = $this->getViewState("Items", array());
+	// 			$items = array(
+	// 						array(
+	// 							"IdContratoItem" =>"",
+	// 							"IdContrato"=>"",
+	// 							"Orden" => 1,
+	// 							"Item" => "",
+	// 							"Cantidad" => "",
+	// 							"UnidadMedida" => "",
+	// 							"PrecioUnitario" => "",
+	// 							"PrecioTotal" => ""
+	// 							)
+	// 						);
 
-		//$this->CargarItems();
-	}
+	// 			$this->setViewState("Elementos", $items);
+	// 			$this->dgDatos->DataSource = $items;
+	// 			//$this->dgDatos->dataBind();
+			
+ //    	}
 
-	public function CargarItems(){
-
-		$order =
-		$item = 
-		$cantidad =
-		$unidadMedida =
-		$precioUnitario = 
-		$precioTotal = 0;
-		//$contador = 1;
-
-		foreach ($this ->dgDatos->Items as $it){
-			$orden =+ floatval ($it->tcOrden->txtOrden->Text);
-			$item =+ floatval ($it->tcItem->txtItem->Text);
-			$cantidad =+ floatval ($it->tcCantidad->txtCantidad->Text);
-			$precioUnitario =+ floatval ($it->tcPrecioUnitario->txtPrecioUnitario->Text);
-			$precioTotal =+ floatval ($it->tcPrecioTotal->txtPrecioTotal->Text);
-			//$contador =+ 1;
-		}
-
-	}
+	// 	$this->dgDatos->dataBind();
+	// }
 
 	public function cvCodigo_OnServerValidate($sender, $param)
 	{
@@ -455,13 +453,14 @@ class UpdateAdmin extends PageBaseSP{
 
 			
 			try{
-				$obra->save();		//Guardo la obra en la BD
-			//Guardar todos los datos del objeto contrato
-			//$recalcula = false;
+				$obra->save();
+
+
+			//$recGuardaralcula = false;
 			$idc = $this->Request["idc"];
 
 			 if(!is_null($idc)){
-			// 	//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
+				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
 			 	$finder = ContratoRecord::finder();
 			 	$contrato = $finder->findByPk($idc);
 
@@ -509,7 +508,9 @@ class UpdateAdmin extends PageBaseSP{
 				$contrato->PlazoEjecucion = null;
 			}
 			//Ya guarde todos los datos del objeto Obra
-			 	$contrato->save();	//Guardo el contrato en la BD
+			 	//Guardo el contrato en la BD
+
+			 	//$this->guardarItemsV2();
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
@@ -704,6 +705,7 @@ class UpdateAdmin extends PageBaseSP{
 					$nuevoEstado->DetalleEstado = mb_strtoupper($this->txtDetalleEstado->Text, 'utf-8');
 					$nuevoEstado->save();
 				}
+				$contrato->save();
 
 				$this->Response->Redirect("?page=Obra.HomeAdmin");
 			}
@@ -739,8 +741,8 @@ class UpdateAdmin extends PageBaseSP{
 
 	}
 
-	// Contrato
-		public function dtpFechaInicio_OnTextChanged($sender, $param){
+
+	public function dtpFechaInicio_OnTextChanged($sender, $param){
 		$this->RecalcularFechaFinalizacion();
 	}
 
@@ -806,49 +808,236 @@ class UpdateAdmin extends PageBaseSP{
 		}
 
 	}
-	// Fin Contrato
 
-	//Agregar mas items
-	// public function dgDatos_OnItemCommand($sender, $param)
+
+
+	 // public function guardarItemsV2(){
+	 // 	if($this->IsValid){
+
+		// 	try{
+		// 		foreach ($this->dgDatos->Items as $it) {
+				
+		// 			if($it->tcOrden->txtOrden->Text!=""){
+		// 				$idContratoItem = $it->tcID->hdnIdContratoItem->Value;
+		// 				$idContrato = $it->tcID->hdnIdContrato->Value;
+
+		// 				if($idContratoItem!=""){
+		// 					$finder = ContratoItemRecord::finder();
+		// 					$contratoitem = $finder->findByPk($idContratoItem);
+		// 				}
+		// 				else{
+		// 					$contratoitem = new ContratoItemRecord();
+		// 					$idContrato = $this->Request["idc"];
+		// 					$contratoitem->IdContrato = $idContrato;
+		// 				}
+
+		// 				if($it->tcOrden->txtOrden->Text!=""){
+		// 					$contratoitem->Orden = $it->tcOrden->txtOrden->Text;
+		// 				}
+		// 				else{
+		// 					$contratoitem->Orden = 1;
+		// 				}
+
+		// 				if($it->tcItem->txtItem->Text!=""){
+		// 					$contratoitem->Item = $it->tcItem->txtItem->Text;
+		// 				}
+		// 				else{
+		// 					$contratoitem->Item = "Item de Prueba";
+		// 				}
+
+		// 				$contratoitem->Cantidad = $it->tcCantidad->txtCantidad->Text;
+		// 				$contratoitem->UnidadMedida = $it->tcUnidadMedida->ddlUnidadDeMedida->SelectedValue;
+		// 				$contratoitem->PrecioUnitario = $it->tcPrecioUnitario->txtPrecioUnitario->Text;
+		// 				$contratoitem->PrecioTotal = $it->tcPrecioTotal->txtPrecioTotal->Text;
+		// 				$contratoitem->save();
+		// 			}
+		// 		}
+		// 	}
+		// 	catch(exception $e){
+		// 		$this->Log($e->getMessage(),true);
+		// 	}
+
+		// }
+	 // }
+
+//Botoneras de edicion
+//	 public function dgDatos_OnItemDataBound($sender, $param)
+//	{
+
+		// if(($param->Item->ItemType == TListItemType::Item)||($param->Item->ItemType == TListItemType::AlternatingItem)){
+
+		// 	if($param->Item->tcCuenta->lblCuenta->Text == ""){
+		// 		$param->Item->tcEditar->btnEditar->Visible =
+		// 		$param->Item->tcEditar->btnBorrar->Visible = false;
+		// 	}
+		// 	else{
+
+		// 		if($param->Item->tcDebe->lblDebe->Text!=""){
+		// 			$param->Item->tcDebe->lblDebe->Text = number_format(floatval($param->Item->tcDebe->lblDebe->Text),2,",",".");
+		// 		}
+
+		// 		if($param->Item->tcHaber->lblHaber->Text!=""){
+		// 			$param->Item->tcHaber->lblHaber->Text = number_format(floatval($param->Item->tcHaber->lblHaber->Text),2,",",".");
+		// 		}
+
+		// 	}
+
+		// }
+
+//	}
+
+
+	//  public function dgDatos_OnItemCommand($sender, $param)
 	// {
 
 	// 	if($param->CommandName == "Add"){
 
 	// 		if($this->IsValid){
-	// 			$items = $this->getViewState("Items", array());
+	// 			$items = $this->getViewState("Elementos", array());
 	// 			$items = array(
-	// 							"IdContratoItem" =>TActiveTemplateColumn ID="tceditar "",
-	// 							"Orden" => $this->dgDatos->Footer->tcOrden->txtOrden->Text,
-	// 							"Item" => $this->dgDatos->Footer->tcItem->txtItem->Text,
-	// 							"Cantidad" => $this->dgDatos->Footer->tcCantidad->txtCantidad->Text,
-	// 							"UnidadMedida" => $this->dgDatos->Footer->tcUnidadMedida->tcUnidadMedida->Text,
-	// 							"PrecioUnitario" => $this->dgDatos->Footer->tcPrecioUnitario->txtPrecioUnitario->Text,
-	// 							"PrecioTotal" => $this->dgDatos->Footer->tcPrecioTotal->txtPrecioTotal->Text
+	// 							"IdContratoItem" =>"",
+	// 							"IdContrato" =>"",
+	// 							"Orden"=>$this->dgDatos->Footer->tcOrden->txtOrdenAdd->Text,
+	// 							"Item"=>$this->dgDatos->Footer->tcItem->txtItemAdd->Text,
+	// 							"Cantidad" =>$this->dgDatos->tcCantidad->txtCantidadAdd->Text,
+	// 							//"UnidadMedida"=>$this->dgDatos->tcCantidad->txtCantidadAdd->Text,
+	// 							"PrecioUnitario"=>$this->dgDatos->tcPrecioUnitarioAdd->txtPrecioUnitario->Text,
+	// 							"PrecioTotal"=>$this->dgDatos->tcPrecioTotalAdd->txtPrecioTotal->Text
 	// 						);
-	// 			//tcItem
-	// 			//tcCantidad
-	// 			//tcUnidadMedida
-	// 			//tcPrecioUnitario
-	// 			//tcPrecioTotal
-	// 			//
-							
-	// 			$orden =+ floatval ($it->tcOrden->txtOrden->Text);
-	// 			$item =+ floatval ($it->tcItem->txtItem->Text);
-	// 			$cantidad =+ floatval ($it->tcCantidad->txtCantidad->Text);
-	// 			$precioUnitario =+ floatval ($it->tcPrecioUnitario->txtPrecioUnitario->Text);
-	// 			$precioTotal =+ floatval ($it->tcPrecioTotal->txtPrecioTotal->Text);
-	// 			//
-
 	// 			$items[] = $items;
 	// 			$this->setViewState("Elementos", $items);
-	// 			$this->dgDetalle->DataSource = $items;
-	// 			$this->dgDetalle->dataBind();
+	// 			$this->dgDatos->DataSource = $items;
+	// 			$this->dgDatos->dataBind();
 	// 		}
 
 	// 	}
 
 	// }
 
-}
+//		public function dgDatos_OnDataBound($sender, $param)
+//	{
+		// $debe =
+		// $haber = 0;
 
+		// foreach($this->dgDetalle->Items as $i){
+
+		// 	if(($i->ItemType == TListItemType::Item)||($i->ItemType == TListItemType::AlternatingItem)){
+
+		// 		if($i->tcDebe->lblDebe->Text!=""){
+		// 			$valor = str_replace(".", "", $i->tcDebe->lblDebe->Text);
+		// 			$valor = floatval(str_replace(",", ".", $valor));
+		// 			$valor = round($valor,2);
+		// 			$debe += $valor;
+		// 		}
+
+		// 		if($i->tcHaber->lblHaber->Text!=""){
+		// 			$valor = str_replace(".", "", $i->tcHaber->lblHaber->Text);
+		// 			$valor = floatval(str_replace(",", ".", $valor));
+		// 			$valor = round($valor,2);
+		// 			$haber += $valor;
+		// 		}
+
+		// 	}
+
+		// 	if($i->ItemType == TListItemType::EditItem){
+
+		// 		if($i->tcDebe->txtDebeEdit->Text!=""){
+		// 			$valor = floatval($i->tcDebe->txtDebeEdit->Text);
+		// 			$valor = round($valor,2);
+		// 			$debe += $valor;
+		// 		}
+
+		// 		if($i->tcHaber->txtHaberEdit->Text!=""){
+		// 			$valor = floatval($i->tcHaber->txtHaberEdit->Text);
+		// 			$valor = round($valor,2);
+		// 			$haber += $valor;
+		// 		}
+
+		// 	}
+
+		// }
+
+		// $this->dgDetalle->Footer->tcDebe->txtDebeTotal->Text = number_format($debe, 2, ",", ".");
+		// $this->dgDetalle->Footer->tcHaber->txtHaberTotal->Text = number_format($haber, 2, ",", ".");
+
+		// if($debe>$haber){
+		// 	$this->dgDetalle->Footer->tcHaber->txtHaberAdd->Text = round($debe - $haber,2);
+		// }
+		// else{
+
+		// 	if($haber>$debe){
+		// 		$this->dgDetalle->Footer->tcDebe->txtDebeAdd->Text = round($haber-$debe,2);
+		// 	}
+
+		// }
+
+//	}
+
+
+//	public function dgDatos_OnEditCommand($sender, $param)
+//	{
+		// $itemIndex = $param->Item->ItemIndex;
+		// $this->dgDetalle->EditItemIndex = $itemIndex;
+		// $elementos = $this->getViewState("Elementos", array());
+		// $this->dgDetalle->DataSource = $elementos;
+		// $this->dgDetalle->dataBind();
+//	}
+
+//	public function dgDatos_OnCancelCommand($sender, $param){
+		// $this->dgDetalle->EditItemIndex = -1;
+		// $elementos = $this->getViewState("Elementos", array());
+		// $this->dgDetalle->DataSource = $elementos;
+		// $this->dgDetalle->dataBind();
+//	}
+
+	//public function dgDatos_OnUpdateCommand($sender, $param)
+	//{
+
+		// if ($this->IsValid) {
+		// 	$elementos = $this->getViewState("Elementos", array());
+		// 	$itemIndex = $param->Item->ItemIndex;
+		// 	$elementos[$itemIndex]["IdAsientoContableDetalle"] = $param->Item->tcIdDetalle->lblIdAsientoContableDetalleEdit->Text;
+		// 	$elementos[$itemIndex]["IdCuenta"] = $param->Item->tcCuenta->txtCuentaEdit->Text;
+		// 	$elementos[$itemIndex]["CuentaDesc"] = $param->Item->tcCuenta->acpCuentaEdit->Text;
+		// 	$elementos[$itemIndex]["Debe"] = $param->Item->tcDebe->txtDebeEdit->Text;
+		// 	$elementos[$itemIndex]["Haber"] = $param->Item->tcHaber->txtHaberEdit->Text;
+		// 	$elementos[$itemIndex]["Leyenda"] = $param->Item->tcLeyenda->txtLeyendaEdit->Text;
+		// 	$this->dgDetalle->EditItemIndex = -1;
+		// 	$this->setViewState("Elementos", $elementos);
+		// 	$this->dgDetalle->DataSource = $elementos;
+		// 	$this->dgDetalle->dataBind();
+		//}
+
+	//}
+
+	// public function dgDatos_OnDeleteCommand($sender, $param)
+	// {
+	// 	$items = $this->getViewState("Elementos", array());
+	// 	array_splice($items,$param->Item->ItemIndex,1);
+
+	// 	if(count($items)){
+	// 		$this->setViewState("Elementos",$items);
+	// 	}
+	// 	else{
+	// 		$items = array(
+	// 					array(
+	// 						"IdContratoItem" =>"",
+	// 							"IdContrato" =>"",
+	// 							"Orden"=>"",
+	// 							"Item"=>"",
+	// 							"Cantidad" =>"",
+	// 							"UnidadMedida"=>"",
+	// 							"PrecioUnitario"=>"",
+	// 							"PrecioTotal"=>""
+	// 					)
+	// 				);
+	// 		$this->setViewState("Elementos",array());
+	// 	}
+
+	// 	$this->dgDatos->DataSource = $items;
+	// 	$this->dgDatos->dataBind();
+	// }
+
+
+}
 ?>

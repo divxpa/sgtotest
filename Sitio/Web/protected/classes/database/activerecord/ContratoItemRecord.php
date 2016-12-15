@@ -11,6 +11,7 @@ class ContratoItemRecord extends TActiveRecord
 	public $PrecioUnitario;
 	public $PrecioTotal;
 	public $Orden;
+	public $IdContratoItemPadre;
 
 	public static function finder($className=__CLASS__)
 	{

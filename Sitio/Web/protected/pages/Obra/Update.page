@@ -441,6 +441,20 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="Ingrese un número válido." />
+			<br />
+			<span class="label">F. Inauguración</span>
+			<com:TDatePicker
+				ID="dtpFechaInauguracion"
+				DateFormat="dd/MM/yyyy"
+				Culture="es" />
+			<com:TDataTypeValidator
+			    ValidationGroup="Register"
+			    ControlToValidate="dtpFechaInauguracion"
+			    DataType="Date"
+			    DateFormat="dd/MM/yyyy"
+			    Text="*"
+			    Display="Dynamic"
+			    ErrorMessage="El formato de fecha es inválido (dd/mm/yyyy)." />
 	       	<br />
 	       	<span class="label required">Estado</span>
 			<com:TDropDownList
