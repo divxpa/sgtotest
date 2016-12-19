@@ -27,11 +27,19 @@
 	</div>
 	<div>
 		<fieldset>
-			<span class="label">Fecha</span>
-			<com:TDatePicker
-				ID="dtpFecha"
-				DateFormat="dd/MM/yyyy"
-				Culture="es" />
+				<span class="label">Fecha</span></td>
+				<com:TActiveLabel
+        			ID="lblFecha"
+		        	Text="fecha"
+		        	CssClass="label" />				
+			<br>
+			<br>
+			<br>
+			<span class="label">Fecha</span>		
+				<com:TDatePicker
+					ID="dtpFecha"
+					DateFormat="dd/MM/yyyy"
+					Culture="es" />
 			<com:TRequiredFieldValidator
 			    ControlToValidate="dtpFecha"
 				ErrorMessage="Debe ingresar la fecha del compromiso."
@@ -46,7 +54,7 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="El formato de fecha es inválido (dd/mm/yyyy)." />
-			<br />
+			<br>
 			<span class="label required">Localidad</span>
 			<com:TDropDownList
 	       		ID="ddlLocalidad"
@@ -63,7 +71,16 @@
 				Text="*"
 				InitialValue="0"
 				ValidationGroup="Register"/>
-	       	<br />
+
+	       	<com:TActiveLabel
+        	ID="lblTituloLocalidad"
+        	Text="Localidad"
+        		CssClass="label" />
+			<com:TActiveLabel
+        	ID="lblLocalidad"
+        	Text="Localidad"
+        		CssClass="label" />
+			<br>
 			<span class="label required">Compromiso</span>
 			<com:TTextBox
 	       		ID="txtDenominacion"
