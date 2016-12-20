@@ -25,6 +25,7 @@
 </script>
 	<div id="button-bar-top"  style="margin-top: 10px;">
 		<com:THyperLink
+			ID="btnAgregar"
 			CssClass="imgbtn2-nuevo"
             NavigateUrl="?page=Obra.UpdateAdmin"
 	        ToolTip="Haga click aquí para agregar un nuevo registro">

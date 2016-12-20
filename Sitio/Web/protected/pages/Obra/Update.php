@@ -165,6 +165,12 @@ class Update extends PageBaseSP{
 		}
 
 		$this->txtBeneficiarios->Text = $obra->CantidadBeneficiarios;
+
+		if(!is_null($obra->FechaInauguracion)){
+			$fecha = explode("-",$obra->FechaInauguracion);
+			$this->dtpFechaInauguracion->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		}
+
 		$this->ddlEstado->SelectedValue = $obra->IdEstadoObra;
 		$this->txtDetalleEstado->Text = $obra->DetalleEstado;
 		$this->txtMemoriaDescriptiva->Text = $obra->MemoriaDescriptiva;
@@ -295,6 +301,14 @@ class Update extends PageBaseSP{
 			}
 			else{
 				$obra->CantidadBeneficiarios = null;
+			}
+
+			if($this->dtpFechaInauguracion->Text!=""){
+				$fecha = explode("/", $this->dtpFechaInauguracion->Text);
+				$obra->FechaInauguracion = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			}
+			else{
+				$obra->FechaInauguracion = null;
 			}
 
 			$obra->IdEstadoObra = $this->ddlEstado->SelectedValue;
