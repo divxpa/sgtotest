@@ -39,8 +39,10 @@ class Home extends PageBaseSP{
 	public function LoadDataRelated(){
 		$actualizacion = $this->CreateDataSource("CompromisoPeer","UltimaCreacion");
 		$this->dgDatos->DataSource = $actualizacion;
-		$this->lblActualizacion->Text = 'Ultima Actualizacion: ' . $actualizacion[0]["ultimo"];
-
+		$this->lblActualizacion->Text = 'Última Actualización: ' . $actualizacion[0]["ultimo"];
+		$actualizacion = $this->CreateDataSource("CompromisoPeer","UltimaRevision");
+		$this->lblUltimaRevision->Text = 'Última Revisión: ' . $actualizacion[0]["ultimo"];
+	
 		$localidades = $this->CreateDataSource("CompromisoPeer","LocalidadesConCompromisoSelect");
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
@@ -52,8 +54,6 @@ class Home extends PageBaseSP{
 		$responsables = $this->CreateDataSource("CompromisoResponsablePeer","CompromisoResponsableSelect");
 		$this->ddlResponsable->DataSource = $responsables;
 		$this->ddlResponsable->dataBind();
-
-
 	}
 
 	public function dgDatos_OnPageIndexChanged($sender,$param){

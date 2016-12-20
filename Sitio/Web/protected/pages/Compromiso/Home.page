@@ -12,9 +12,15 @@
         ID="lblTitulo"
         Text="Compromiso"
         CssClass="maintitle" />
+        <br>
 	<com:TActiveLabel
         ID="lblActualizacion"
-        Text="Ultima Actualizacion: 10/10/2016"
+        Text="Ultima Actualización: 10/10/2016"
+        CssClass="medium" />
+        <br>
+    <com:TActiveLabel
+        ID="lblUltimaRevision"
+        Text="Ultima Revisión: 10/10/2016"
         CssClass="medium" />        
 	<div>
 		<div>

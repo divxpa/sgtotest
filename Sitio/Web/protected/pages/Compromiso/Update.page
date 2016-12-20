@@ -27,14 +27,6 @@
 	</div>
 	<div>
 		<fieldset>
-				<span class="label">Fecha</span></td>
-				<com:TActiveLabel
-        			ID="lblFecha"
-		        	Text="fecha"
-		        	CssClass="label" />				
-			<br>
-			<br>
-			<br>
 			<span class="label">Fecha</span>		
 				<com:TDatePicker
 					ID="dtpFecha"
@@ -71,15 +63,6 @@
 				Text="*"
 				InitialValue="0"
 				ValidationGroup="Register"/>
-
-	       	<com:TActiveLabel
-        	ID="lblTituloLocalidad"
-        	Text="Localidad"
-        		CssClass="label" />
-			<com:TActiveLabel
-        	ID="lblLocalidad"
-        	Text="Localidad"
-        		CssClass="label" />
 			<br>
 			<span class="label required">Compromiso</span>
 			<com:TTextBox
@@ -118,7 +101,6 @@
 			<com:TTextBox
 	       		ID="txtPlazo"
 				CssClass="small"
-				Enabled="false"
 				MaxLength="3"
 	            AutoTrim="True"
 	       		ToolTip="Ingrese el plazo estipulado del compromiso"/>
@@ -127,7 +109,6 @@
 			<com:TTextBox
 	       		ID="txtLatitud"
 				CssClass="medium"
-				Enabled="false"
 				MaxLength="20"
 	            AutoTrim="True"
 	       		ToolTip="Ingrese coordenada de latitud de obra"/>

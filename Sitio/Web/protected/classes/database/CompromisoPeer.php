@@ -55,8 +55,14 @@ class CompromisoPeer
 
 	public static function UltimaCreacion(){
 		// Falta implementar la ultima fecha de registro para un organismo determinado
+		$sql = "Select DATE_FORMAT(MAX(FechaRegistro),'%d-%m-%Y') as ultimo From compromiso";
+		return $sql;
+	}
+
+	public static function UltimaRevision(){
+		// Falta implementar la ultima fecha de registro para un organismo determinado
 		$sql = 
-				"Select MAX(FechaRegistro) as ultimo From compromiso";
+			"Select DATE_FORMAT(MAX(Fecha),'%d-%m-%Y') as ultimo From compromisorevision";
 		return $sql;
 	}
 
@@ -79,7 +85,6 @@ class CompromisoPeer
 
 	public static function RevisionesDelCompromiso($IdCompromiso){
 
-		//DATE_FORMAT(cr.Fecha,'%d-%m-%Y')
 		$sql = "Select cr.IdCompromisoRevision, cr.IdCompromiso, u.ApellidoNombre as Usuario, DATE_FORMAT(cr.Fecha,'%d-%m-%Y') as Fecha, cr.Revision
 			from compromisorevision cr inner join usuario u on cr.IdUsuario = u.IdUsuario
 			where cr.IdCompromiso = $IdCompromiso;";

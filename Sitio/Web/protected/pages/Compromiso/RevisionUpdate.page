@@ -2,10 +2,10 @@
 <com:TContent ID="MainContent">
 	<div style="height: 59px;">
 		<div style="display: inline;">
-			<a class="maintitle volver" href="?page=Compromiso.Home">Compromisos</a>
+ 			<span class="maintitle">Compromisos >> </span>
 	    	<com:TLabel
 		        ID="lblAccion"
-		        Text=" Agregar Compromiso"
+		        Text=" Agregar Revision del Compromiso"
 		        CssClass="maintitle" />
 		</div>
 		<div id="button-bar-top" style="margin: 15px 0 0 0;">
@@ -27,11 +27,6 @@
 	</div>
 	<div>
 		<fieldset>
-			<span class="label">Fecha</span></td>
-				<com:TActiveLabel
-        			ID="lblFecha"
-		        	Text="fecha"
-		        	CssClass="label" />		
 			<span class="label required">Compromiso Revision</span>
 			<com:TTextBox
 	       		ID="txtDenominacion"

@@ -9,16 +9,18 @@ class Update extends PageBaseSP{
 			$id = $this->Request["id"];
 			if (!is_null($id)) {
 				$this->lblAccion->Text = "Modificar Compromiso";
+				$this->MostrarControlesSoloLectura();				
 				$this->Refresh($id);
 			}			
 		}		
 	}
 
 	public function MostrarControlesSoloLectura(){
-		$this->lblTituloLocalidad->Visible = true;
-		$this->lblLocalidad->Visible = true;		
-		$this->lblFecha->Visible = true;		
-		//$this->dtpFecha->Visible = false;
+		$this->dtpFecha->Enabled = false;
+		$this->ddlLocalidad->Enabled = false;
+		$this->ddlResponsable->Enabled = false;
+		$this->txtDenominacion->Enabled = false;
+		$this->txtPlazo->Enabled = false;		
 	}
 	
 	public function LoadDataRelated(){		
@@ -34,7 +36,6 @@ class Update extends PageBaseSP{
 		$this->ddlResponsable->DataSource = $responsables;
 		$this->ddlResponsable->dataBind();
 
-		
 	}
 		
 	public function Refresh($idCompromiso){
@@ -46,7 +47,6 @@ class Update extends PageBaseSP{
 		if(!is_null($compromiso->Fecha)){
 			$fecha = explode("-",$compromiso->Fecha);
 			$this->dtpFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-			$this->lblFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
 		} 
 
 		$this->txtDenominacion->Text = $compromiso->Compromiso;
@@ -55,16 +55,10 @@ class Update extends PageBaseSP{
 
 		$finder = LocalidadRecord::finder();
 		$localidad = $finder->findByPk($compromiso->IdLocalidad);
-		$this->lblLocalidad->Text = $localidad->Nombre;
 		$this->txtPlazo->Text = $compromiso->Plazo;
 		$this->txtLatitud->Text = $compromiso->Latitud;
 		$this->txtLongitud->Text = $compromiso->Longitud;
-//		$this->txtLongitud->Text = Disabled ;
 
-
-
-
-		//COMPROMISO REVISION
 		$this->pnlRevision->Visible = true;
 
 		$this->btnAgregarRevision->NavigateUrl .= "&idCompromiso=".$idCompromiso;
@@ -75,11 +69,8 @@ class Update extends PageBaseSP{
 		if(count($data)){
 			$this->lblRevisiones->Visible = false;
 		}
-		//COMPROMISO REVISION
-
 
 	}
-
 	
 	public function btnCancelar_OnClick($sender, $param){
 		$this->Response->Redirect("?page=Compromiso.Home");
@@ -97,7 +88,6 @@ class Update extends PageBaseSP{
 				$compromiso = new CompromisoRecord();
 			}
 			
-			// Compromiso.Fecha
 			if($this->dtpFecha->Text!=""){
 				$fecha = explode("/", $this->dtpFecha->Text);
 				$compromiso->Fecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
@@ -106,41 +96,26 @@ class Update extends PageBaseSP{
 				$compromiso->Fecha = null;
 			}
 
-			// Compromiso.IdLocalidad
 			if($this->ddlLocalidad->SelectedValue!="" and $this->ddlLocalidad->SelectedValue!="0"){
 				$compromiso->IdLocalidad = $this->ddlLocalidad->SelectedValue;
 			}
 			else{
 				$compromiso->IdLocalidad = null;
 			}
-			// Compromiso.Compromiso
+
 			$compromiso->Compromiso = $this->txtDenominacion->Text;
-			
-			// Compromiso.IdResponsable			
+				
 			if($this->ddlResponsable->SelectedValue!="" and $this->ddlResponsable->SelectedValue!="0"){
 				$compromiso->IdResponsable = $this->ddlResponsable->SelectedValue;
 			}
 
-			// Compromiso.Plazo
 			$compromiso->Plazo = $this->txtPlazo->Text;
-			// Compromiso.Latitud
 			$compromiso->Latitud = $this->txtLatitud->Text;
-			// Compromiso.Longitud
 			$compromiso->Longitud = $this->txtLongitud->Text;
-			// Compromiso.Fecha Registro
-			//$compromiso->FechaRegistro = date('Y-m-d h:i:s a');
-			//$compromiso->FechaRegistro = date('Y-m-d H:i:s');
-
-			//Compromiso.IdUsuario
 			$idUsuario = $this->Session["SPIdUsuario"];
 			$finder = UsuarioRecord::finder();
 			$usuario = $finder->findByPk($idUsuario);
 			$compromiso->IdUsuario = $usuario->IdUsuario;						
-			
-			// Compromiso.IdObra
-			//
-					
-			// Compromiso.Activo
 			$compromiso->Activo = True;
 			
 			try{
