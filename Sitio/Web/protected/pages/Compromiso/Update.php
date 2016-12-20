@@ -59,36 +59,27 @@ class Update extends PageBaseSP{
 		$this->txtPlazo->Text = $compromiso->Plazo;
 		$this->txtLatitud->Text = $compromiso->Latitud;
 		$this->txtLongitud->Text = $compromiso->Longitud;
+//		$this->txtLongitud->Text = Disabled ;
+
+
+
+
+		//COMPROMISO REVISION
+		$this->pnlRevision->Visible = true;
+
+		$this->btnAgregarRevision->NavigateUrl .= "&idCompromiso=".$idCompromiso;
+		$data = $this->CreateDataSource("CompromisoPeer","RevisionesDelCompromiso", $idCompromiso);
+		$this->dgRevisiones->DataSource = $data;
+		$this->dgRevisiones->dataBind();
+
+		if(count($data)){
+			$this->lblRevisiones->Visible = false;
+		}
+		//COMPROMISO REVISION
+
 
 	}
 
-	/*
-	public function cvEstadoObra_OnServerValidate($sender, $param){
-		$compromiso = strtoupper($this->txtDenominacion->Text);
-		$criteria = new TActiveRecordCriteria;
-		//$criteria->Condition = 'Descripcion like :descripcion ';
-		$criteria->Condition = ' AND 1 = 1';
-		$criteria->Parameters[':descripcion'] = $descripcion;
-
-		$id = $this->Request["id"];
-
-		if(!is_null($id)){
-			//$criteria->Condition .=  ' AND IdEstadoObra <> :idestadoobra';
-			$criteria->Condition .=  ' AND 1 = 1';
-			$criteria->Parameters[':idestadoobra'] = $id;
-		}
-
-		$finder = CompromisoRecord::finder();
-		$estado = $finder->find($criteria);
-
-		if (is_object($estado)) {
-			$param->IsValid = false;
-		}
-		else {
-			$param->IsValid = true;
-		}
-
-	}*/
 	
 	public function btnCancelar_OnClick($sender, $param){
 		$this->Response->Redirect("?page=Compromiso.Home");
@@ -96,7 +87,7 @@ class Update extends PageBaseSP{
 
 	public function btnAceptar_OnClick($sender, $param)	{ 
 		if($this->IsValid){
-			$id = $this->Request["id"];
+			$id = $this->Request["idCompromiso"];
 
 			if(!is_null($id)){
 				$finder = CompromisoRecord::finder();

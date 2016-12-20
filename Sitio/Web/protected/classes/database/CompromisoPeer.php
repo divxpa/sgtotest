@@ -76,5 +76,16 @@ class CompromisoPeer
 	}
 
 
+
+	public static function RevisionesDelCompromiso($IdCompromiso){
+
+		//DATE_FORMAT(cr.Fecha,'%d-%m-%Y')
+		$sql = "Select cr.IdCompromisoRevision, cr.IdCompromiso, u.ApellidoNombre as Usuario, DATE_FORMAT(cr.Fecha,'%d-%m-%Y') as Fecha, cr.Revision
+			from compromisorevision cr inner join usuario u on cr.IdUsuario = u.IdUsuario
+			where cr.IdCompromiso = $IdCompromiso;";
+		return $sql;
+	}
+
+
 }
 ?>

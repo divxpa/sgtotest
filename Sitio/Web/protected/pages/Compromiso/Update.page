@@ -118,6 +118,7 @@
 			<com:TTextBox
 	       		ID="txtPlazo"
 				CssClass="small"
+				Enabled="false"
 				MaxLength="3"
 	            AutoTrim="True"
 	       		ToolTip="Ingrese el plazo estipulado del compromiso"/>
@@ -126,6 +127,7 @@
 			<com:TTextBox
 	       		ID="txtLatitud"
 				CssClass="medium"
+				Enabled="false"
 				MaxLength="20"
 	            AutoTrim="True"
 	       		ToolTip="Ingrese coordenada de latitud de obra"/>
@@ -138,7 +140,42 @@
 	            AutoTrim="True"
 	       		ToolTip="Ingrese coordenada de longitud de obra"/>
 	       	<br />
-						
+		<com:TActivePanel 
+				ID="pnlRevision"
+				Visible="false">
+				<br />
+				<span class="label">Revisiones del Compromiso</span>
+				<com:THyperLink
+					ID="btnAgregarRevision"
+		            NavigateUrl="?page=Compromiso.RevisionUpdate"
+			        ToolTip="Haga click aquí para agregar un nuevo registro">
+		            <img src="themes/serviciospublicos/images/btn2nuevo.png" width="20px" height="20px" border="0"/>
+			    </com:THyperLink>
+				<com:TActiveDataGrid
+				    ID="dgRevisiones"
+					CssClass="TableForm"
+				    AlternatingItemStyle.BackColor="#EEEEEE"
+				    AutoGenerateColumns="false"
+		            AllowPaging="false"
+					AllowCustomPaging="false"
+			        AllowSorting="false"
+			        Width="800px">
+					<com:TBoundColumn DataField="Fecha" HeaderText="Fecha" ItemStyle.HorizontalAlign="Center"/>
+					<com:TBoundColumn DataField="Usuario" HeaderText="Usuario" />
+					<com:TBoundColumn  ItemStyle.HorizontalAlign="Left" ItemStyle.CustomStyle="width: 500px; min-width: 500px; max-width: 500px; word-wrap: break-word; text-wrap: unrestricted" DataField="Revision" HeaderText="Revision"/>
+					<com:TTemplateColumn ID="tcEditarRevision" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+			            <prop:ItemTemplate>
+					       	<com:TActiveHyperLink
+					            ID="hlEditar"
+					            ToolTip="Haga click aquí para editar"
+					            NavigateUrl="?page=Compromiso.RevisionUpdate&idCompromiso=<%# $this->Parent->Data['IdCompromiso']%>&idRevision=<%# $this->Parent->Data['IdCompromisoRevision']%>">
+					            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+					    	</com:TActiveHyperLink>
+			            </prop:ItemTemplate>
+	             	</com:TTemplateColumn>
+			  	</com:TActiveDataGrid>
+			  	<com:TLabel ID="lblRevisiones" Text="No existen revisiones del compromiso" />
+			</com:TActivePanel>				
 		</fieldset>
 	</div>
 	<com:TValidationSummary
@@ -147,4 +184,5 @@
 		ValidationGroup="Register"
 		Display="Dynamic"
 		CssClass="Summary"/>
+	
 </com:TContent>
