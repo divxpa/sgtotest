@@ -11,7 +11,16 @@ class UsuarioRecord extends TActiveRecord
 	public $Activo;
 	public $IdRol;
 	public $Email;
-	public $IdLocalidad;	
+	public $IdLocalidad;
+	public $IdPlanilla;
+	public $Sgo;
+	public $Tablero;
+	public $Geo;
+	public $GeoCompromisos;
+	public $Compromisos;
+	public $CertificacionMunicipio;
+	public $Calendario;
+	public $TableroUnificado;
 
 	public static function finder($className=__CLASS__)
 	{
