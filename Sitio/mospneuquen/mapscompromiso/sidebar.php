@@ -1,4 +1,4 @@
- <?php include('conf/db.php'); ?>
+<?php include('conf/db.php'); ?>
 <div class="titulo">
 <input type="checkbox" checked="checked" onclick="HideShowLayout(this,0);HideShowLayout(this,1);HideShowLayout(this,2);HideShowLayout(this,3);CheckUncheck('zonanorte',this.checked);CheckUncheck('zonacentro',this.checked);CheckUncheck('zonaconfluencia',this.checked);CheckUncheck('zonasur',this.checked);">
 <span class="group">ZONAS</span></div>
@@ -24,14 +24,14 @@
 <div class="subgroup">
 	<ul id="organismos">
 		<?php
-			$sql = "select * from compromisoorganismo order by tag";
+			$sql = "select * from compromisoorganismo order by Tag";
 			$query = mysql_query($sql); 
 
 			while($row = mysql_fetch_object($query)) 
 			{ 
 		?>
  		<li style="color:<?php echo $row->Color; ?>">
-			<input id="organismo_<?php echo $row->IdCompromisoOrganismo; ?>" type="checkbox" checked="checked" onclick="RefreshData();"><?php echo $row->Tag; ?>
+			<input id="compromisoorganismo_<?php echo $row->IdCompromisoOrganismo; ?>" type="checkbox" checked="checked" onclick="RefreshData();"><?php echo $row->Tag; ?>
 		</li> 
 		<?php
 			}
@@ -39,6 +39,3 @@
 		?>
 	</ul>
 </div>
-
-
-

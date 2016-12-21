@@ -40,7 +40,6 @@ class Update extends PageBaseSP{
 		
 	public function Refresh($idCompromiso){
 		
-		$this->MostrarControlesSoloLectura();
 		$finder = CompromisoRecord::finder();
 		$compromiso = $finder->findByPk($idCompromiso);
 		
@@ -48,19 +47,15 @@ class Update extends PageBaseSP{
 			$fecha = explode("-",$compromiso->Fecha);
 			$this->dtpFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
 		} 
-
+		
 		$this->txtDenominacion->Text = $compromiso->Compromiso;
 		$this->ddlResponsable->Text = $compromiso->IdResponsable;
 		$this->ddlLocalidad->Text = $compromiso->IdLocalidad;
-
-		$finder = LocalidadRecord::finder();
-		$localidad = $finder->findByPk($compromiso->IdLocalidad);
 		$this->txtPlazo->Text = $compromiso->Plazo;
 		$this->txtLatitud->Text = $compromiso->Latitud;
 		$this->txtLongitud->Text = $compromiso->Longitud;
 
 		$this->pnlRevision->Visible = true;
-
 		$this->btnAgregarRevision->NavigateUrl .= "&idCompromiso=".$idCompromiso;
 		$data = $this->CreateDataSource("CompromisoPeer","RevisionesDelCompromiso", $idCompromiso);
 		$this->dgRevisiones->DataSource = $data;
@@ -71,14 +66,15 @@ class Update extends PageBaseSP{
 		}
 
 	}
-	
+
+
 	public function btnCancelar_OnClick($sender, $param){
 		$this->Response->Redirect("?page=Compromiso.Home");
 	}
 
 	public function btnAceptar_OnClick($sender, $param)	{ 
 		if($this->IsValid){
-			$id = $this->Request["idCompromiso"];
+			$id = $this->Request["id"];
 
 			if(!is_null($id)){
 				$finder = CompromisoRecord::finder();
@@ -102,9 +98,8 @@ class Update extends PageBaseSP{
 			else{
 				$compromiso->IdLocalidad = null;
 			}
-
 			$compromiso->Compromiso = $this->txtDenominacion->Text;
-				
+			
 			if($this->ddlResponsable->SelectedValue!="" and $this->ddlResponsable->SelectedValue!="0"){
 				$compromiso->IdResponsable = $this->ddlResponsable->SelectedValue;
 			}
@@ -112,7 +107,10 @@ class Update extends PageBaseSP{
 			$compromiso->Plazo = $this->txtPlazo->Text;
 			$compromiso->Latitud = $this->txtLatitud->Text;
 			$compromiso->Longitud = $this->txtLongitud->Text;
-			$idUsuario = $this->Session["SPIdUsuario"];
+
+
+
+			$idUsuario = $this->Session->get("usr_id");
 			$finder = UsuarioRecord::finder();
 			$usuario = $finder->findByPk($idUsuario);
 			$compromiso->IdUsuario = $usuario->IdUsuario;						

@@ -38,19 +38,18 @@ class RevisionUpdate extends PageBaseSP{
 			}
 			else{
 				$compromisoRevision = new CompromisoRevisionRecord();
-				$compromisoRevision->Fecha = date('Y-m-d h:i:s');
 			}
 			
 			$compromisoRevision->IdCompromiso = $idCompromiso;
 			$compromisoRevision->Revision = $this->txtDenominacion->Text;
-			$idUsuario = $this->Session["SPIdUsuario"];
+			$idUsuario = $this->Session->get("usr_id");
 			$finder = UsuarioRecord::finder();
 			$usuario = $finder->findByPk($idUsuario);
 			$compromisoRevision->IdUsuario = $usuario->IdUsuario;						
 			$compromisoRevision->Activo = True;
 			
 			try{
-				//$compromisoRevision->Fecha = date('Y-m-d h:i:s');
+				$compromisoRevision->Fecha = date('Y-m-d h:i:s');
 				$compromisoRevision->save();
 				$this->Response->Redirect("?page=Compromiso.Update&id=$idCompromiso");
 			}
