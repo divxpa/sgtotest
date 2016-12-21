@@ -64,3 +64,6 @@
 20161211185054 	mmartinez	s:133:"[Notice] Undefined variable: ido (@line 86 in file C:\xampp\htdocs\sgtotest\Sitio\Web\protected\pages\Obra\Contrato\Item\Update.php).";
 20161212043849 	mmartinez	s:56:"Component property 'TTableCell.txtOrden' is not defined.";
 20161212043944 	mmartinez	s:56:"Component property 'TTableCell.txtOrden' is not defined.";
+20161221163056 	mmartinez	s:67:"Component property 'ObraRecord.ultimaActualizacion' is not defined.";
+20161221163704 	mmartinez	s:67:"Component property 'ObraRecord.ultimaActualizacion' is not defined.";
+20161221164527 	mmartinez	s:67:"Component property 'ObraRecord.ultimaActualizacion' is not defined.";

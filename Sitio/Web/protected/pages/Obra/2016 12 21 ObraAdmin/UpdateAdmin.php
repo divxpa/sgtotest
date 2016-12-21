@@ -7,7 +7,7 @@ class UpdateAdmin extends PageBaseSP{
 		if(!$this->IsPostBack){			
 			$this->LoadDataRelated();
 			$id = $this->Request["id"];
-			//$idc = $this->Request["idc"];
+			$idc = $this->Request["idc"];
 
 			if (!is_null($id)) {
 				//Actualizar Obra
@@ -33,9 +33,9 @@ class UpdateAdmin extends PageBaseSP{
 		$criteria->Parameters[':idorganismo'] = $idOrganismo;
 		$finder = OrganismoRecord::finder();
 		$organismos = $finder->findAll($criteria);
-		// $this->ddlComitente->DataSource = $organismos;
-		// $this->ddlComitente->dataBind();
-		// $this->ddlComitente->SelectedValue = $idOrganismo;
+		$this->ddlComitente->DataSource = $organismos;
+		$this->ddlComitente->dataBind();
+		$this->ddlComitente->SelectedValue = $idOrganismo;
 
 		//Todo lo referido a las localidades
 		$criteria = new TActiveRecordCriteria;
@@ -123,7 +123,7 @@ class UpdateAdmin extends PageBaseSP{
 		$this->txtCodigo->Text = $obra->Codigo;
 		$this->txtDenominacion->Text = $obra->Denominacion;
 		$this->txtExpediente->Text = $obra->Expediente;
-		//$this->ddlComitente->SelectedValue = $obra->IdComitente;
+		$this->ddlComitente->SelectedValue = $obra->IdComitente;
 		$this->txtCreditoPresup->Text = $obra->CreditoPresupuestarioAprobado;
 
 		$criteria = new TActiveRecordCriteria;
@@ -189,115 +189,115 @@ class UpdateAdmin extends PageBaseSP{
 		}
 
 		//Buscar el Contrato
-		//$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
+		$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
 		//$this->txtCodigo->Text = $data[0]["IdContrato"];
-		//if(count($data)){	
-		//	$idContrato = $data[0]["IdContrato"];
-		//	$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
+		if(count($data)){	
+			$idContrato = $data[0]["IdContrato"];
+			$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
 			//$this->RefreshItems($idContrato);//Cargar Items del Contrato
-	//}
+	}
 
 	}
 
 	//Carga los Datos del Contrato
-	// public function CargarContrato($idObra,$idContrato){
-	// 	$idOrganismo = $this->Session["SPOrganismo"];
-	// 	$finder = ObraRecord::finder();
-	// 	$obra = $finder->findByPk($idObra);
+	public function CargarContrato($idObra,$idContrato){
+		$idOrganismo = $this->Session["SPOrganismo"];
+		$finder = ObraRecord::finder();
+		$obra = $finder->findByPk($idObra);
 
-	// 	if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
-	// 		$this->Response->Redirect("?page=Obra.HomeAdmin");
-	// 	}
+		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
+			$this->Response->Redirect("?page=Obra.HomeAdmin");
+		}
 
-	// 	$finder = ContratoRecord::finder();
-	// 	$contrato = $finder->findByPk($idContrato);
+		$finder = ContratoRecord::finder();
+		$contrato = $finder->findByPk($idContrato);
 
-	// 	$this->txtNumero->Text = $contrato->Numero;
-	// 	$this->txtIdProveedor->Text = $contrato->IdProveedor;
-	// 	 $finder2 = ProveedorRecord::finder();
-	// 	 $proveedor = $finder2->findByPk($contrato->IdProveedor);
-	// 	 $this->acpProveedor->Text = $proveedor->RazonSocial." (".$proveedor->Cuit.")";
-	// 	 $this->acpProveedor->Enabled = false;
+		$this->txtNumero->Text = $contrato->Numero;
+		$this->txtIdProveedor->Text = $contrato->IdProveedor;
+		 $finder2 = ProveedorRecord::finder();
+		 $proveedor = $finder2->findByPk($contrato->IdProveedor);
+		 $this->acpProveedor->Text = $proveedor->RazonSocial." (".$proveedor->Cuit.")";
+		 $this->acpProveedor->Enabled = false;
 
-	// 	$fecha = explode("-",$contrato->Fecha);
-	// 	$this->dtpFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	$this->txtMonto->Text = $contrato->Monto;
-	// 	$fecha = explode("-",$contrato->FechaBaseMonto);
-	// 	$this->dtpFechaBaseMonto->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	$this->txtNConvenio->Text = $contrato->NormaLegalAutorizacion;
+		$fecha = explode("-",$contrato->Fecha);
+		$this->dtpFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		$this->txtMonto->Text = $contrato->Monto;
+		$fecha = explode("-",$contrato->FechaBaseMonto);
+		$this->dtpFechaBaseMonto->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		$this->txtNConvenio->Text = $contrato->NormaLegalAutorizacion;
 		
-	// 	if(!is_null($contrato->FechaInicio)){
-	// 		$fecha = explode("-",$contrato->FechaInicio);
-	// 	 	$this->dtpFechaInicio->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	 }
+		if(!is_null($contrato->FechaInicio)){
+			$fecha = explode("-",$contrato->FechaInicio);
+		 	$this->dtpFechaInicio->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		 }
 
-	// 	if(!is_null($contrato->FechaFinalizacion)){
-	// 	 	$fecha = explode("-",$contrato->FechaFinalizacion);
-	// 	 	$this->dtpFechaFinalizacion->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	 }
+		if(!is_null($contrato->FechaFinalizacion)){
+		 	$fecha = explode("-",$contrato->FechaFinalizacion);
+		 	$this->dtpFechaFinalizacion->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		 }
 		
-	// 	 $this->txtPlazoEjecucion->Text = $contrato->PlazoEjecucion;
+		 $this->txtPlazoEjecucion->Text = $contrato->PlazoEjecucion;
 
-	// 	 $this->pnlItemsDelConvenio->Visible = true;
-	// 	 //$this->pnlModificacionContrato->Visible = true;
+		 $this->pnlItemsDelConvenio->Visible = true;
+		 //$this->pnlModificacionContrato->Visible = true;
 
 
-	// 	 $this->btnAgregarItems->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
-	// 	 $this->dgItems->DataSource = $data;
-	// 	 $this->dgItems->dataBind();		 
-	// 	 if(count($data)){
-	// 	 	$this->lblItems->Visible = false;
-	// 	 }
+		 $this->btnAgregarItems->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		 $data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
+		 $this->dgItems->DataSource = $data;
+		 $this->dgItems->dataBind();		 
+		 if(count($data)){
+		 	$this->lblItems->Visible = false;
+		 }
 
-	// 	 $this->btnAgregarAlteracion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","AlteracionesByContrato", $idContrato);
-	// 	 $this->dgAlteraciones->DataSource = $data;
-	// 	 $this->dgAlteraciones->dataBind();
+		 $this->btnAgregarAlteracion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		 $data = $this->CreateDataSource("ContratoPeer","AlteracionesByContrato", $idContrato);
+		 $this->dgAlteraciones->DataSource = $data;
+		 $this->dgAlteraciones->dataBind();
 
-	// 	 if(count($data)){
-	// 	 	$this->lblAlteraciones->Visible = false;
-	// 	 }
+		 if(count($data)){
+		 	$this->lblAlteraciones->Visible = false;
+		 }
 
-	// 	 $this->btnAgregarRedeterminacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","RedeterminacionesByContrato", $idContrato);
-	// 	 $this->dgRedeterminaciones->DataSource = $data;
-	// 	 $this->dgRedeterminaciones->dataBind();
+		 $this->btnAgregarRedeterminacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		 $data = $this->CreateDataSource("ContratoPeer","RedeterminacionesByContrato", $idContrato);
+		 $this->dgRedeterminaciones->DataSource = $data;
+		 $this->dgRedeterminaciones->dataBind();
 
-	// 	 if(count($data)){
-	// 	 	$this->lblRedeterminaciones->Visible = false;
-	// 	 }
+		 if(count($data)){
+		 	$this->lblRedeterminaciones->Visible = false;
+		 }
 
-	// 	 $this->btnAgregarAmpliacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $this->btnAgregarAmpliacion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	 $data = $this->CreateDataSource("ContratoPeer","AmpliacionesByContrato", $idContrato, $idOrganismo);
-	// 	 $this->dgAmpliacionesPlazo->DataSource = $data;
-	// 	 $this->dgAmpliacionesPlazo->dataBind();
+		 $this->btnAgregarAmpliacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		 $this->btnAgregarAmpliacion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
+		 $data = $this->CreateDataSource("ContratoPeer","AmpliacionesByContrato", $idContrato, $idOrganismo);
+		 $this->dgAmpliacionesPlazo->DataSource = $data;
+		 $this->dgAmpliacionesPlazo->dataBind();
 
-	// 	 if(count($data)){
-	// 	 	$this->lblAmpliacionesPlazo->Visible = false;
-	// 	 }
+		 if(count($data)){
+		 	$this->lblAmpliacionesPlazo->Visible = false;
+		 }
 
-	// 	$this->btnAgregarRecepcion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	$this->btnAgregarRecepcion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	$data = $this->CreateDataSource("ContratoPeer","RecepcionesByContrato", $idContrato, $idOrganismo);
-	// 	$this->dgRecepcionesContrato->DataSource = $data;
-	// 	$this->dgRecepcionesContrato->dataBind();
+		$this->btnAgregarRecepcion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		$this->btnAgregarRecepcion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
+		$data = $this->CreateDataSource("ContratoPeer","RecepcionesByContrato", $idContrato, $idOrganismo);
+		$this->dgRecepcionesContrato->DataSource = $data;
+		$this->dgRecepcionesContrato->dataBind();
 
-	// 	if(count($data)){
-	// 	 	$this->lblRecepcionesContrato->Visible = false;
-	// 	 }
+		if(count($data)){
+		 	$this->lblRecepcionesContrato->Visible = false;
+		 }
 		
-	// 	$this->btnAgregarOrdenTrabajo->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	$this->btnAgregarOrdenTrabajo->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	$data = $this->CreateDataSource("ContratoPeer","OrdenesTrabajoByContrato", $idContrato, $idOrganismo);
-	// 	$this->dgOrdenesTrabajo->DataSource = $data;
-	// 	$this->dgOrdenesTrabajo->dataBind();
+		$this->btnAgregarOrdenTrabajo->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
+		$this->btnAgregarOrdenTrabajo->Visible = $this->ValidarComitente($idOrganismo, $idObra);
+		$data = $this->CreateDataSource("ContratoPeer","OrdenesTrabajoByContrato", $idContrato, $idOrganismo);
+		$this->dgOrdenesTrabajo->DataSource = $data;
+		$this->dgOrdenesTrabajo->dataBind();
 
-	// 	if(count($data)){
-	// 		$this->lblOrdenesTrabajo->Visible = false;
-	// 	}
-	// }
+		if(count($data)){
+			$this->lblOrdenesTrabajo->Visible = false;
+		}
+	}
 
 	//Carga los Items Del Contrato
 	// public function RefreshItems($idContrato)
@@ -367,7 +367,7 @@ class UpdateAdmin extends PageBaseSP{
 	public function btnAceptar_OnClick($sender, $param)
 	{
 
-		if($this->IsValid){
+		if($this->IsValid){//Si la pagina es Valida
 			$id = $this->Request["id"];
 			$idOrganismo = $this->Session["SPOrganismo"];
 
@@ -404,8 +404,7 @@ class UpdateAdmin extends PageBaseSP{
 			$obra->Codigo = $this->txtCodigo->Text;
 			$obra->Denominacion = mb_strtoupper($this->txtDenominacion->Text, 'utf-8');
 			$obra->Expediente = $this->txtExpediente->Text;
-			//$obra->IdComitente = $this->ddlComitente->SelectedValue;
-			$obra->IdComitente = 12;
+			$obra->IdComitente = $this->ddlComitente->SelectedValue;
 
 			if($this->txtCreditoPresup->Text!=""){
 				$obra->CreditoPresupuestarioAprobado = $this->txtCreditoPresup->Text;
@@ -454,8 +453,65 @@ class UpdateAdmin extends PageBaseSP{
 
 			
 			try{
-				$obra->ultimaActualizacion  = date('Y-m-d H:i:s');
+				$obra->UltimaActualizacion = date('Y-m-d H:i:s');
 				$obra->save();
+
+
+			//$recGuardaralcula = false;
+			$idc = $this->Request["idc"];
+
+			 if(!is_null($idc)){
+				//CORREGIR , EL GUARDADO DE CONTRATO Y EL RECALCULO
+			 	$finder = ContratoRecord::finder();
+			 	$contrato = $finder->findByPk($idc);
+
+			 	if($contrato->Monto!=$this->txtMonto->Text){
+			 		$recalcula = true;
+			 	}
+
+			 }
+			 else{
+			 	$contrato = new ContratoRecord();
+			 	$contrato->IdObra = $obra->IdObra;
+			 }
+
+
+			$contrato->IdProveedor = $this->txtIdProveedor->Text;
+			$contrato->Numero = $this->txtNumero->Text;
+			$fecha = explode("/", $this->dtpFecha->Text);
+			$contrato->Fecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			$contrato->Monto = $this->txtMonto->Text;
+			$fecha = explode("/", $this->dtpFechaBaseMonto->Text);
+			$contrato->FechaBaseMonto = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			$contrato->NormaLegalAutorizacion = $this->txtNConvenio->Text;
+			$contrato->NormaLegalAdjudicacion = $this->txtNConvenio->Text;
+			
+			if($this->dtpFechaInicio->Text!=""){
+				$fecha = explode("/", $this->dtpFechaInicio->Text);
+				$contrato->FechaInicio = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			}
+			else{
+				$contrato->FechaInicio = null;
+			}
+
+			if($this->dtpFechaFinalizacion->Text!=""){
+				$fecha = explode("/", $this->dtpFechaFinalizacion->Text);
+				$contrato->FechaFinalizacion = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+			}
+			else{
+				$contrato->FechaFinalizacion = null;
+			}
+
+			if($this->txtPlazoEjecucion->Text!=""){
+				$contrato->PlazoEjecucion = $this->txtPlazoEjecucion->Text;
+			}
+			else{
+				$contrato->PlazoEjecucion = null;
+			}
+			//Ya guarde todos los datos del objeto Obra
+			 	//Guardo el contrato en la BD
+
+			 	//$this->guardarItemsV2();
 
 				$obraFufi = new ObraFuenteFinanciamientoRecord();
 				$obraFufi->IdObra = $obra->IdObra;
@@ -650,7 +706,7 @@ class UpdateAdmin extends PageBaseSP{
 					$nuevoEstado->DetalleEstado = mb_strtoupper($this->txtDetalleEstado->Text, 'utf-8');
 					$nuevoEstado->save();
 				}
-				//$contrato->save();
+				$contrato->save();
 
 				$this->Response->Redirect("?page=Obra.HomeAdmin");
 			}

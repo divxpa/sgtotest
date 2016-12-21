@@ -89,6 +89,12 @@
 			    Display="Dynamic"
 			    ErrorMessage="Ingrese un expediente válido (0000-000000/0000{-0000/0000})." />
 	       	<br />
+	       	<span class="label required">Organismo Comitente</span>
+	       	<com:TDropDownList
+	       		ID="ddlComitente"
+	       		ToolTip="Seleccione el organismo que realiza la contratación de la obra"
+	       		DataTextField="Nombre"
+	       		DataValueField="IdOrganismo" />
 	       	<br />
 	       	<span class="label">Crédito Presup. Asignado</span>
 	       	<com:TTextBox

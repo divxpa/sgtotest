@@ -118,8 +118,8 @@
 			        ShowHeader="true">
 				        <com:TBoundColumn ID="bcAlarma" DataField="IdObra" HeaderText="" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 24px; min-width: 24px; max-width: 24px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Codigo" HeaderText="Código" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 39px; min-width: 39px; max-width: 39px; word-wrap: break-word; text-wrap: unrestricted"/>
-						<com:TBoundColumn DataField="Organismo" HeaderText="Organismo" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 45px; word-wrap: break-word; text-wrap: unrestricted"/>
-						<com:TBoundColumn DataField="Comitente" HeaderText="Comitente" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 57px; word-wrap: break-word; text-wrap: unrestricted"/>
+						<com:TBoundColumn DataField="Organismo" HeaderText="Organismo" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 45px; word-wrap: break-word; text-wrap: unrestricted" />
+						<com:TBoundColumn DataField="Comitente" HeaderText="Comitente" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 57px; word-wrap: break-word; text-wrap: unrestricted" />
 						<com:TBoundColumn DataField="Denominacion" HeaderText="Denominacion" ItemStyle.CustomStyle="width: 250px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Localidad" HeaderText="Localidad" ItemStyle.CustomStyle="width: 67px; min-width: 67px; max-width: 67px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Expediente" HeaderText="Nro. Expediente" ItemStyle.CustomStyle="width: 70px; min-width: 70px; max-width: 90px; word-wrap: break-word; text-wrap: unrestricted"/>
@@ -129,7 +129,28 @@
 						<com:TBoundColumn ID="bcSaldoPresup" DataField="SaldoCreditoPresup" HeaderText="Saldo Cred. Presup." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 72px; min-width: 72px; max-width: 72px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="UltimoCertificado" HeaderText="Últ. Cert." ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 39px; min-width: 39px; max-width: 39px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Estado" HeaderText="Estado" ItemStyle.CustomStyle="width: 66px; min-width: 66px; max-width: 58px; word-wrap: break-word; text-wrap: unrestricted"/>
-						<com:TTemplateColumn ID="tcContratos" HeaderText="Contratos" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
+						<com:TTemplateColumn ID="tcEditar" HeaderText="Editar Obra" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 16px; min-width: 16px; max-width: 16px; word-wrap: break-word; text-wrap: unrestricted">
+				            <prop:ItemTemplate>
+						       	<com:TActiveHyperLink
+						            ID="hlEditar"
+						            ToolTip="Haga click aquí para editar"
+						            NavigateUrl="?page=Obra.UpdateAdmin&id=<%# $this->Parent->Data['IdObra']%>"
+						            Visible="<%# $this->Parent->Data['EditarVisible']%>">
+						            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+						    	</com:TActiveHyperLink>
+				            </prop:ItemTemplate>
+		             	</com:TTemplateColumn>
+						<com:TTemplateColumn ID="tcContratos" HeaderText="Editar Convenio" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
+				            <prop:ItemTemplate>
+						       	<com:TActiveHyperLink
+						            ID="hlContratos"
+						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
+						            NavigateUrl="?page=Obra.Contrato.UpdateAdmin&id=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
+						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
+						    	</com:TActiveHyperLink>
+				            </prop:ItemTemplate>
+		             	</com:TTemplateColumn>
+		             	<com:TTemplateColumn ID="tcItem" HeaderText="Editar Items Contrato" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlContratos"
@@ -139,17 +160,17 @@
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>
 		             	</com:TTemplateColumn>
-						<com:TTemplateColumn ID="tcEditar" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 16px; min-width: 16px; max-width: 16px; word-wrap: break-word; text-wrap: unrestricted">
+		             	<com:TTemplateColumn ID="tcCertificacion" HeaderText="Ultima Certificacion" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
-						            ID="hlEditar"
-						            ToolTip="Haga click aquí para editar"
-						            NavigateUrl="?page=Obra.UpdateAdmin&id=<%# $this->Parent->Data['IdObra']%>&idc=<%# $this->Parent->Data['IdContrato']%>"
-						            Visible="<%# $this->Parent->Data['EditarVisible']%>">
-						            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+						            ID="hlContratos"
+						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
+						            NavigateUrl="?page=Obra.Contrato.HomeAdmin&id=<%# $this->Parent->Data['IdObra']%>">
+						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>
 		             	</com:TTemplateColumn>
+
 				</com:TActiveDataGrid>
 			</div>
 		</div>
