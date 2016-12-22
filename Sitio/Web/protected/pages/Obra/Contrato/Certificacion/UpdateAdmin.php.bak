@@ -15,8 +15,8 @@ class UpdateAdmin extends PageBaseSP {
             } else {
                 $this->SugerirNumeroCertificado($idContrato, 0);
             }
+
             $this->LoadDataRelated($idObra, $idContrato, $id);
-            $this->cambios->Value = "0";
         }
     }
 
@@ -238,7 +238,6 @@ class UpdateAdmin extends PageBaseSP {
                         $certificacionItem = $finder->findByPk($it->tcPrecioTotal->hdnIdCertificacionItem->Value);
                     } else {
                         $certificacionItem = new CertificacionItemRecord();
-                        //$certificacionItem->IdContratoItem = $it->tcPrecioTotal->hdnIdContratoItem->value;
                         $certificacionItem->IdContratoItem = $it->tcPrecioTotal->hdnIdContratoItem->value;
                         $certificacionItem->IdCertificacion = $certificacion->IdCertificacion;
                     }
@@ -319,46 +318,12 @@ class UpdateAdmin extends PageBaseSP {
 
     public function CalcularTotales() {
         $sumaPrecioTotal = $incidenciaTotal = $sumaImporteAnterior = $sumaImporteActual = $sumaImporteAcum = 0;
-        $items = $this->dgDatos->Items;
-        foreach ($items as $i => $item) {
-            if (strpos($item->tcPrecioTotal->txtPrecioTotal->CssClass,'padre') > 0) {
-                $padre = $i;
-                $items[$padre]->tcPrecioTotal->txtPrecioTotal->Text = 0;  
-                $items[$padre]->tcIncidencia->txtIncidencia->Text = 0;
-                $items[$padre]->tcIncidenciaPorcentaje->txtIncidenciaPorcentaje->Text = 0;
-                $items[$padre]->tcImporteAnterior->txtImporteAnterior->Text = 0;
-                $items[$padre]->tcPorcentajeAnterior->txtPorcentajeAnterior->Text = 0;
-                $items[$padre]->tcImporteActual->txtImporteActual->Text = 0;
-                $items[$padre]->tcPorcentajeActual->txtPorcentajeActual->Text = 0;
-                $items[$padre]->tcImporteAcum->txtImporteAcum->Text = 0;
-                $items[$padre]->tcPorcentajeAcum->txtPorcentajeAcum->Text = 0;
-            } else {
-                if (strpos($item->tcPrecioTotal->txtPrecioTotal->CssClass,'hijo') > 0) {
-                    $items[$padre]->tcPrecioTotal->txtPrecioTotal->Text =
-                        floatval($items[$padre]->tcPrecioTotal->txtPrecioTotal->Text) + floatval($item->tcPrecioTotal->txtPrecioTotal->Text);
-                    $items[$padre]->tcIncidencia->txtIncidencia->Text =
-                        floatval($items[$padre]->tcIncidencia->txtIncidencia->Text) + floatval($item->tcIncidencia->txtIncidencia->Text);
-                    $items[$padre]->tcIncidenciaPorcentaje->txtIncidenciaPorcentaje->Text =
-                        floatval($items[$padre]->tcIncidenciaPorcentaje->txtIncidenciaPorcentaje->Text) + floatval($item->tcIncidenciaPorcentaje->txtIncidenciaPorcentaje->Text);
-                    $items[$padre]->tcImporteAnterior->txtImporteAnterior->Text =
-                        floatval($items[$padre]->tcImporteAnterior->txtImporteAnterior->Text) + floatval($item->tcImporteAnterior->txtImporteAnterior->Text);
-                    $items[$padre]->tcImporteActual->txtImporteActual->Text =
-                        floatval($items[$padre]->tcImporteActual->txtImporteActual->Text) + floatval($item->tcImporteActual->txtImporteActual->Text);
-                    $items[$padre]->tcImporteAcum->txtImporteAcum->Text =
-                        floatval($items[$padre]->tcImporteAcum->txtImporteAcum->Text) + floatval($item->tcImporteAcum->txtImporteAcum->Text);
-                    $items[$padre]->tcPorcentajeAnterior->txtPorcentajeAnterior->Text =
-                        floatval($items[$padre]->tcPorcentajeAnterior->txtPorcentajeAnterior->Text) + floatval($item->tcPorcentajeAnterior->txtPorcentajeAnterior->Text);
-                    $items[$padre]->tcPorcentajeActual->txtPorcentajeActual->Text =
-                        floatval($items[$padre]->tcPorcentajeActual->txtPorcentajeActual->Text) + floatval($item->tcPorcentajeActual->txtPorcentajeActual->Text);
-                    $items[$padre]->tcPorcentajeAcum->txtPorcentajeAcum->Text =
-                        floatval($items[$padre]->tcPorcentajeAcum->txtPorcentajeAcum->Text) + floatval($item->tcPorcentajeAcum->txtPorcentajeAcum->Text);
-                }     
-                $sumaPrecioTotal+=floatval($item->tcPrecioTotal->txtPrecioTotal->Text);
-                $incidenciaTotal+=$item->tcIncidencia->txtIncidencia->Text;
-                $sumaImporteAnterior+=floatval($item->tcImporteAnterior->txtImporteAnterior->Text);
-                $sumaImporteActual+=floatval($item->tcImporteActual->txtImporteActual->Text);
-                $sumaImporteAcum+=floatval($item->tcImporteAcum->txtImporteAcum->Text);
-            }
+        foreach ($this->dgDatos->Items as $it) {
+            $sumaPrecioTotal+=floatval($it->tcPrecioTotal->txtPrecioTotal->Text);
+            $incidenciaTotal+=$it->tcIncidencia->txtIncidencia->Text;
+            $sumaImporteAnterior+=floatval($it->tcImporteAnterior->txtImporteAnterior->Text);
+            $sumaImporteActual+=floatval($it->tcImporteActual->txtImporteActual->Text);
+            $sumaImporteAcum+=floatval($it->tcImporteAcum->txtImporteAcum->Text);
         }
         $this->lblPrecioTotal->Text = number_format($sumaPrecioTotal, 2, ",", ".");
         $this->lblIncidenciaTotal->Text = number_format($incidenciaTotal, 4, ".", "");
@@ -371,9 +336,6 @@ class UpdateAdmin extends PageBaseSP {
         $this->hdnSumaPorcentajeActual->Value = $sumaImporteActual / $this->hdnMontoContrato->Value * 100;
         $this->lblSumaImporteAcum->Text = number_format($sumaImporteAcum, 2, ",", ".");
         $this->lblSumaPorcentajeAcum->Text = number_format($sumaImporteAcum / $this->hdnMontoContrato->Value * 100, 4, ".", "");
-
-        // Activa los cambios realizados del lado del cliente
-        $this->cambios->Value++;
     }
 
     public function dtpPeriodo_OnTextChanged($sender, $param) {

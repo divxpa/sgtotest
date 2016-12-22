@@ -117,9 +117,7 @@
 			        OnItemDataBound="dgDatos_OnItemDataBound"
 			        ShowHeader="true">
 				        <com:TBoundColumn ID="bcAlarma" DataField="IdObra" HeaderText="" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 24px; min-width: 24px; max-width: 24px; word-wrap: break-word; text-wrap: unrestricted"/>
-						<com:TBoundColumn DataField="Codigo" HeaderText="Código" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 39px; min-width: 39px; max-width: 39px; word-wrap: break-word; text-wrap: unrestricted"/>
-						<com:TBoundColumn DataField="Organismo" HeaderText="Organismo" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 45px; word-wrap: break-word; text-wrap: unrestricted" />
-						<com:TBoundColumn DataField="Comitente" HeaderText="Comitente" ItemStyle.CustomStyle="width: 45px; min-width: 45px; max-width: 57px; word-wrap: break-word; text-wrap: unrestricted" />
+						<com:TBoundColumn DataField="Codigo" HeaderText="Código" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 39px; min-width: 39px; max-width: 39px; word-wrap: break-word; text-wrap: unrestricted"/>				
 						<com:TBoundColumn DataField="Denominacion" HeaderText="Denominacion" ItemStyle.CustomStyle="width: 250px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Localidad" HeaderText="Localidad" ItemStyle.CustomStyle="width: 67px; min-width: 67px; max-width: 67px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="Expediente" HeaderText="Nro. Expediente" ItemStyle.CustomStyle="width: 70px; min-width: 70px; max-width: 90px; word-wrap: break-word; text-wrap: unrestricted"/>
@@ -144,6 +142,8 @@
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlContratos"
+						            ?page=Obra.Contrato.Update&id=828&ido=900
+
 						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
 						            NavigateUrl="?page=Obra.Contrato.UpdateAdmin&id=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
@@ -160,12 +160,12 @@
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>
 		             	</com:TTemplateColumn>
-		             	<com:TTemplateColumn ID="tcCertificacion" HeaderText="Ultima Certificacion" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
+		             	<com:TTemplateColumn ID="tcCertificacion" HeaderText="Certificacion" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlContratos"
 						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
-						            NavigateUrl="?page=Obra.Contrato.HomeAdmin&id=<%# $this->Parent->Data['IdObra']%>">
+						            NavigateUrl="?page=Obra.Contrato.Certificacion.HomeAdmin&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>

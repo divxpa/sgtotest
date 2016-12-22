@@ -2,7 +2,7 @@
 <com:TContent ID="MainContent">
 	<div style="height: 59px;">
 		<div style="display: inline;">
-	        <a class="maintitle volver" href="http://localhost/sgo/Sitio/Web/?page=Obra.HomeAdmin">Obras</a>
+	        <a class="maintitle volver" href="?page=Obra.HomeAdmin">Obras</a>
 	    	<com:TLabel
 		        ID="lblAccion"
 		        Text=" Agregar Obra por Administracion"
@@ -26,18 +26,14 @@
 				Attributes.onclick="return confirm('¿Desea salir? Perderá los cambios');" />
 		</div>
 	</div>
-
-<com:TTabPanel>
-   <com:TTabView Caption="Obra">
-     Obra
      <div>
 		<fieldset>
-			<span class="label required">Código</span>
 			<com:TTextBox
 	       		ID="txtCodigo"
 				CssClass="small"
 				MaxLength="4"
 	            AutoTrim="True"
+	            Display= "None"
 	       		ToolTip="Ingrese el código de obra"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtCodigo"
@@ -88,7 +84,6 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="Ingrese un expediente válido (0000-000000/0000{-0000/0000})." />
-	       	<br />
 	       	<br />
 	       	<span class="label">Crédito Presup. Asignado</span>
 	       	<com:TTextBox
@@ -220,8 +215,38 @@
 				Display="Dynamic"
 				Text="*"
 				InitialValue="0"
-				ValidationGroup="Register"/>
-	       	<br />
+				ValidationGroup="Register"/>	       	
+			<br />			
+			<span class="label">Detalle de la Localidad</span>
+			<com:TTextBox
+		   		ID="txtDetalleLocalidad"
+		   		TextMode="MultiLine"
+   				Rows="4"
+				Columns="50"
+				CssClass="small"
+				AutoTrim="True"
+		   		ToolTip="Ingrese el detalle de la localidad"
+		   		MaxLength="10"
+		   		Attributes.onkeypress="return imposeMaxLength(event, this, 500);" />
+		   	<com:TCustomValidator
+				ControlToValidate="txtDetalleLocalidad"
+	  			Text="*"
+		   		ErrorMessage="El detalle de la localidad no puede superar los 500 caracteres."
+				Display="Dynamic"
+			  	OnServerValidate="cvMemoriaDescriptiva_OnServerValidate"
+			 	ValidationGroup="Register"/>
+			<br />
+			<span class="label required">Agregar mas Localidades</span>
+	       	<com:TActiveImageButton
+				ID="btnMasLocalidades"
+				ToolTip="Agregar más localidades"
+				ImageUrl="themes/serviciospublicos/images/btnAgregar2.png"
+				OnClick="btnMasLocalidades_OnClick" />
+			<br />
+	       	<com:TActivePanel 
+	       		ID="pnlMasLocalidades"
+	       		Display="None">
+	       		<br />
 	       	<span class="label"></span>
 			<com:TDropDownList
 	       		ID="ddlLocalidad2"
@@ -248,16 +273,8 @@
 	       		PromptText="Seleccione"
 	       		DataTextField="Nombre"
 	       		DatavalueField="IdLocalidad" />
-	       	<com:TActiveImageButton
-				ID="btnMasLocalidades"
-				ToolTip="Agregar más localidades"
-				ImageUrl="themes/serviciospublicos/images/btnAgregar2.png"
-				OnClick="btnMasLocalidades_OnClick" />
-	       	<com:TActivePanel 
-	       		ID="pnlMasLocalidades"
-	       		Display="None">
 	       		<br />
-	       		<span class="label"></span>
+	       	<span class="label"></span>
 		       	<com:TDropDownList
 		       		ID="ddlLocalidad5"
 		       		ToolTip="Seleccione"
@@ -266,7 +283,7 @@
 		       		DataTextField="Nombre"
 		       		DatavalueField="IdLocalidad" />
 		       	<br />
-	       		<span class="label"></span>
+	       	<span class="label"></span>
 		       	<com:TDropDownList
 		       		ID="ddlLocalidad6"
 		       		ToolTip="Seleccione"
@@ -485,8 +502,4 @@
 			 	ValidationGroup="Register"/>
 		</fieldset>
 	</div>
-   </com:TTabView>
-   
-
-</com:TTabPanel>   	
 </com:TContent>

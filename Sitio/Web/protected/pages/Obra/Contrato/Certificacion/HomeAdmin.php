@@ -17,7 +17,7 @@ class HomeAdmin extends PageBaseSP{
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$this->btnAgregar->NavigateUrl.="&ido=$idObra&idc=$idContrato";
 		$this->btnAgregar->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-		$this->hlkVolver->NavigateUrl.="&id=$idObra";
+		//$this->hlkVolver->NavigateUrl.="&id=$idObra";
 
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);

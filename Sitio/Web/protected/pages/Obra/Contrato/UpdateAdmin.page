@@ -4,7 +4,7 @@
 		<div style="display: inline;">
 			<com:THyperLink 
 				ID="hlkVolver"
-				NavigateUrl="?page=Obra.Contrato.HomeAdmin" 
+				NavigateUrl="?page=Obra.HomeAdmin" 
 				Text="Contratos"
 				CssClass="maintitle volver" />
 	    	<com:TLabel
@@ -139,30 +139,16 @@
 			    Display="Dynamic"
 			    ErrorMessage="El formato de fecha base de monto es inválido (dd/mm/yyyy)." />
 			<br />
-			<span class="label required">N.L. de Autorización</span>
+			<span class="label required">Nro. Convenio</span>
 			<com:TTextBox
-	       		ID="txtNLAutorizacion"
+	       		ID="txtNConvenio"
 				CssClass="small"
 				MaxLength="10"
 	            AutoTrim="True"
-	       		ToolTip="Ingrese la norma legal de autorización de contrato"/>
+	       		ToolTip="Ingrese el número de convenio"/>
 	       	<com:TRequiredFieldValidator
-				ControlToValidate="txtNLAutorizacion"
-				ErrorMessage="Debe ingresar la norma legal de autorización de contrato."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-	       	<br />
-	       	<span class="label required">N.L. de Adjudicación</span>
-			<com:TTextBox
-	       		ID="txtNLAdjudicacion"
-				CssClass="small"
-				MaxLength="10"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la norma legal de adjudicación de contrato"/>
-	       	<com:TRequiredFieldValidator
-				ControlToValidate="txtNLAdjudicacion"
-				ErrorMessage="Debe ingresar la norma legal de adjudicación de contrato."
+				ControlToValidate="txtNConvenio"
+				ErrorMessage="Debe ingresar el número de convenio"
 				Display="Dynamic"
 				Text="*"
 				ValidationGroup="Register"/>

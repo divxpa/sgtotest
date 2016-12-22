@@ -13,9 +13,9 @@
 	<com:THyperLink
 		ID="hlkVolver"
 		CssClass="maintitle volver"
-        NavigateUrl="?page=Obra.Contrato.HomeAdmin"
+        NavigateUrl="?page=Obra.HomeAdmin"
         ToolTip="Volver"
-        Text="Convenios de Obra" />
+        Text="Obra" />
 	<com:TActiveLabel
         ID="lblTitulo"
         Text="Certificaciones de Convenio"

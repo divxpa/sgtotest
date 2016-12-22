@@ -1,5 +1,5 @@
 <?php
-class Update extends PageBaseSP{
+class UpdateAdmin extends PageBaseSP{
 
 	public function onLoad($param){
 		parent::onLoad($param);
@@ -69,8 +69,9 @@ class Update extends PageBaseSP{
 		$this->txtMonto->Text = $contrato->Monto;
 		$fecha = explode("-",$contrato->FechaBaseMonto);
 		$this->dtpFechaBaseMonto->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-		$this->txtNLAutorizacion->Text = $contrato->NormaLegalAutorizacion;
-		$this->txtNLAdjudicacion->Text = $contrato->NormaLegalAdjudicacion;
+		$this->txtNConvenio->Text = $contrato->NormaLegalAutorizacion;
+		//$this->txtNLAutorizacion->Text = $contrato->NormaLegalAutorizacion;
+		//$this->txtNLAdjudicacion->Text = $contrato->NormaLegalAdjudicacion;
 		
 		if(!is_null($contrato->FechaInicio)){
 			$fecha = explode("-",$contrato->FechaInicio);
@@ -136,8 +137,9 @@ class Update extends PageBaseSP{
 
 	public function btnCancelar_OnClick($sender, $param)
 	{
-		$id = $this->Request["ido"];
-		$this->Response->Redirect("?page=Obra.Contrato.Home&id=$id");
+		//$id = $this->Request["ido"];
+		//$this->Response->Redirect("?page=Obra.Contrato.Home&id=$id");
+		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
 	public function btnAceptar_OnClick($sender, $param)
@@ -170,8 +172,10 @@ class Update extends PageBaseSP{
 			$contrato->Monto = $this->txtMonto->Text;
 			$fecha = explode("/", $this->dtpFechaBaseMonto->Text);
 			$contrato->FechaBaseMonto = $fecha[2]."-".$fecha[1]."-".$fecha[0];
-			$contrato->NormaLegalAutorizacion = $this->txtNLAutorizacion->Text;
-			$contrato->NormaLegalAdjudicacion = $this->txtNLAdjudicacion->Text;
+			$contrato->NormaLegalAutorizacion = $this->txtNConvenio->Text;
+			$contrato->NormaLegalAdjudicacion = $this->txtNConvenio->Text;
+			//$contrato->NormaLegalAutorizacion = $this->txtNLAutorizacion->Text;
+			//$contrato->NormaLegalAdjudicacion = $this->txtNLAdjudicacion->Text;
 			
 			if($this->dtpFechaInicio->Text!=""){
 				$fecha = explode("/", $this->dtpFechaInicio->Text);
@@ -203,7 +207,8 @@ class Update extends PageBaseSP{
 					$this->ExecuteSql(ContratoPeer::RecalcularCertificacionesByContrato($contrato->IdContrato));
 				}*/
 
-				$this->Response->Redirect("?page=Obra.Contrato.Home&id=$idObra");
+				//$this->Response->Redirect("?page=Obra.Contrato.Home&id=$idObra");
+				$this->Response->Redirect("?page=Obra.HomeAdmin");
 			}
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
