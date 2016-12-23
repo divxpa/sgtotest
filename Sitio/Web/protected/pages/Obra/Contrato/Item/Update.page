@@ -12,6 +12,7 @@
 			<com:TImageButton
 				ID="btnAceptar"
 				ToolTip="Guardar"
+				Visible = "false"
 				ImageUrl="themes/serviciospublicos/images/invisible.png"
 				CssClass="imgbtn2-guardar"
 				OnClick="btnAceptar_OnClick"

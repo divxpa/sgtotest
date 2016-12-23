@@ -383,3 +383,8 @@ a:5:{s:9:"FechaHora";s:14:"20161223092504";s:7:"Usuario";s:9:"mmartinez";s:4:"pa
 a:5:{s:9:"FechaHora";s:14:"20161223092512";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:25:"Obra.Contrato.Item.Update";s:3:"idc";s:4:"1661";s:3:"ido";s:4:"2075";}
 a:3:{s:9:"FechaHora";s:14:"20161223092650";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:14:"Obra.HomeAdmin";}
 a:5:{s:9:"FechaHora";s:14:"20161223092653";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:37:"Obra.Contrato.Certificacion.HomeAdmin";s:3:"idc";s:4:"1661";s:3:"ido";s:4:"2075";}
+a:5:{s:9:"FechaHora";s:14:"20161223095757";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:37:"Obra.Contrato.Certificacion.HomeAdmin";s:3:"idc";s:4:"1661";s:3:"ido";s:4:"2075";}
+a:6:{s:9:"FechaHora";s:14:"20161223095759";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:39:"Obra.Contrato.Certificacion.UpdateAdmin";s:2:"id";s:4:"4447";s:3:"idc";s:4:"1661";s:3:"ido";s:4:"2075";}
+a:3:{s:9:"FechaHora";s:14:"20161223100214";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:14:"Obra.HomeAdmin";}
+a:5:{s:9:"FechaHora";s:14:"20161223100217";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:25:"Obra.Contrato.Item.Update";s:3:"idc";s:3:"828";s:3:"ido";s:3:"900";}
+a:5:{s:9:"FechaHora";s:14:"20161223100309";s:7:"Usuario";s:9:"mmartinez";s:4:"page";s:25:"Obra.Contrato.Item.Update";s:3:"idc";s:3:"828";s:3:"ido";s:3:"900";}
