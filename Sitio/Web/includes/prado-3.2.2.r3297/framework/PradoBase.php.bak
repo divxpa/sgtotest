@@ -84,11 +84,11 @@ class PradoBase
 		/**
 		 * Sets error handler to be Prado::phpErrorHandler
 		 */
-		//set_error_handler(array('PradoBase','phpErrorHandler'));
+		set_error_handler(array('PradoBase','phpErrorHandler'));
 		/**
 		 * Sets exception handler to be Prado::exceptionHandler
 		 */
-		//set_exception_handler(array('PradoBase','exceptionHandler'));
+		set_exception_handler(array('PradoBase','exceptionHandler'));
 	}
 
 	/**

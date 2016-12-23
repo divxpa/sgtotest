@@ -6,7 +6,7 @@
 				ID="hlkVolver"
 				NavigateUrl="?page=Obra.Contrato.Certificacion.HomeAdmin" 
 				Text="Certificaciones de Contrato"
-				CssClass="maintitle volver" />
+				CssClass="maintitle volver" />			
 	    	<com:TLabel
 		        ID="lblAccion"
 		        Text=" Agregar Certificación"
@@ -237,7 +237,7 @@ AutoPostBack="true"
             AllowPaging="false"
             AllowCustomPaging="false"
             AllowSorting="false"
-            ShowHeader="false"
+            ShowHeader="true"
             Width="1200px">
 			<com:TBoundColumn DataField="Orden" ItemStyle.Width="50px"/>
 			<com:TBoundColumn DataField="Item" ItemStyle.Width="250px"/>

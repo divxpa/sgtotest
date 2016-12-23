@@ -8,32 +8,11 @@ class Update extends PageBaseSP{
 			$idObra = $this->Request["ido"];
 			$idContrato = $this->Request["idc"];
 			$this->LoadDataRelated($idObra, $idContrato);
-			$id = $this->Request["id"];
+			//$id = $this->Request["id"];
 
-			if (!is_null($id)) {
+			if (!is_null($idContrato)) {
 				$this->lblAccion->Text = "Modificar item de Contrato";
-				$this->Refresh($id);
-			}
-			else
-			{
-				$this->lblAccion->Text = "Nuevo item de Contrato";
-				$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
-				$this->txtOrden->Text = $orden[0]["Orden"];
-				if ($orden>1){					
-					$criteria = new TActiveRecordCriteria;
-					$criteria->OrdersBy['Orden'] = 'asc';
-					$criteria = new TActiveRecordCriteria;
-					$criteria->Condition = 'IdContrato = :idcontrato ';
-					$criteria->Parameters[':idcontrato'] = $idContrato;
-					$finder = ContratoItemPadreRecord::finder();
-					$items = $finder->findAll($criteria);
-					$this->ddlItemPadre->DataSource = $items;
-					$this->ddlItemPadre->dataBind();	
-					if (count($items) != 0) {
-						$this->pnlItemPadre->Visible = "true";	
-					}
-					
-				}				
+				$this->Refresh($idContrato);
 			}
 		}
 	}
@@ -54,18 +33,40 @@ class Update extends PageBaseSP{
 		$this->lblContrato->Text = $contrato->Numero . " - " . $proveedor->Cuit . " " . $proveedor->RazonSocial;
 	}
 
-	public function Refresh($idContratoItem){
+	public function Refresh($idContrato){
 
-		$finder = ContratoItemRecord::finder();
-		$contratoitem = $finder->findByPk($idContratoItem);
+		$this->lblAccion->Text = "Nuevo item de Contrato";
+		$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
+		$this->txtOrden->Text = $orden[0]["Orden"];
+		if ($orden>1){					
+			$criteria = new TActiveRecordCriteria;
+			$criteria->OrdersBy['Orden'] = 'asc';
+			$criteria = new TActiveRecordCriteria;
+			$criteria->Condition = 'IdContrato = :idcontrato ';
+			$criteria->Parameters[':idcontrato'] = $idContrato;
+			$finder = ContratoItemPadreRecord::finder();
+			$items = $finder->findAll($criteria);
+			$this->ddlItemPadre->DataSource = $items;
+			$this->ddlItemPadre->dataBind();	
+			//if (count($items) != 0) {
+			//	$this->pnlItemPadre->Visible = "true";	
+			//}					
+			}
 
-		$this->txtOrden->Text = $contratoitem->Orden;
-		$this->txtItem->Text = $contratoitem->Item;
-		$this->txtCantidad->Text = $contratoitem->Cantidad;
-		$this->ddlUnidadDeMedida->SelectedValue = $contratoitem->UnidadMedida;
-		$this->txtPrecioUnitario->Text = $contratoitem->PrecioUnitario;
-		$this->txtPrecioTotal->Text = $contratoitem->PrecioTotal;
+		$data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
+		 		$this->dgItems->DataSource = $data;
+		 		$this->dgItems->dataBind();		 
+		 		if(count($data)){
+		 		$this->lblItems->Visible = false;
+		}
+	}
 
+	public function LimpiarCampos(){
+		$this->txtItem->Text = "";
+		$this->txtCantidad->Text = "";
+		$this->ddlUnidadDeMedida->SelectedValue = 0;
+		$this->txtPrecioUnitario->Text = "";
+		$this->txtPrecioTotal->Text = "";
 	}
 
 	public function btnCancelar_OnClick($sender, $param)
@@ -114,21 +115,6 @@ class Update extends PageBaseSP{
 				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
 			}
 
-			// if(!is_null($id)){
-			// 	$finder = ContratoItemRecord::finder();
-			// 	$contratoitem = $finder->findByPk($id);
-			// }
-			// else{
-			// 	$contratoitem = new ContratoItemRecord();
-			// }
-			// $contratoitem->IdContrato = $idContrato;
-			// $contratoitem->Orden = $this->txtOrden->Text;
-			// $contratoitem->Item = $this->txtItem->Text;
-			// $contratoitem->Cantidad = $this->txtCantidad->Text;
-			// $contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
-			// $contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
-			// $contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
-
 			try{
 				if($this->chkEsPadre->Checked){
 					$contratoitempadre->save();
@@ -139,9 +125,68 @@ class Update extends PageBaseSP{
 				}
 
 
-				//$contratoitem->save();
-				$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
+				$contratoitem->save();
+				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 			}
+			catch(exception $e){
+				$this->Log($e->getMessage(),true);
+			}
+		}
+	}
+
+	public function btnAgregarItem_OnClick($sender, $param)
+	{
+		$ido = $this->Request["ido"];
+		$idc = $this->Request["idc"];
+		if($this->IsValid){
+			$id = $this->Request["id"];
+			$idObra = $this->Request["ido"];
+			$idContrato = $this->Request["idc"];
+
+			if($this->chkEsPadre->Checked){
+				if(!is_null($id)){
+					$finder = ContratoItemPadreRecord::finder();
+					$contratoitempadre = $finder->findByPk($id);
+				}
+				else{
+					$contratoitempadre = new ContratoItemPadreRecord();
+				}
+				$contratoitempadre->IdContrato = $idContrato;
+				$contratoitempadre->Item = $this->txtItem->Text;
+				$contratoitempadre->Orden = $this->txtOrden->Text;
+			}
+			else
+			{
+				if(!is_null($id)){
+					$finder = ContratoItemRecord::finder();
+					$contratoitem = $finder->findByPk($id);
+				}
+				else{
+					$contratoitem = new ContratoItemRecord();
+				}
+				$contratoitem->IdContrato = $idContrato;
+				$contratoitem->Orden = $this->txtOrden->Text;
+				$contratoitem->Item = $this->txtItem->Text;
+				$contratoitem->Cantidad = $this->txtCantidad->Text;
+				$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
+				$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
+				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
+			}
+
+			try{
+				$contratoitem->save();
+				$this->Refresh($idContrato);
+				$this->LimpiarCampos();
+				//if($this->chkEsPadre->Checked){
+					//$contratoitempadre->save();
+				}
+				//else
+				//{
+				//	$contratoitem->save();
+				//}
+				
+				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
+			//}
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
 			}

@@ -42,6 +42,13 @@ class HomeAdmin extends PageBaseSP{
 		$this->lblTitulo->Text = "Certificaciones de Convenio (". count($data) . ")";
 		$this->dgDatos->dataBind();
 		$this->setViewState("Data",$data);
+
+		if (count($data)<1){
+
+			$this->Response->Redirect("?page=Obra.Contrato.Certificacion.UpdateAdmin&ido=$idObra&idc=$idContrato");
+		}
+
+
 	}
 
 	public function dgDatos_OnPageIndexChanged($sender,$param){

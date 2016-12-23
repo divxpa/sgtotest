@@ -24,6 +24,7 @@ class ObraRecord extends TActiveRecord
 	public $PorAdministracion;
 	public $Activo;
 	public $ultimaActualizacion;
+	public $detalleLocalidad;
 
 	public static function finder($className=__CLASS__)
 	{

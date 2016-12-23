@@ -10,7 +10,6 @@ class UpdateAdmin extends PageBaseSP{
 			//$idc = $this->Request["idc"];
 
 			if (!is_null($id)) {
-				//Actualizar Obra
 				$this->lblAccion->Text = "Modificar Obra";
 				$this->Refresh($id);
 			}
@@ -165,6 +164,7 @@ class UpdateAdmin extends PageBaseSP{
 			$this->pnlMasLocalidades->Display = "Dynamic";
 		}
 
+		$this->txtDetalleLocalidad->Text = $obra->detalleLocalidad;
 		$this->txtLatitud->Text = $obra->Latitud;
 		$this->txtLongitud->Text = $obra->Longitud;
 
@@ -187,148 +187,7 @@ class UpdateAdmin extends PageBaseSP{
 		if(count($data)){
 			$this->lblRefuerzosPartida->Visible = false;
 		}
-
-		//Buscar el Contrato
-		//$data = $this->CreateDataSource("ContratoPeer","ContratosHome", $idObra);
-		//$this->txtCodigo->Text = $data[0]["IdContrato"];
-		//if(count($data)){	
-		//	$idContrato = $data[0]["IdContrato"];
-		//	$this->CargarContrato($idObra,$idContrato); //Cargar Contrato
-			//$this->RefreshItems($idContrato);//Cargar Items del Contrato
-	//}
-
 	}
-
-	//Carga los Datos del Contrato
-	// public function CargarContrato($idObra,$idContrato){
-	// 	$idOrganismo = $this->Session["SPOrganismo"];
-	// 	$finder = ObraRecord::finder();
-	// 	$obra = $finder->findByPk($idObra);
-
-	// 	if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
-	// 		$this->Response->Redirect("?page=Obra.HomeAdmin");
-	// 	}
-
-	// 	$finder = ContratoRecord::finder();
-	// 	$contrato = $finder->findByPk($idContrato);
-
-	// 	$this->txtNumero->Text = $contrato->Numero;
-	// 	$this->txtIdProveedor->Text = $contrato->IdProveedor;
-	// 	 $finder2 = ProveedorRecord::finder();
-	// 	 $proveedor = $finder2->findByPk($contrato->IdProveedor);
-	// 	 $this->acpProveedor->Text = $proveedor->RazonSocial." (".$proveedor->Cuit.")";
-	// 	 $this->acpProveedor->Enabled = false;
-
-	// 	$fecha = explode("-",$contrato->Fecha);
-	// 	$this->dtpFecha->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	$this->txtMonto->Text = $contrato->Monto;
-	// 	$fecha = explode("-",$contrato->FechaBaseMonto);
-	// 	$this->dtpFechaBaseMonto->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	$this->txtNConvenio->Text = $contrato->NormaLegalAutorizacion;
-		
-	// 	if(!is_null($contrato->FechaInicio)){
-	// 		$fecha = explode("-",$contrato->FechaInicio);
-	// 	 	$this->dtpFechaInicio->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	 }
-
-	// 	if(!is_null($contrato->FechaFinalizacion)){
-	// 	 	$fecha = explode("-",$contrato->FechaFinalizacion);
-	// 	 	$this->dtpFechaFinalizacion->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
-	// 	 }
-		
-	// 	 $this->txtPlazoEjecucion->Text = $contrato->PlazoEjecucion;
-
-	// 	 $this->pnlItemsDelConvenio->Visible = true;
-	// 	 //$this->pnlModificacionContrato->Visible = true;
-
-
-	// 	 $this->btnAgregarItems->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
-	// 	 $this->dgItems->DataSource = $data;
-	// 	 $this->dgItems->dataBind();		 
-	// 	 if(count($data)){
-	// 	 	$this->lblItems->Visible = false;
-	// 	 }
-
-	// 	 $this->btnAgregarAlteracion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","AlteracionesByContrato", $idContrato);
-	// 	 $this->dgAlteraciones->DataSource = $data;
-	// 	 $this->dgAlteraciones->dataBind();
-
-	// 	 if(count($data)){
-	// 	 	$this->lblAlteraciones->Visible = false;
-	// 	 }
-
-	// 	 $this->btnAgregarRedeterminacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $data = $this->CreateDataSource("ContratoPeer","RedeterminacionesByContrato", $idContrato);
-	// 	 $this->dgRedeterminaciones->DataSource = $data;
-	// 	 $this->dgRedeterminaciones->dataBind();
-
-	// 	 if(count($data)){
-	// 	 	$this->lblRedeterminaciones->Visible = false;
-	// 	 }
-
-	// 	 $this->btnAgregarAmpliacion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	 $this->btnAgregarAmpliacion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	 $data = $this->CreateDataSource("ContratoPeer","AmpliacionesByContrato", $idContrato, $idOrganismo);
-	// 	 $this->dgAmpliacionesPlazo->DataSource = $data;
-	// 	 $this->dgAmpliacionesPlazo->dataBind();
-
-	// 	 if(count($data)){
-	// 	 	$this->lblAmpliacionesPlazo->Visible = false;
-	// 	 }
-
-	// 	$this->btnAgregarRecepcion->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	$this->btnAgregarRecepcion->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	$data = $this->CreateDataSource("ContratoPeer","RecepcionesByContrato", $idContrato, $idOrganismo);
-	// 	$this->dgRecepcionesContrato->DataSource = $data;
-	// 	$this->dgRecepcionesContrato->dataBind();
-
-	// 	if(count($data)){
-	// 	 	$this->lblRecepcionesContrato->Visible = false;
-	// 	 }
-		
-	// 	$this->btnAgregarOrdenTrabajo->NavigateUrl .= "&idc=".$idContrato."&ido=".$idObra;
-	// 	$this->btnAgregarOrdenTrabajo->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-	// 	$data = $this->CreateDataSource("ContratoPeer","OrdenesTrabajoByContrato", $idContrato, $idOrganismo);
-	// 	$this->dgOrdenesTrabajo->DataSource = $data;
-	// 	$this->dgOrdenesTrabajo->dataBind();
-
-	// 	if(count($data)){
-	// 		$this->lblOrdenesTrabajo->Visible = false;
-	// 	}
-	// }
-
-	//Carga los Items Del Contrato
-	// public function RefreshItems($idContrato)
-	// {
-	// 	$data = $this->CreateDataSource("ContratoPeer","ItemsByContrato", $idContrato);
-	// 	$this->dgDatos->DataSource = $data;
-
-	// 	if(count($data)<1){
-	// 			//Si el contrato no tiene items, entonces lo inicializa vacio
-	// 			//$items = $this->getViewState("Items", array());
-	// 			$items = array(
-	// 						array(
-	// 							"IdContratoItem" =>"",
-	// 							"IdContrato"=>"",
-	// 							"Orden" => 1,
-	// 							"Item" => "",
-	// 							"Cantidad" => "",
-	// 							"UnidadMedida" => "",
-	// 							"PrecioUnitario" => "",
-	// 							"PrecioTotal" => ""
-	// 							)
-	// 						);
-
-	// 			$this->setViewState("Elementos", $items);
-	// 			$this->dgDatos->DataSource = $items;
-	// 			//$this->dgDatos->dataBind();
-			
- //    	}
-
-	// 	$this->dgDatos->dataBind();
-	// }
 
 	public function cvCodigo_OnServerValidate($sender, $param)
 	{
@@ -401,6 +260,7 @@ class UpdateAdmin extends PageBaseSP{
 				$obra->IdOrganismo = $idOrganismo;
 			}
 
+			$obra->detalleLocalidad = $this->txtDetalleLocalidad->Text;
 			$obra->Codigo = $this->txtCodigo->Text;
 			$obra->Denominacion = mb_strtoupper($this->txtDenominacion->Text, 'utf-8');
 			$obra->Expediente = $this->txtExpediente->Text;

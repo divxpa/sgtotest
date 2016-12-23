@@ -26,7 +26,12 @@ class HomeAdmin extends PageBaseSP{
 				$this->lblFufi->Display ="None";
 				$this->ddlFufi->Display = "None";
 				$this->btnVerTodos->Display = "None";
-				//Ocultar Columna de Editar la Obra
+				
+				$this->bcDenominacion->ItemStyle->CustomStyle="width: 500px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted";
+				$this->bcLocalidad->Visible = false;
+				$this->tcEditar->Visible = false;
+				$this->tcContratos->Visible = false;				
+				$this->tcItem->Visible = false;
 			}
 
 			$this->Refresh($idObra);
@@ -34,6 +39,10 @@ class HomeAdmin extends PageBaseSP{
 	}
 
 	public function LoadDataRelated(){
+
+		$this->btnVerTodos->Display = "None";
+		$this->btnVerTodos->Display = "None";
+
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$localidades = $this->CreateDataSource("ObraAdministracionPeer","LocalidadesConObraSelect", $idOrganismo);
 		$this->ddlLocalidad->DataSource = $localidades;

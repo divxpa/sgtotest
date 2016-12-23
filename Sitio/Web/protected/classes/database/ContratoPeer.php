@@ -228,8 +228,8 @@ class ContratoPeer
 
 
 	public static function SiguienteNumeroOrden($idContrato){
-		$sql = "Select
-				  lpad(ifnull(max(cast(ci.Orden as unsigned))+1,1),1,'0') as Orden
+		$sql = "Select				  
+				   max(ci.Orden) +1 as Orden
 				from
 				  contratoitem ci
 				where

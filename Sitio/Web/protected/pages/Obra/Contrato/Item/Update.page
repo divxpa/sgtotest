@@ -55,6 +55,7 @@
 			<span class="label">Este item incluye Subitems</span>
 	       	<com:TActiveCheckBox 
 	       		ID="chkEsPadre"
+	       		Visible = "false"
 	       		Checked="false"
 	       		OnCheckedChanged="chkEsPadre_OnCheckedChanged"
 	       		ClientSide.OnLoading="Element.show('callback_status')"
@@ -114,6 +115,12 @@
 				AutoTrim="True"
 		   		ToolTip="Ingrese el precio unitario"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtCantidad"
+				ErrorMessage="Debe ingresar la cantidad de Items."
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
 			</br>
 			<span class="label required">Precio Unitario</span>
 	       	<com:TTextBox
@@ -123,6 +130,12 @@
 				AutoTrim="True"
 		   		ToolTip="Ingrese el precio unitario"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtPrecioUnitario"
+				ErrorMessage="Debe ingresar el precio unitario del Item."
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
 			</br>
 			<span class="label required">Precio Total</span>
 	       	<com:TTextBox
@@ -130,8 +143,25 @@
 				CssClass="medium"
 				MaxLength="15"
 				AutoTrim="True"
-		   		ToolTip="Ingrese el precio unitario"
+		   		ToolTip="Ingrese el precio total"
 				AutoCompleteType="Disabled" />
+			<com:TRequiredFieldValidator
+				ControlToValidate="txtPrecioTotal"
+				ErrorMessage="Debe ingresar el precio total del Item."
+				Display="Dynamic"
+				Text="*"
+				ValidationGroup="Register"/>
+			<br />
+			<span class="label">Agregar Item</span>
+			<com:TImageButton
+				ID="btnAgregarItem"
+				ToolTip="Guardar"
+				ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
+				CssClass="imgbtn2-guardar"
+				OnClick="btnAgregarItem_OnClick"
+				Attributes.onclick="return confirm('¿Desea guardar los datos?');"
+				ValidationGroup="Register" />
+					
 			</com:TActivePanel>	
 			<com:TActivePanel 
 				ID="pnlBorrarItem"
@@ -144,6 +174,51 @@
 			    </com:THyperLink>
 				<br />
 			</com:TActivePanel>
+<com:TActivePanel 
+				ID="pnlItemsDelConvenio"
+				Visible="true">
+				<br />
+				<table border="0" cellpadding="10px">
+					<tr>
+						<td valign="top">
+							<span class="maintitle2">Items del Convenio</span>							
+							<com:TActiveDataGrid
+							    ID="dgItems"
+								CssClass="TableForm"
+							    AlternatingItemStyle.BackColor="#EEEEEE"
+							    AutoGenerateColumns="false"
+					            AllowPaging="false"
+								AllowCustomPaging="false"
+						        AllowSorting="false"
+						        Width="600px">
+								<com:TBoundColumn DataField="IdContratoItem" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
+								<com:TBoundColumn DataField="IdContrato" Visible ="false" HeaderText="IdContrato" />
+								<com:TBoundColumn DataField="Orden" HeaderText="Orden" />
+								<com:TBoundColumn DataField="Item" HeaderText="Item" />
+								<com:TBoundColumn DataField="UnidadMedida" HeaderText="Unidad de Medida" />
+								<com:TBoundColumn DataField="PrecioUnitario" HeaderText="P. Unitario" />
+								<com:TBoundColumn DataField="PrecioTotal" HeaderText="P. Total" />
+								<com:TBoundColumn DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Right"/>
+								<com:TTemplateColumn ID="tcEditarItem" Visible ="false"HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+						            <prop:ItemTemplate>
+								       	<com:TActiveHyperLink
+								            ID="hlEditar"
+								            ToolTip="Haga click aquí para editar"
+								            NavigateUrl="?page=Obra.Contrato.Item.Update&id=<%# $this->Parent->Data['IdContratoItem']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
+								            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+								    	</com:TActiveHyperLink>
+						            </prop:ItemTemplate>
+				             	</com:TTemplateColumn>
+						  	</com:TActiveDataGrid>
+						  	<com:TLabel ID="lblItems" Text="No existen items cargados del convenio" />
+						</td>
+					<tr>
+					</table>
+			</com:TActivePanel>
+
+
+
+
 		</fieldset>
 	</div>
 	<com:TValidationSummary

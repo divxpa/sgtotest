@@ -9,8 +9,9 @@ class UpdateAdmin extends PageBaseSP{
 			$this->LoadDataRelated($idObra);
 			$id = $this->Request["id"];
 
-			if (!is_null($id)) {
+			if (!is_null($id) and ($id!="")) {
 				$this->lblAccion->Text = "Modificar Contrato";
+				//$this->txtNConvenio->Text = $id;
 				$this->Refresh($id, $idObra);
 			}
 
@@ -39,8 +40,6 @@ class UpdateAdmin extends PageBaseSP{
 			$this->lblPlazoEjecucion->CssClass = 
 			$this->lblFechaFinalizacion->CssClass = "label";
 		}
-
-		$this->hlkVolver->NavigateUrl .= "&id=$idObra";
 	}
 
 	public function Refresh($idContrato, $idObra){
@@ -150,7 +149,7 @@ class UpdateAdmin extends PageBaseSP{
 			$id = $this->Request["id"];
 			$idObra = $this->Request["ido"];
 
-			if(!is_null($id)){
+			if(!is_null($id) and ($id!="") ){
 				$finder = ContratoRecord::finder();
 				$contrato = $finder->findByPk($id);
 
