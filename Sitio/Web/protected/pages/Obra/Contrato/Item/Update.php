@@ -37,6 +37,7 @@ class Update extends PageBaseSP{
 
 		$this->lblAccion->Text = "Nuevo item de Contrato";
 		$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
+		//Si $orden = 0, entonces que el Orden sea 1
 		$this->txtOrden->Text = $orden[0]["Orden"];
 		if ($orden>1){					
 			$criteria = new TActiveRecordCriteria;
@@ -73,7 +74,8 @@ class Update extends PageBaseSP{
 	{
 		$ido = $this->Request["ido"];
 		$idc = $this->Request["idc"];
-		$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
+		//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
+		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
 	public function btnAceptar_OnClick($sender, $param)
