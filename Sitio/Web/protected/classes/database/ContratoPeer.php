@@ -309,7 +309,7 @@ class ContratoPeer
 						CONCAT('padre',cip.idcontratoitempadre) AS claseVinculadora
 					FROM 
 						contratoitempadre AS cip
-					WHERE cip.IdContrato = 1034)
+					WHERE cip.IdContrato = $idContrato)
 				) AS t 
 				ORDER BY Orden";
 

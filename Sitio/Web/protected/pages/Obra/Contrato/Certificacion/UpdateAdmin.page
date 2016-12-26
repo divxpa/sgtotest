@@ -244,6 +244,7 @@ AutoPostBack="true"
 
 			<com:TTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="100px">
 			    <prop:ItemTemplate>
+			        <com:THiddenField ID="hdnIdContratoItem" Value="<%# $this->Parent->Data['IdContratoItem']%>" />
 			        <com:THiddenField ID="hdnIdCertificacionItem" Value="<%# $this->Parent->Data['IdCertificacionItem']%>" />
 			        <com:TActiveTextBox
 			            ID="txtPrecioTotal"

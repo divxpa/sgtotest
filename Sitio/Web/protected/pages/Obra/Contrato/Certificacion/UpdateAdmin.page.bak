@@ -237,7 +237,7 @@ AutoPostBack="true"
             AllowPaging="false"
             AllowCustomPaging="false"
             AllowSorting="false"
-            ShowHeader="true"
+            ShowHeader="false"
             Width="1200px">
 			<com:TBoundColumn DataField="Orden" ItemStyle.Width="50px"/>
 			<com:TBoundColumn DataField="Item" ItemStyle.Width="250px"/>

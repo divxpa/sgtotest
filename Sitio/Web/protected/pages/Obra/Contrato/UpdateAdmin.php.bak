@@ -44,7 +44,6 @@ class UpdateAdmin extends PageBaseSP{
 
 	public function Refresh($idContrato, $idObra){
 		$idOrganismo = $this->Session["SPOrganismo"];
-		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
 
