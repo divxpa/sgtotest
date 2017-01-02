@@ -8,6 +8,9 @@ class Home extends PageBaseSP{
 		if(!$this->IsPostBack){
 			$criteria = new TActiveRecordCriteria;
 			$criteria->OrdersBy['Nombre'] = 'asc';
+			$criteria = new TActiveRecordCriteria;
+			$criteria->Condition = ' Aniversario is not null ';
+
 			$finder = LocalidadRecord::finder();
 			$localidades = $finder->findAll($criteria);
 			$this->ddlLocalidad->DataSource = $localidades;

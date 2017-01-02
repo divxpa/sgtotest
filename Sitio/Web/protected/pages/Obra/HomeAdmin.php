@@ -44,6 +44,8 @@ class HomeAdmin extends PageBaseSP{
 		$this->btnVerTodos->Display = "None";
 
 		$idOrganismo = $this->Session["SPOrganismo"];
+		if ($idOrganismo == 12)
+			{$this->MostrarControlesIngresosBrutos();}
 		$localidades = $this->CreateDataSource("ObraAdministracionPeer","LocalidadesConObraSelect", $idOrganismo);
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
@@ -214,6 +216,11 @@ class HomeAdmin extends PageBaseSP{
 		}
 
 	}
+
+	public function MostrarControlesIngresosBrutos (){
+		$this->bcDenominacion->Visible = false;
+	}
+
 
 }
 

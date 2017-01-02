@@ -23,6 +23,9 @@ class Home extends PageBaseSP{
 
 	public function LoadDataRelated(){
 		$idOrganismo = $this->Session["SPOrganismo"];
+		if ($idOrganismo == 12) // Personaliza la Visualizacion de las Columnas para Ingresos Brutos
+			{//$this->MostrarControlesIngresosBrutos();
+			}
 		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesConObraSelect", $idOrganismo);
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
@@ -184,11 +187,11 @@ class Home extends PageBaseSP{
 				$param->Item->bcAlarma->Text = "";
 			}
 
-			$saldo = str_replace('.', '', $param->Item->bcSaldoPresup->Text);
+			$saldo = str_replace('.', '', $param->Item->bcSaldoCreditoPresup->Text);
 			$saldo = floatval(str_replace(',', '.', $saldo));
 
 			if($saldo<0){
-				$param->Item->bcSaldoPresup->Style = 'color: red';
+				$param->Item->bcSaldoCreditoPresup->Style = 'color: red';
 			}
 
 		}
@@ -197,6 +200,17 @@ class Home extends PageBaseSP{
 		}
 
 	}
+
+	public function MostrarControlesIngresosBrutos (){
+		$this->bcOrganismo->Visible = false;
+		$this->bcComitente->Visible = false;
+		$this->bcCreditoPresupuestarioAprobado->Visible = false;
+		$this->bcCantidadBeneficiarios->Visible = false;
+		$this->bcRefuerzoPartida->Visible = false;
+		$this->bcPresupuestoOficial->Visible = false;
+		$this->bcFechaPresupuestoOficial->Visible = false;
+	}
+
 
 }
 
