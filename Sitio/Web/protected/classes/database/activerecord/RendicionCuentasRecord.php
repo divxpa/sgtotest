@@ -6,6 +6,7 @@ class RendicionCuentasRecord extends TActiveRecord
   public $IdRendicionCuentas;
   public $IdCertificacion;
   public $Orden;
+  public $Proyecto
   public $IdLocalidad
   public $Empresa;
   public $Cuit;
@@ -13,8 +14,9 @@ class RendicionCuentasRecord extends TActiveRecord
   public $Recibo;
   public $FechaEmision;
   public $Concepto;
-  public $Monto;
   public $FechaCancelacion;
+  public $OrdenDePago;
+  public $Monto;
   public $Observaciones;
   public $Estado;
   public $Revision;

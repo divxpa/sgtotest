@@ -5,190 +5,93 @@ class Update extends PageBaseSP{
 		parent::onLoad($param);
 
 		if(!$this->IsPostBack){
-			$idObra = $this->Request["ido"];
-			$idContrato = $this->Request["idc"];
-			$this->LoadDataRelated($idObra, $idContrato);
-			//$id = $this->Request["id"];
+			$idCertificacion = $this->Request["id"];
+			$this->LoadDataRelated($idCertificacion);
 
-			if (!is_null($idContrato)) {
-				$this->lblAccion->Text = "Modificar item de Contrato";
-				$this->Refresh($idContrato);
+			if (!is_null($idCertificacion)) {
+				$this->lblAccion->Text = "Rendición de Cuentas s/Aporte Nacional";
+				$this->Refresh($idCertificacion);
 			}
 		}
 	}
 
-	public function LoadDataRelated($idObra, $idContrato){
-		//Lista de Items padre
-		//Proximo nro de orden
-		$finder = ObraRecord::finder();
-		$obra = $finder->findByPk($idObra);
-		$finder = OrganismoRecord::finder();
-		$organismo = $finder->findByPk($obra->IdOrganismo);
-		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesPorObra", $idObra);
-		$this->lblObra->Text = $organismo->PrefijoCodigo . '-' . $obra->Codigo . ' ' . $obra->Denominacion . " - " .$localidades[0]["Localidades"];
-		$finder = ContratoRecord::finder();
-		$contrato = $finder->findByPk($idContrato);
-		$finder = ProveedorRecord::finder();
-		$proveedor = $finder->findByPk($contrato->IdProveedor);
-		$this->lblContrato->Text = $contrato->Numero . " - " . $proveedor->Cuit . " " . $proveedor->RazonSocial;
+	public function LoadDataRelated($idCertifiacion){
+		
 	}
 
 	public function Refresh($idContrato){
 
 		$this->lblAccion->Text = "Nuevo item de Contrato";
-		$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
-		//Si $orden = 0, entonces que el Orden sea 1
-		$this->txtOrden->Text = $orden[0]["Orden"];
-		if ($orden>1){					
-			$criteria = new TActiveRecordCriteria;
-			$criteria->OrdersBy['Orden'] = 'asc';
-			$criteria = new TActiveRecordCriteria;
-			$criteria->Condition = 'IdContrato = :idcontrato ';
-			$criteria->Parameters[':idcontrato'] = $idContrato;
-			$finder = ContratoItemPadreRecord::finder();
-			$items = $finder->findAll($criteria);
-			$this->ddlItemPadre->DataSource = $items;
-			$this->ddlItemPadre->dataBind();	
-			//if (count($items) != 0) {
-			//	$this->pnlItemPadre->Visible = "true";	
-			//}					
-			}
 
-		$data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
-		 		$this->dgItems->DataSource = $data;
-		 		$this->dgItems->dataBind();		 
+		$data = $this->CreateDataSource("ContratoPeer","RendicionesByCertificacion", $idContrato);
+		 		$this->dgCuentas->DataSource = $data;
+		 		$this->dgCuentas->dataBind();		 
 		 		if(count($data)){
 		 		$this->lblItems->Visible = false;
 		}
 	}
 
 	public function LimpiarCampos(){
-		$this->txtItem->Text = "";
-		$this->txtCantidad->Text = "";
-		$this->ddlUnidadDeMedida->SelectedValue = 0;
-		$this->txtPrecioUnitario->Text = "";
-		$this->txtPrecioTotal->Text = "";
+		// $this->txtItem->Text = "";
+		// $this->txtCantidad->Text = "";
+		// $this->ddlUnidadDeMedida->SelectedValue = 0;
+		// $this->txtPrecioUnitario->Text = "";
+		// $this->txtPrecioTotal->Text = "";
 	}
 
 	public function btnCancelar_OnClick($sender, $param)
 	{
-		$ido = $this->Request["ido"];
-		$idc = $this->Request["idc"];
+		$ido = $this->Request["id"];
 		//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
 	public function btnAceptar_OnClick($sender, $param)
 	{
-		$ido = $this->Request["ido"];
-		$idc = $this->Request["idc"];
-		if($this->IsValid){
-			$id = $this->Request["id"];
-			$idObra = $this->Request["ido"];
-			$idContrato = $this->Request["idc"];
-
-			if($this->chkEsPadre->Checked){
-				if(!is_null($id)){
-					$finder = ContratoItemPadreRecord::finder();
-					$contratoitempadre = $finder->findByPk($id);
-				}
-				else{
-					$contratoitempadre = new ContratoItemPadreRecord();
-				}
-				$contratoitempadre->IdContrato = $idContrato;
-				$contratoitempadre->Item = $this->txtItem->Text;
-				$contratoitempadre->Orden = $this->txtOrden->Text;
-			}
-			else
-			{
-				if(!is_null($id)){
-					$finder = ContratoItemRecord::finder();
-					$contratoitem = $finder->findByPk($id);
-				}
-				else{
-					$contratoitem = new ContratoItemRecord();
-				}
-				$contratoitem->IdContrato = $idContrato;
-				$contratoitem->Orden = $this->txtOrden->Text;
-				$contratoitem->Item = $this->txtItem->Text;
-				$contratoitem->Cantidad = $this->txtCantidad->Text;
-				$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
-				$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
-				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
-			}
-
-			try{
-				if($this->chkEsPadre->Checked){
-					$contratoitempadre->save();
-				}
-				else
-				{
-					$contratoitem->save();
-				}
-
-
-				$contratoitem->save();
-				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
-			}
-			catch(exception $e){
-				$this->Log($e->getMessage(),true);
-			}
-		}
+		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
-	public function btnAgregarItem_OnClick($sender, $param)
+	public function btnAgregarRendicion_OnClick($sender, $param)
 	{
-		$ido = $this->Request["ido"];
-		$idc = $this->Request["idc"];
+		$idCertificacion = $this->Request["id"];
+		
 		if($this->IsValid){
-			$id = $this->Request["id"];
-			$idObra = $this->Request["ido"];
-			$idContrato = $this->Request["idc"];
+			if(!is_null($idCertificacion)){
+				$rendicioncuenta = new RendicionCuentasRecord();
+				$rendicioncuenta->IdCertificacion = $this->idCertificacion;
+				$rendicioncuenta->Orden = $this->txtOrden ->Text;
+				$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
+				$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
+				$rendicioncuenta->Empresa = $this->txtEmpresa ->Text;
+				$rendicioncuenta->Cuit = $this->txtCuit->Text;
+				$rendicioncuenta->Factura = $this->txtFacturaNro->Text;
+				$rendicioncuenta->Recibo = $this->txtReciboNro->Text;
 
-			if($this->chkEsPadre->Checked){
-				if(!is_null($id)){
-					$finder = ContratoItemPadreRecord::finder();
-					$contratoitempadre = $finder->findByPk($id);
+				if($this->dtpFechaEmision->Text!=""){
+					$fecha = explode("/", $this->dtpFechaEmision->Text);
+					$rendicioncuenta->FechaEmision = $fecha[2]."-".$fecha[1]."-".$fecha[0];
 				}
-				else{
-					$contratoitempadre = new ContratoItemPadreRecord();
+
+				$rendicioncuenta->Concepto = $this->txtConcepto->Text;
+
+				if($this->dtpFechaCancelacion->Text!=""){
+					$fecha = explode("/", $this->dtpFechaCancelacion->Text);
+					$rendicioncuenta->FechaCancelacion = $fecha[2]."-".$fecha[1]."-".$fecha[0];
 				}
-				$contratoitempadre->IdContrato = $idContrato;
-				$contratoitempadre->Item = $this->txtItem->Text;
-				$contratoitempadre->Orden = $this->txtOrden->Text;
-			}
-			else
-			{
-				if(!is_null($id)){
-					$finder = ContratoItemRecord::finder();
-					$contratoitem = $finder->findByPk($id);
-				}
-				else{
-					$contratoitem = new ContratoItemRecord();
-				}
-				$contratoitem->IdContrato = $idContrato;
-				$contratoitem->Orden = $this->txtOrden->Text;
-				$contratoitem->Item = $this->txtItem->Text;
-				$contratoitem->Cantidad = $this->txtCantidad->Text;
-				$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
-				$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
-				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
-			}
+
+				$rendicioncuenta->OrdenDePago = $this->txtOrdenPago->Text;
+				$rendicioncuenta->Monto = $this->txtMonto->Text;
+				$rendicioncuenta->Observaciones = $this->txtObservacion->Text;
+				$rendicioncuenta->Estado = $this-> ->Text;
+				$rendicioncuenta->Revision = $this-> ->Text;
+				$rendicioncuenta->Activo = 1;
 
 			try{
-				$contratoitem->save();
-				$this->Refresh($idContrato);
+				$rendicioncuenta->save();
+				$this->Refresh($idCertificacion);
 				$this->LimpiarCampos();
-				//if($this->chkEsPadre->Checked){
-					//$contratoitempadre->save();
 				}
-				//else
-				//{
-				//	$contratoitem->save();
-				//}
-				
-				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
-			//}
+
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
 			}
