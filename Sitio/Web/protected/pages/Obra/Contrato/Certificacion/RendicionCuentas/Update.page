@@ -28,38 +28,94 @@
 	</div>
 	<div>
 		<fieldset>
-			<span class="label required">Obra</span>
-			<com:TLabel 
-				ID="lblObra" 
-				CssClass="labeldata"/>
-			<br />
-			<span class="label required">Contrato</span>
-			<com:TLabel 
-				ID="lblContrato" 
-				CssClass="labeldata"/>
-			<br />
-			<span class="label required">Orden</span>
-			<com:TTextBox
-	       		ID="txtOrden"
-				CssClass="largest"
-				MaxLength="50"
-	            AutoTrim="True"
-	            Enabled="False"
-	       		ToolTip="Ingrese el orden del Item"/>
+			<table class="TableForm" width="1200px">
+					<thead>
+						<tr style="background-color:#CCC; font-size:10px;">
+							<th width="44px" style="padding: 1px 2px;">Orden</th>
+							<th width="44px" style="padding: 1px 2px;">Proyecto Nº</th>
+							<th width="100px" style="padding: 1px 2px;">Localidad</th>
+							<th width="100px" style="padding: 1px 2px;">Empresa</th>
+							<th width="65px" style="padding: 1px 2px;">Nro de CUIT/CUIL</th>
+							<th width="65px" style="padding: 1px 2px;">Factura Nro.</th>
+							<th width="65px" style="padding: 1px 2px;">Recibo Nro.</th>
+							<th width="65px" style="padding: 1px 2px;">Fecha de Emisión</th>
+							<th width="65px" style="padding: 1px 2px;">Concepto - Certificado Nro</th>
+							<th width="65px" style="padding: 1px 2px;">Fecha de Cancelación</th>
+							<th width="65px" style="padding: 1px 2px;">Orden de Pago o Cheque Nro.</th>
+							<th width="65px" style="padding: 1px 2px;">Monto</th>
+							<th width="65px" style="padding: 1px 2px;">Observaciones</th>
+						</tr>
+						<tr style="background-color:#CCC; font-size:10px;">
+							<th width="44px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtOrden" MaxLength="50" AutoTrim="True" Enabled="True"
+					       		ToolTip="Ingrese el orden del Item"/>
+					       	</th>
+							<th width="44px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtProyecto" MaxLength="50" AutoTrim="True"
+					       		ToolTip="Ingrese la denominacion del Item"/>
+					       	</th>
+							<th width="100px" style="padding: 1px 2px;"><com:TDropDownList
+	       						ID="ddlLocalidad" ToolTip="Seleccione" PromptValue="0"
+	       						PromptText="Seleccione" DataTextField="Nombre" DatavalueField="IdLocalidad" />
+							</th>
+							<th width="100px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtEmpresa" MaxLength="255" AutoTrim="True" ToolTip="Ingrese la el nombre de la Empresa"/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtCuit" MaxLength="13" AutoTrim="True" ToolTip="Ingrese el CUIT del proveedor"/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtFacturaNro" MaxLength="255" AutoTrim="True" ToolTip="Ingrese el número de la Factura"/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtReciboNro" MaxLength="255" AutoTrim="True" ToolTip="Ingrese el número del Recibo"/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TDatePicker
+								ID="dtpFechaEmision"
+								DateFormat="dd/MM/yyyy"
+								Culture="es" />
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtConcepto" MaxLength="255" AutoTrim="True" ToolTip="Ingrese la el Concepto o Nro de Certificado"/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TDatePicker
+								ID="dtpFechaCancelacion" DateFormat="dd/MM/yyyy" Culture="es" />
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtOrdenPago" MaxLength="255" AutoTrim="True"
+					       		ToolTip="Ingrese el Orden de Pago o Cheque Nro."/>
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+						   		ID="txtMonto" MaxLength="15" AutoTrim="True" ToolTip="Ingrese el monto de contrato" AutoCompleteType="Disabled" />
+							</th>
+							<th width="65px" style="padding: 1px 2px;"><com:TTextBox
+					       		ID="txtObservacion" MaxLength="255" AutoTrim="True" ToolTip="Ingrese la observacion."/>
+							</th>							
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background-color:#CCC; font-size:10px;">
+							<td colspan="4" align="center"><strong>TOTALES</strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblMontoAvanceTotal" /></strong></td>
+							<td>&nbsp;</td>
+							<td align="right"><strong><com:TActiveLabel ID="lblAnticipoFinancieroTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblDescuentoAnticipoTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblRetencionMultaTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblFondoReparoTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblRedeterminacionPreciosTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblOtrosConceptosTotal" /></strong></td>
+							<td align="right"><strong><com:TActiveLabel ID="lblImporteNetoTotal" /></strong></td>							
+						</tr>
+					</tbody>	
+			</table>
+			
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtOrden"
 				ErrorMessage="Debe ingresar orden del Item."
 				Display="Dynamic"
 				Text="*"
 				ValidationGroup="Register"/>
-			<br />
-			<span class="label required">Proyecto Nº</span>
-			<com:TTextBox
-	       		ID="txtProyecto"
-				CssClass="largest"
-				MaxLength="50"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la denominacion del Item"/>
+			<br />			
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtProyecto"
 				ErrorMessage="Debe ingresar el numero del proyecto."
@@ -67,29 +123,14 @@
 				Text="*"
 				ValidationGroup="Register"/>
 			<br />
-			<span class="label required">Localidad</span>
-			<com:TDropDownList
-	       		ID="ddlLocalidad"
-	       		ToolTip="Seleccione"
-	       		PromptValue="0"
-	       		PromptText="Seleccione"
-	       		DataTextField="Nombre"
-	       		DatavalueField="IdLocalidad" />
 	       	<com:TRequiredFieldValidator
-				ControlToValidate="ddlLocalidad1"
+				ControlToValidate="ddlLocalidad"
 				ErrorMessage="Debe seleccionar una localidad"
 				Display="Dynamic"
 				Text="*"
 				InitialValue="0"
 				ValidationGroup="Register"/>
 			<br />
-			<span class="label required">Empresa</span>
-			<com:TTextBox
-	       		ID="txtEmpresa"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la el nombre de la Empresa"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtEmpresa"
 				ErrorMessage="Debe ingresar el nombre de la empresa."
@@ -97,14 +138,6 @@
 				Text="*"
 				ValidationGroup="Register"/>
 			<br />
-
-			<span class="label required">Nro de CUIT/CUIL</span>
-			<com:TTextBox
-	       		ID="txtCuit"
-				CssClass="medium"
-				MaxLength="13"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese el CUIT del proveedor"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtCuit"
 				ErrorMessage="Debe ingresar un CUIT de proveedor."
@@ -118,64 +151,21 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="Ingrese un CUIT válido (00-00000000-0)." />
-			<com:TCustomValidator
-				ControlToValidate="txtCuit"
-	  			Text="*"
-		   		ErrorMessage="El CUIT del proveedor ya existe."
-				Display="Dynamic"
-			  	OnServerValidate="cvCuit_OnServerValidate"
-			 	ValidationGroup="Register"/>
-			<br />				
-
-	       	<span class="label required">Factura Nro.</span>
-			<com:TTextBox
-	       		ID="txtFacturaNro"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese el número de la Factura"/>
+			<br />							
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtFacturaNro"
 				ErrorMessage="Debe ingresar el número de la Factura."
 				Display="Dynamic"
 				Text="*"
 				ValidationGroup="Register"/>
-			<com:TCustomValidator
-				ControlToValidate="txtFacturaNro"
-	  			Text="*"
-		   		ErrorMessage="Debe ingresar el número de la Factura."
-				Display="Dynamic"
-			  	OnServerValidate="txtFacturaNro_OnServerValidate"
-			 	ValidationGroup="Register"/>
-			<br />
-
-			<span class="label required">Recibo Nro.</span>
-			<com:TTextBox
-	       		ID="txtReciboNro"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese el número del Recibo"/>
+			<br />			
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtReciboNro"
 				ErrorMessage="Debe ingresar el número del Recibo."
 				Display="Dynamic"
 				Text="*"
 				ValidationGroup="Register"/>
-			<com:TCustomValidator
-				ControlToValidate="txtReciboNro"
-	  			Text="*"
-		   		ErrorMessage="Debe ingresar el número del Recibo."
-				Display="Dynamic"
-			  	OnServerValidate="txtReciboNro_OnServerValidate"
-			 	ValidationGroup="Register"/>
 			<br />
-
-	       	<span class="label required">Fecha de Emisión</span>
-			<com:TDatePicker
-				ID="dtpFechaEmision"
-				DateFormat="dd/MM/yyyy"
-				Culture="es" />
 			<com:TRequiredFieldValidator
 				ControlToValidate="dtpFechaEmision"
 				ErrorMessage="Debe ingresar la fecha de emisión."
@@ -191,14 +181,6 @@
 			    Display="Dynamic"
 			    ErrorMessage="El formato de fecha es inválido (dd/mm/yyyy)." />
 			<br />
-
-			<span class="label required">Concepto - Certificado Nro</span>
-			<com:TTextBox
-	       		ID="txtConcepto"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la el Concepto o Nro de Certificado"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtConcepto"
 				ErrorMessage="Debe ingresar el Concepto o Nro de Certificado."
@@ -206,12 +188,6 @@
 				Text="*"
 				ValidationGroup="Register"/>
 			<br />
-
-	       	<span class="label required">Fecha de Cancelación</span>
-			<com:TDatePicker
-				ID="dtpFechaCancelacion"
-				DateFormat="dd/MM/yyyy"
-				Culture="es" />
 			<com:TRequiredFieldValidator
 				ControlToValidate="dtpFechaCancelacion"
 				ErrorMessage="Debe ingresar la fecha de cancelación."
@@ -226,15 +202,7 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="El formato de fecha es inválido (dd/mm/yyyy)." />
-			<br />
-
-			<span class="label required">Orden de Pago o Cheque Nro.</span>
-			<com:TTextBox
-	       		ID="txtOrdenPago"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese el Orden de Pago o Cheque Nro."/>
+			<br />			
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtOrdenPago"
 				ErrorMessage="Debe ingresar el Orden de Pago o Cheque Nro."
@@ -242,15 +210,6 @@
 				Text="*"
 				ValidationGroup="Register"/>
 			<br />
-
-			<span class="label required">Monto</span>
-	       	<com:TTextBox
-		   		ID="txtMonto"
-				CssClass="medium"
-				MaxLength="15"
-				AutoTrim="True"
-		   		ToolTip="Ingrese el monto de contrato"
-				AutoCompleteType="Disabled" />
 			<com:TRequiredFieldValidator
 				ControlToValidate="txtMonto"
 				ErrorMessage="Debe ingresar el monto."
@@ -266,15 +225,6 @@
 				ValidationGroup="Register"/>
 			<br />
 
-			<span class="label required">Observaciones</span>
-			<com:TTextBox
-	       		ID="txtObservacion"
-				CssClass="largest"
-				MaxLength="255"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la observacion."/>
-			<br />			
-
 			<span class="label">Agregar Cuenta</span>
 			<com:TImageButton
 				ID="btnAgregarRendicion"
@@ -285,7 +235,7 @@
 				Attributes.onclick="return confirm('¿Desea guardar la cuenta?');"
 				ValidationGroup="Register" />
 					
-			</com:TActivePanel>	
+
 			<com:TActivePanel 
 				ID="pnlBorrarCuenta"
 				Visible="false">
@@ -314,8 +264,8 @@
 								AllowCustomPaging="false"
 						        AllowSorting="false"
 						        Width="600px">
-								<com:TBoundColumn DataField="IdContratoItem" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
-								<com:TBoundColumn DataField="IdContrato" Visible ="false" HeaderText="IdContrato" />
+								<com:TBoundColumn DataField="IdRendicionCuentas" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
+								<com:TBoundColumn DataField="IdCertificacion" Visible ="false" HeaderText="IdContrato" />
 								<com:TBoundColumn DataField="Orden" HeaderText="Nº de órden" />
 								<com:TBoundColumn DataField="Proyecto" HeaderText="Proyecto Nº" />
 								<com:TBoundColumn DataField="Localidad" HeaderText="Localidad" />
@@ -330,25 +280,25 @@
 								<com:TBoundColumn DataField="Monto" HeaderText="Monto $" />
 								<com:TBoundColumn DataField="Observaciones" HeaderText="Observaciones" />
 								
-								<com:TTemplateColumn ID="tcEditarCuenta" Visible ="false"HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+								<com:TTemplateColumn ID="tcEditarCuenta2" Visible ="true" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
 						            <prop:ItemTemplate>
 								       	<com:TActiveHyperLink
 								            ID="hlEditar"
 								            ToolTip="Haga click aquí para editar"
-								            NavigateUrl="?page=Obra.Contrato.Item.Update&id=<%# $this->Parent->Data['IdContratoItem']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
+								            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdRendicionCuentas']%>">
 								            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
 								    	</com:TActiveHyperLink>
 						            </prop:ItemTemplate>
-				             	</com:TTemplateColumn>
+				             	</com:TTemplateColumn>				             	
 						  	</com:TActiveDataGrid>
-						  	<com:TLabel ID="lblItems" Text="No existen cuentas cargadas en esta certificación" />
+						  	<com:TLabel ID="lblCuentas" Text="No existen cuentas cargadas en esta certificación" />
 						</td>
 					<tr>
 					</table>
 			</com:TActivePanel>
 
 		</fieldset>
-	</div>
+
 	<com:TValidationSummary
 		ShowMessageBox="false"
 		ShowSummary="true"

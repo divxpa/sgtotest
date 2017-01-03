@@ -6,8 +6,8 @@ class RendicionCuentasRecord extends TActiveRecord
   public $IdRendicionCuentas;
   public $IdCertificacion;
   public $Orden;
-  public $Proyecto
-  public $IdLocalidad
+  public $Proyecto;
+  public $IdLocalidad;
   public $Empresa;
   public $Cuit;
   public $Factura;

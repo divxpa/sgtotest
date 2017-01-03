@@ -6,16 +6,20 @@ class Update extends PageBaseSP{
 
 		if(!$this->IsPostBack){
 			$idCertificacion = $this->Request["id"];
+			$idRendicionCuentas = $this->Request["idc"];
 			$this->LoadDataRelated($idCertificacion);
 
 			if (!is_null($idCertificacion)) {
 				$this->lblAccion->Text = "Rendición de Cuentas s/Aporte Nacional";
 				$this->Refresh($idCertificacion);
+				if (!is_null($idRendicionCuentas)) {
+				$this->RefreshRendicionCuentas($idRendicionCuentas);
+			}
 			}
 		}
 	}
 
-	public function LoadDataRelated($idCertifiacion){
+	public function LoadDataRelated($idCertificacion){
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Nombre'] = 'asc';
 		$finder = LocalidadRecord::finder();
@@ -33,8 +37,33 @@ class Update extends PageBaseSP{
 		 		$this->dgCuentas->DataSource = $data;
 		 		$this->dgCuentas->dataBind();		 
 		 		if(count($data)){
-		 		$this->lblItems->Visible = false;
+		 		$this->lblCuentas->Visible = false;
 		}
+
+	}
+
+	public function RefreshRendicionCuentas($idRendicionCuentas){
+		$finder = RendicionCuentasRecord::finder();
+		$RendicionCuentas = $finder->findByPk($idRendicionCuentas);
+		$this->txtProyecto->Text = $RendicionCuentas->Proyecto;
+		$this->ddlLocalidad->SelectedValue = $RendicionCuentas->IdLocalidad;
+		$this->txtEmpresa->Text = $RendicionCuentas->Empresa;
+		$this->txtCuit->Text = $RendicionCuentas->Cuit;
+		$this->txtFacturaNro->Text = $RendicionCuentas->Factura;
+		$this->txtReciboNro->Text = $RendicionCuentas->Recibo;
+		if(!is_null($RendicionCuentas->FechaEmision)){
+			$fecha = explode("-",$RendicionCuentas->FechaEmision);
+			$this->dtpFechaEmision->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		}
+		$this->txtConcepto->Text = $RendicionCuentas->Concepto;
+		if(!is_null($RendicionCuentas->FechaCancelacion)){
+			$fecha = explode("-",$RendicionCuentas->FechaCancelacion);
+			$this->dtpFechaCancelacion->Text = $fecha[2]."/".$fecha[1]."/".$fecha[0];
+		}		
+		$this->txtOrdenPago->Text = $RendicionCuentas->OrdenDePago;
+		$this->txtMonto->Text = $RendicionCuentas->Monto;
+		$this->txtObservacion->Text = $RendicionCuentas->Observaciones; 
+		
 	}
 
 	public function LimpiarCampos(){
@@ -53,26 +82,24 @@ class Update extends PageBaseSP{
 		$this->txtObservacion->Text = "";	
 	}
 
-	public function btnCancelar_OnClick($sender, $param)
-	{
+	public function btnCancelar_OnClick($sender, $param){
 		$ido = $this->Request["id"];
 		//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
-	public function btnAceptar_OnClick($sender, $param)
-	{
+	public function btnAceptar_OnClick($sender, $param){
 		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
-	public function btnAgregarRendicion_OnClick($sender, $param)
-	{
+
+	public function btnAgregarRendicion_OnClick($sender, $param){
 		$idCertificacion = $this->Request["id"];
 		
 		if($this->IsValid){
 			if(!is_null($idCertificacion)){
 				$rendicioncuenta = new RendicionCuentasRecord();
-				$rendicioncuenta->IdCertificacion = $this->idCertificacion;
+				$rendicioncuenta->IdCertificacion = $idCertificacion;
 				$rendicioncuenta->Orden = $this->txtOrden ->Text;
 				$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
 				$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
@@ -109,20 +136,7 @@ class Update extends PageBaseSP{
 				$this->Log($e->getMessage(),true);
 			}
 		}
+		}
 	}
-
-
-	public function selectionChanged($sender,$param)
-    {
-       if ($this->ddlItemPadre->SelectedValue!="0"){
-       		$this->pnlItem->Display = "Dynamic";
-       }
-       else{
-       		$this->pnlItem->Display = "None";
-       }
-
-    }
-
 }
-
 ?>
