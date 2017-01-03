@@ -315,4 +315,55 @@ class ContratoPeer
 
 		return $sql;
 	}
+
+	public static function ItemsByContratoConUnidadMedida ($idContrato){
+		$sql = "Select
+				    ci.IdContratoItem, ci.IdContrato, ci.Item, ci.Cantidad, 
+				    CASE ci.UnidadMedida
+              WHEN 0 THEN 'gl.'
+              WHEN 1 THEN 'ml.'
+              WHEN 2 THEN 'm2.'
+              WHEN 3 THEN 'm3.'
+              WHEN 4 THEN 'lt.'
+              WHEN 5 THEN 'kg.'
+              WHEN 6 THEN 'u.'
+              WHEN 7 THEN 'pza'
+              WHEN 8 THEN 'cto.'
+              WHEN 9 THEN 'ha.'
+              END as UnidadMedida,
+            ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra
+				From 
+				    contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
+				Where
+				    ci.IdContrato = $idContrato
+				Order by 
+				    ci.Orden";
+		return $sql;
+	}
+
+	public static function RendicionesByCertificacion($idCertificacion){
+		$sql= "SELECT 
+				  IdRendicionCuentas, 
+				  IdCertificacion, 
+				  Orden, 
+				  Proyecto,  
+				  localidad.Nombre as 'Localidad', 
+				  Empresa, 
+				  Cuit, 
+				  Factura, 
+				  Recibo, 
+				  FechaEmision, 
+				  Concepto,
+				  FechaCancelacion, 
+				  OrdenDePago, 
+				  Monto, 
+				  Observaciones, 
+				  Estado, 
+				  Revision, 
+				  Activo 
+			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			WHERE idCertificacion = $idCertificacion";
+		return $sql;
+	}
+
 }

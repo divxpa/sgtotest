@@ -16,12 +16,18 @@ class Update extends PageBaseSP{
 	}
 
 	public function LoadDataRelated($idCertifiacion){
-		
+		$criteria = new TActiveRecordCriteria;
+		$criteria->OrdersBy['Nombre'] = 'asc';
+		$finder = LocalidadRecord::finder();
+		$localidades = $finder->findAll($criteria);
+		$this->ddlLocalidad->DataSource = $localidades;
+		$this->ddlLocalidad->dataBind();
 	}
 
 	public function Refresh($idContrato){
 
 		$this->lblAccion->Text = "Nuevo item de Contrato";
+		$this->LimpiarCampos();
 
 		$data = $this->CreateDataSource("ContratoPeer","RendicionesByCertificacion", $idContrato);
 		 		$this->dgCuentas->DataSource = $data;
@@ -32,11 +38,19 @@ class Update extends PageBaseSP{
 	}
 
 	public function LimpiarCampos(){
-		// $this->txtItem->Text = "";
-		// $this->txtCantidad->Text = "";
-		// $this->ddlUnidadDeMedida->SelectedValue = 0;
-		// $this->txtPrecioUnitario->Text = "";
-		// $this->txtPrecioTotal->Text = "";
+		$this->txtOrden->Text = "";
+		$this->txtProyecto->Text = "";
+		$this->ddlLocalidad->SelectedValue=0;
+		$this->txtEmpresa->Text = "";
+		$this->txtCuit->Text = "";
+		$this->txtFacturaNro->Text = "";
+		$this->txtReciboNro->Text = "";
+		$this->dtpFechaEmision->Text = "";
+		$this->txtConcepto->Text = "";
+		$this->dtpFechaCancelacion->Text = "";
+		$this->txtOrdenPago->Text = "";
+		$this->txtMonto->Text = "";
+		$this->txtObservacion->Text = "";	
 	}
 
 	public function btnCancelar_OnClick($sender, $param)
@@ -82,14 +96,13 @@ class Update extends PageBaseSP{
 				$rendicioncuenta->OrdenDePago = $this->txtOrdenPago->Text;
 				$rendicioncuenta->Monto = $this->txtMonto->Text;
 				$rendicioncuenta->Observaciones = $this->txtObservacion->Text;
-				$rendicioncuenta->Estado = $this-> ->Text;
-				$rendicioncuenta->Revision = $this-> ->Text;
+				//$rendicioncuenta->Estado = $this-> ->Text;
+				//$rendicioncuenta->Revision = $this-> ->Text;
 				$rendicioncuenta->Activo = 1;
 
 			try{
 				$rendicioncuenta->save();
 				$this->Refresh($idCertificacion);
-				$this->LimpiarCampos();
 				}
 
 			catch(exception $e){
@@ -98,20 +111,6 @@ class Update extends PageBaseSP{
 		}
 	}
 
-	public function chkEsPadre_OnCheckedChanged($sender, $param)
-	{		
-		if($this->chkEsPadre->Checked){
-			$this->pnlItem->Display = "None";
-			$this->pnlItemPadre->Display = "None";
-			//$this->ddlItemPadre->SelectedValue = 0;
-			$this->ddlItemPadre->dataBind();
-			//Controlar el ID de ItemPadre
-		}
-		else{
-			$this->pnlItem->Display = "Dynamic";
-			$this->pnlItemPadre->Display = "Dynamic";
-		}
-	}
 
 	public function selectionChanged($sender,$param)
     {

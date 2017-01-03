@@ -85,6 +85,17 @@
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>
              	</com:TTemplateColumn>
+             	<com:TTemplateColumn ID="tcRendicionCuentas" HeaderText="Rendicion de Cuentas" ItemStyle.HorizontalAlign="Center">
+		            <prop:ItemTemplate>
+				       	<com:TActiveHyperLink
+				            ID="hlEditar"
+				            ToolTip="Haga click aquí para Agregar Rendición de Cuentas"
+				            Visible="<%# $this->Parent->Data['EditarVisible']%>"
+				            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>">
+				            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+				    	</com:TActiveHyperLink>
+		            </prop:ItemTemplate>
+             	</com:TTemplateColumn>
 		  	</com:TActiveDataGrid>
 		</div>
 	</div>
