@@ -91,7 +91,7 @@
 				            ID="hlEditar"
 				            ToolTip="Haga click aquí para Agregar Rendición de Cuentas"
 				            Visible="<%# $this->Parent->Data['EditarVisible']%>"
-				            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>">
+				            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&ido=<%# $this->Parent->Data['IdObra']%>&idcontrato=<%# $this->Parent->Data['IdContrato']%>">
 				            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>

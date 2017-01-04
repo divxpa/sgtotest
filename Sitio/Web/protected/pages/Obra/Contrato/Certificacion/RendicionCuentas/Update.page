@@ -2,7 +2,11 @@
 <com:TContent ID="MainContent">
 	<div style="height: 59px;">
 		<div style="display: inline;">
-	        <span class="maintitle">Certificacion >> </span>
+	        <com:THyperLink 
+				ID="hlkVolver"
+				NavigateUrl="?page=Obra.Contrato.Certificacion.HomeAdmin" 
+				Text="Certificaciones de Contrato"
+				CssClass="maintitle volver" />
 	    	<com:TLabel
 		        ID="lblAccion"
 		        Text=" Agregar Rendición de Cuentas"

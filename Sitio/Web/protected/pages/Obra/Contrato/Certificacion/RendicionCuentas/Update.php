@@ -20,17 +20,22 @@ class Update extends PageBaseSP{
 	}
 
 	public function LoadDataRelated($idCertificacion){
+		$idContrato = $this->Request["idcontrato"];
+		$idObra = $this->Request["ido"];
+
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Nombre'] = 'asc';
 		$finder = LocalidadRecord::finder();
 		$localidades = $finder->findAll($criteria);
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
+
+		$this->hlkVolver->NavigateUrl .= "&idc=$idContrato&ido=$idObra";
 	}
 
 	public function Refresh($idContrato){
 
-		$this->lblAccion->Text = "Nuevo item de Contrato";
+		$this->lblAccion->Text = "Rendición de Cuentas";
 		$this->LimpiarCampos();
 
 		$data = $this->CreateDataSource("ContratoPeer","RendicionesByCertificacion", $idContrato);
