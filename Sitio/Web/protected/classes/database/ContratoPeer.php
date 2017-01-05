@@ -352,9 +352,9 @@ class ContratoPeer
 				  Cuit, 
 				  Factura, 
 				  Recibo, 
-				  FechaEmision, 
+				  DATE_FORMAT(FechaEmision,'%d/%m/%Y') as FechaEmision,
 				  Concepto,
-				  FechaCancelacion, 
+				  DATE_FORMAT(FechaCancelacion,'%d/%m/%Y') as FechaCancelacion,
 				  OrdenDePago, 
 				  Monto, 
 				  Observaciones, 
@@ -362,7 +362,7 @@ class ContratoPeer
 				  Revision, 
 				  Activo 
 			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
-			WHERE idCertificacion = $idCertificacion";
+			WHERE idCertificacion = $idCertificacion and rendicioncuentas.Activo=1";
 		return $sql;
 	}
 

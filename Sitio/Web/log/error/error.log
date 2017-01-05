@@ -74,3 +74,87 @@
 20161223134804 	mmartinez	s:544:"TDbCommand failed to execute the SQL statement "INSERT INTO `certificacionitem`(`IdCertificacion`, `IdContratoItem`, `PorcentajeActual`, `ImporteActual`) VALUES (:IdCertificacion, :IdContratoItem, :PorcentajeActual, :ImporteActual)": SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ssp`.`certificacionitem`, CONSTRAINT `fk_certificacionitem_contratoitem` FOREIGN KEY (`IdContratoItem`) REFERENCES `contratoitem` (`IdContratoItem`) ON DELETE NO ACTION ON UPDATE NO ACTION)";
 20161223134841 	mmartinez	s:544:"TDbCommand failed to execute the SQL statement "INSERT INTO `certificacionitem`(`IdCertificacion`, `IdContratoItem`, `PorcentajeActual`, `ImporteActual`) VALUES (:IdCertificacion, :IdContratoItem, :PorcentajeActual, :ImporteActual)": SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ssp`.`certificacionitem`, CONSTRAINT `fk_certificacionitem_contratoitem` FOREIGN KEY (`IdContratoItem`) REFERENCES `contratoitem` (`IdContratoItem`) ON DELETE NO ACTION ON UPDATE NO ACTION)";
 20161223135100 	mmartinez	s:544:"TDbCommand failed to execute the SQL statement "INSERT INTO `certificacionitem`(`IdCertificacion`, `IdContratoItem`, `PorcentajeActual`, `ImporteActual`) VALUES (:IdCertificacion, :IdContratoItem, :PorcentajeActual, :ImporteActual)": SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`ssp`.`certificacionitem`, CONSTRAINT `fk_certificacionitem_contratoitem` FOREIGN KEY (`IdContratoItem`) REFERENCES `contratoitem` (`IdContratoItem`) ON DELETE NO ACTION ON UPDATE NO ACTION)";
+20170105193938 	mmartinez	s:838:"TDbCommand failed to execute the query SQL "SELECT 
+				  IdRendicionCuentas, 
+				  IdCertificacion, 
+				  Orden, 
+				  Proyecto,  
+				  localidad.Nombre as 'Localidad', 
+				  Empresa, 
+				  Cuit, 
+				  Factura, 
+				  Recibo, 
+				  DATE_FORMAT(FechaEmision,'%d/%m/%Y') as FechaEmision,
+				  Concepto,
+				  DATE_FORMAT(FechaCancelacion,'%d/%m/%Y') as FechaCancelacion,
+				  OrdenDePago, 
+				  Monto, 
+				  Observaciones, 
+				  Estado, 
+				  Revision, 
+				  Activo 
+			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			WHERE idCertificacion = ": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 21";
+20170105194310 	mmartinez	s:838:"TDbCommand failed to execute the query SQL "SELECT 
+				  IdRendicionCuentas, 
+				  IdCertificacion, 
+				  Orden, 
+				  Proyecto,  
+				  localidad.Nombre as 'Localidad', 
+				  Empresa, 
+				  Cuit, 
+				  Factura, 
+				  Recibo, 
+				  DATE_FORMAT(FechaEmision,'%d/%m/%Y') as FechaEmision,
+				  Concepto,
+				  DATE_FORMAT(FechaCancelacion,'%d/%m/%Y') as FechaCancelacion,
+				  OrdenDePago, 
+				  Monto, 
+				  Observaciones, 
+				  Estado, 
+				  Revision, 
+				  Activo 
+			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			WHERE idCertificacion = ": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 21";
+20170105195402 	mmartinez	s:897:"TDbCommand failed to execute the query SQL "SELECT 
+				  IdRendicionCuentas, 
+				  IdCertificacion, 
+				  Orden, 
+				  Proyecto,  
+				  localidad.Nombre as 'Localidad', 
+				  Empresa, 
+				  Cuit, 
+				  Factura, 
+				  Recibo, 
+				  DATE_FORMAT(FechaEmision,'%d/%m/%Y') as FechaEmision,
+				  Concepto,
+				  DATE_FORMAT(FechaCancelacion,'%d/%m/%Y') as FechaCancelacion,
+				  OrdenDePago, 
+				  Monto, 
+				  Observaciones, 
+				  Estado, 
+				  Revision, 
+				  Activo 
+			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			WHERE idCertificacion =  and rendicioncuentas.Activo=1": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'and rendicioncuentas.Activo=1' at line 21";
+20170105195407 	mmartinez	s:897:"TDbCommand failed to execute the query SQL "SELECT 
+				  IdRendicionCuentas, 
+				  IdCertificacion, 
+				  Orden, 
+				  Proyecto,  
+				  localidad.Nombre as 'Localidad', 
+				  Empresa, 
+				  Cuit, 
+				  Factura, 
+				  Recibo, 
+				  DATE_FORMAT(FechaEmision,'%d/%m/%Y') as FechaEmision,
+				  Concepto,
+				  DATE_FORMAT(FechaCancelacion,'%d/%m/%Y') as FechaCancelacion,
+				  OrdenDePago, 
+				  Monto, 
+				  Observaciones, 
+				  Estado, 
+				  Revision, 
+				  Activo 
+			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			WHERE idCertificacion =  and rendicioncuentas.Activo=1": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'and rendicioncuentas.Activo=1' at line 21";

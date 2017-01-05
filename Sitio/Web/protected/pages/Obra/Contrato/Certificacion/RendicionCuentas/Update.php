@@ -13,8 +13,13 @@ class Update extends PageBaseSP{
 				$this->lblAccion->Text = "Rendición de Cuentas s/Aporte Nacional";
 				$this->Refresh($idCertificacion);
 				if (!is_null($idRendicionCuentas)) {
-				$this->RefreshRendicionCuentas($idRendicionCuentas);
-			}
+				$borrar = $this->Request["borrar"];
+				if (!is_null($borrar)) {
+					$this->borrarRendicionCuentas($idRendicionCuentas);
+				}
+				else
+					$this->RefreshRendicionCuentas($idRendicionCuentas);
+				}
 			}
 		}
 	}
@@ -72,7 +77,7 @@ class Update extends PageBaseSP{
 	}
 
 	public function LimpiarCampos(){
-		$this->txtOrden->Text = "";
+		//$this->txtOrden->Text = "";
 		$this->txtProyecto->Text = "";
 		$this->ddlLocalidad->SelectedValue=0;
 		$this->txtEmpresa->Text = "";
@@ -105,7 +110,7 @@ class Update extends PageBaseSP{
 			if(!is_null($idCertificacion)){
 				$rendicioncuenta = new RendicionCuentasRecord();
 				$rendicioncuenta->IdCertificacion = $idCertificacion;
-				$rendicioncuenta->Orden = $this->txtOrden ->Text;
+				//$rendicioncuenta->Orden = $this->txtOrden ->Text;
 				$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
 				$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
 				$rendicioncuenta->Empresa = $this->txtEmpresa ->Text;
@@ -142,6 +147,37 @@ class Update extends PageBaseSP{
 			}
 		}
 		}
+	}
+
+	public function btnAgregarRendicion2_OnClick($sender, $param){
+		$finder = RendicionCuentasRecord::finder();
+		$rendicioncuenta = $finder->findByPk($idRendicionCuentas);
+		$rendicioncuenta->Activo = 0;
+		try{
+				$rendicioncuenta->save();
+				$this->Refresh($idCertificacion);
+				}
+
+			catch(exception $e){
+				$this->Log($e->getMessage(),true);
+			}
+
+	}
+
+	public function borrarRendicionCuentas($idRendicionCuentas){
+		$finder = RendicionCuentasRecord::finder();
+		$rendicioncuenta = $finder->findByPk($idRendicionCuentas);
+		$rendicioncuenta->Activo = 0;
+		try{
+				//echo "<pre>";print_r($rendicioncuenta); die();
+				$rendicioncuenta->save();
+				//$this->Refresh($idCertificacion);
+				}
+
+			catch(exception $e){
+				$this->Log($e->getMessage(),true);
+			}
+
 	}
 }
 ?>
