@@ -36,6 +36,11 @@ class RendicionCuentasPeer
 		return $sql;
 	}
 
+	public static function TotalMontoRendicionesByCertificacion($idCertificacion){
+		$sql= "Select sum(monto) as monto from rendicioncuentas where IdCertificacion = $idCertificacion and activo=1";
+		return $sql;
+	}
+
 
 
 }

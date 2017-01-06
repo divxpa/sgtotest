@@ -273,9 +273,9 @@
 								            <prop:ItemTemplate>
 								            		<com:TActiveHyperLink
 										            ID="hlEditar"
-										            ToolTip="Haga click aquí para borrar la rendicion de cuenta seleccionada"
-										            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdRendicionCuentas']%>&borrar=true">
-										            <img src="themes/serviciospublicos/images/btnAgregar2.png" border="0"/>
+										            ToolTip="Haga click aquí para aprobar la rendicion de cuenta seleccionada"
+										            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdRendicionCuentas']%>&aprobado=true">
+										            <img src="themes/serviciospublicos/images/btnAprobado.png" border="0"/>
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>
@@ -283,9 +283,9 @@
 								            <prop:ItemTemplate>
 								            		<com:TActiveHyperLink
 										            ID="hlEditar"
-										            ToolTip="Haga click aquí para borrar la rendicion de cuenta seleccionada"
-										            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdRendicionCuentas']%>&borrar=true">
-										            <img src="themes/serviciospublicos/images/btnBorrar.png" border="0"/>
+										            ToolTip="Haga click aquí para rechazado la rendicion de cuenta seleccionada"
+										            NavigateUrl="?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdRendicionCuentas']%>&rechazado=true">
+										            <img src="themes/serviciospublicos/images/btnRechazado.png" border="0"/>
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>		
