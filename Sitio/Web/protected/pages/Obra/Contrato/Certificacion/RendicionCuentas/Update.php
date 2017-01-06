@@ -18,6 +18,7 @@ class Update extends PageBaseSP{
 					$this->borrarRendicionCuentas($idRendicionCuentas);
 				}
 				else
+					$this->lblAccion->Text = "Guardar Cambios";
 					$this->RefreshRendicionCuentas($idRendicionCuentas);
 				}
 			}
@@ -43,7 +44,7 @@ class Update extends PageBaseSP{
 		$this->lblAccion->Text = "Rendición de Cuentas";
 		$this->LimpiarCampos();
 
-		$data = $this->CreateDataSource("ContratoPeer","RendicionesByCertificacion", $idContrato);
+		$data = $this->CreateDataSource("RendicionCuentasPeer","RendicionesByCertificacion", $idContrato);
 		 		$this->dgCuentas->DataSource = $data;
 		 		$this->dgCuentas->dataBind();		 
 		 		if(count($data)){
@@ -105,12 +106,22 @@ class Update extends PageBaseSP{
 
 	public function btnAgregarRendicion_OnClick($sender, $param){
 		$idCertificacion = $this->Request["id"];
+		$idRendicion = $this->Request["idc"];
 		
 		if($this->IsValid){
 			if(!is_null($idCertificacion)){
-				$rendicioncuenta = new RendicionCuentasRecord();
-				$rendicioncuenta->IdCertificacion = $idCertificacion;
-				//$rendicioncuenta->Orden = $this->txtOrden ->Text;
+				if(!is_null($idRendicion)){
+					$finder = RendicionCuentasRecord::finder();
+					$rendicioncuenta = $finder->findByPk($idRendicion);					
+				}
+				else{
+					$rendicioncuenta = new RendicionCuentasRecord();
+					$orden = $this->CreateDataSource("RendicionCuentasPeer", "ProximaOrderRendicionesByCertificacion", $idCertificacion);
+					$this->$rendicioncuenta->Orden = $orden;
+					$rendicioncuenta->IdCertificacion = $idCertificacion;
+					$rendicioncuenta->Activo = 1;
+					$rendicioncuenta->Estado = 0;
+				}								
 				$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
 				$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
 				$rendicioncuenta->Empresa = $this->txtEmpresa ->Text;
@@ -135,7 +146,7 @@ class Update extends PageBaseSP{
 				$rendicioncuenta->Observaciones = $this->txtObservacion->Text;
 				//$rendicioncuenta->Estado = $this-> ->Text;
 				//$rendicioncuenta->Revision = $this-> ->Text;
-				$rendicioncuenta->Activo = 1;
+				
 
 			try{
 				$rendicioncuenta->save();
@@ -177,6 +188,10 @@ class Update extends PageBaseSP{
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
 			}
+
+	}
+
+	public function ObtenerProximaRendicion($idCertificacion){
 
 	}
 }
