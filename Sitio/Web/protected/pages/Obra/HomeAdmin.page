@@ -131,7 +131,7 @@
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlEditar"
-						            ToolTip="Haga click aquí para editar"
+						            ToolTip="Haga click aquí para editar la obra"
 						            NavigateUrl="?page=Obra.UpdateAdmin&id=<%# $this->Parent->Data['IdObra']%>"
 						            Visible="<%# $this->Parent->Data['EditarVisible']%>">
 						            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
@@ -142,27 +142,27 @@
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlContratos"
-						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
+						            ToolTip="Haga click aquí para editar el convenio de la obra"
 						            NavigateUrl="?page=Obra.Contrato.UpdateAdmin&id=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>
 		             	</com:TTemplateColumn>
-		             	<com:TTemplateColumn ID="tcItem" HeaderText="Editar Items Contrato " ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
+		             	<com:TTemplateColumn ID="tcItem" HeaderText="Editar Items Convenio " ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlItems"
-						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
+						            ToolTip="Haga click aquí para ingresar a los intems del convenio"
 						            NavigateUrl="?page=Obra.Contrato.Item.Update&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>
 				            </prop:ItemTemplate>
 		             	</com:TTemplateColumn>
-		             	<com:TTemplateColumn ID="tcCertificacion" HeaderText="Certificacion" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
+		             	<com:TTemplateColumn ID="tcCertificacion" HeaderText="Certificaciones" ItemStyle.HorizontalAlign="Center" ItemStyle.CustomStyle="width: 20px; min-width: 20px; max-width: 20px; word-wrap: break-word; text-wrap: unrestricted">
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlCertificacion"
-						            ToolTip="Haga click aquí para ingresar a los contratos de la obra"
+						            ToolTip="Haga click aquí para ver las certificaciones de la obra"
 						            NavigateUrl="?page=Obra.Contrato.Certificacion.HomeAdmin&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>

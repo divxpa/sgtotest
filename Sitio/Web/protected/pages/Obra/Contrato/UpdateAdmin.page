@@ -9,7 +9,7 @@
 				CssClass="maintitle volver" />
 	    	<com:TLabel
 		        ID="lblAccion"
-		        Text=" Agregar Contrato"
+		        Text=" Agregar Convenio"
 		        CssClass="maintitle" />
 		</div>
 		<div id="button-bar-top" style="margin: 15px 0 0 0;">
@@ -26,7 +26,8 @@
 				ToolTip="Cancelar"
 				ImageUrl="themes/serviciospublicos/images/invisible.png"
 				CssClass="imgbtn2-cancelar"
-				OnClick="btnCancelar_OnClick" />
+				OnClick="btnCancelar_OnClick" 
+				Attributes.onclick="return confirm('¿Desea salir? Perderá los cambios');" />
 		</div>
 	</div>
 	<div>

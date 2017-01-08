@@ -28,22 +28,225 @@
 	</div>
 	<div>
 		<fieldset>
-			<span class="label required">Obra</span>
+		<span class="label">Obra</span>
 			<com:TLabel 
 				ID="lblObra" 
 				CssClass="labeldata"/>
 			<br />
-			<span class="label required">Contrato</span>
+			<span class="label">Contrato</span>
 			<com:TLabel 
 				ID="lblContrato" 
 				CssClass="labeldata"/>
 			<br />
+	</div>
+	<br />
+	<div>
+	<fieldset>
+		<table>
+			<thead>
+				<tr style="background-color:#CCC; font-size:10px;">
+					<th width="250px">Item</th>
+					<th width="60px">Item con Subitem</th>
+					<th width="100px">Subitem del Item</th>
+					<th width="100px">Unidad de Medida</th>
+					<th width="100px">Cantidad</th>
+					<th width="100px">Precio Unitario</th>
+					<th width="100px">Precio Total</th>
+					<th width="100px">Incidencia</th>
+					<th width="100px">Guardar Item</th>
+
+				</tr>
+					<th width="250px">
+						<com:TTextBox
+				       		ID="txtItem"
+							MaxLength="50"
+				            AutoTrim="True"
+				       		ToolTip="Ingrese la denominacion del Item" style="width: 250px; font-size: 12px;"/>
+				       	<com:TRequiredFieldValidator
+							ControlToValidate="txtItem"
+							ErrorMessage="Debe ingresar la denominacion del Item."
+							Display="Dynamic"
+							Text="*"
+							ValidationGroup="Register"/>
+					</th>
+					<th width="60px">
+								<com:TActiveCheckBox 
+						       		ID="chkEsPadre"
+						       		Visible = "true"
+						       		Checked="false"
+						       		OnCheckedChanged="chkEsPadre_OnCheckedChanged"
+						       		ClientSide.OnLoading="Element.show('callback_status')"
+							        ClientSide.OnComplete="Element.hide('callback_status')" />		
+					</th>
+					<th width="100px">
+						<com:TDropDownList 
+							ID="ddlItemPadre"
+							AutoPostBack="true"
+							OnSelectedIndexChanged="selectionChanged"
+							ToolTip="Seleccione"
+					       		PromptValue="0"
+					       		PromptText="Seleccione"
+					       		DataTextField="Item"
+					       		DatavalueField="idContratoItemPadre"/>
+					</th>
+					<th width="100px">
+						<com:TDropDownList 
+							ID="ddlUnidadDeMedida" style="width: 100px; font-size: 12px;">
+								<com:TListItem Value="0" Text="gl."/>
+								<com:TListItem Value="1" Text="ml." />
+								<com:TListItem Value="2" Text="m2." />
+								<com:TListItem Value="3" Text="m3." />
+								<com:TListItem Value="4" Text="lt." />
+								<com:TListItem Value="5" Text="kg." />
+								<com:TListItem Value="6" Text="u." />
+								<com:TListItem Value="7" Text="pza." />
+								<com:TListItem Value="8" Text="cto." />
+								<com:TListItem Value="9" Text="ha." />
+						</com:TDropDownList>
+					</th>
+					<th width="100px">
+						<com:TTextBox
+					   		ID="txtCantidad"
+							MaxLength="15"
+							AutoTrim="True"
+							OnTextChanged="txtCantidad_OnTextChanged"
+							AutoPostBack="true"
+					   		ToolTip="Ingrese el precio unitario"
+							AutoCompleteType="Disabled" 
+							style="width: 100px; font-size: 12px;"/>
+						<com:TRequiredFieldValidator
+							ControlToValidate="txtCantidad"
+							ErrorMessage="Debe ingresar la cantidad de Items."
+							Display="Dynamic"
+							Text="*"
+							ValidationGroup="Register"/>
+					</th>
+					<th width="100px">
+						<com:TTextBox
+					   		ID="txtPrecioUnitario"
+							MaxLength="15"
+							AutoTrim="True"
+							OnTextChanged="txtPrecioUnitario_OnTextChanged"
+							AutoPostBack="true"
+					   		ToolTip="Ingrese el precio unitario"
+							AutoCompleteType="Disabled" style="width: 100px; font-size: 12px;"/>
+						<com:TRequiredFieldValidator
+							ControlToValidate="txtPrecioUnitario"
+							ErrorMessage="Debe ingresar el precio unitario del Item."
+							Display="Dynamic"
+							Text="*"
+							ValidationGroup="Register"/>
+					</th>
+					<th width="100px">
+						<com:TTextBox
+					   		ID="txtPrecioTotal"
+							MaxLength="15"
+							AutoTrim="True"
+							AutoPostBack="true"
+							Enabled="false"
+					   		ToolTip="Ingrese el precio total"
+							AutoCompleteType="Disabled" style="width: 100px; font-size: 12px;"/>
+						<com:TRequiredFieldValidator
+							ControlToValidate="txtPrecioTotal"
+							ErrorMessage="Debe ingresar el precio total del Item."
+							Display="Dynamic"
+							Text="*"
+							ValidationGroup="Register"/>
+					</th>
+					<th width="100px">
+						<com:TTextBox
+					   		ID="txtIncidencia"
+							MaxLength="15"
+							AutoTrim="True"
+							AutoPostBack="true"
+							Enabled="false"
+							AutoCompleteType="Disabled" style="width: 100px; font-size: 12px;"/>
+						<com:TRequiredFieldValidator
+							ControlToValidate="txtPrecioTotal"
+							ErrorMessage="Debe ingresar el precio total del Item."
+							Display="Dynamic"
+							Text="*"
+							ValidationGroup="Register"/>
+					</th>
+					<th>
+						<com:TImageButton
+							ID="btnAgregarItem"
+							ToolTip="Guardar"
+							ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
+							CssClass="imgbtn2-guardar"
+							OnClick="btnAgregarItem_OnClick"
+							Attributes.onclick="return confirm('¿Desea guardar los datos 2?');"
+							ValidationGroup="Register" />
+					</th>
+
+				<tr>
+				<tr>
+				</tr>
+			</thead>
+		</table>		
+	</div>
+	<br>
+	<div>
+		<fieldset>
+			<com:TActivePanel 
+				ID="pnlItemsDelConvenio"
+				Visible="true">
+				<table border="0" cellpadding="10px">
+				<thead>
+					<tr>
+						<td valign="top">
+							<span class="maintitle2">Items del Convenio</span>							
+							<com:TActiveDataGrid
+							    ID="dgItems"
+								CssClass="TableForm"
+							    AlternatingItemStyle.BackColor="#EEEEEE"
+							    AutoGenerateColumns="false"
+					            AllowPaging="false"
+								AllowCustomPaging="false"
+						        AllowSorting="false"
+						        >
+								<com:TBoundColumn DataField="IdContratoItem" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
+								<com:TBoundColumn DataField="IdContrato" Visible ="false" HeaderText="IdContrato" />
+								<com:TBoundColumn ItemStyle.Width="60px" DataField="Orden" HeaderText="Orden" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="350px" DataField="Item" HeaderText="Item" ItemStyle.HorizontalAlign="Left"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="UnidadMedida" HeaderText="Unidad de Medida" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="P. Unitario" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="P. Total" ItemStyle.HorizontalAlign="Center"/>								
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Center"/>
+
+								<com:TTemplateColumn ID="tcEditarItem" Visible ="true"HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+						            <prop:ItemTemplate>
+								       	<com:TActiveHyperLink
+								            ID="hlEditar"
+								            ToolTip="Haga click aquí para editar"
+								            NavigateUrl="?page=Obra.Contrato.Item.Update&id=<%# $this->Parent->Data['IdContratoItem']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
+								            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
+								    	</com:TActiveHyperLink>
+						            </prop:ItemTemplate>
+				             	</com:TTemplateColumn>
+						  	</com:TActiveDataGrid>
+						  	<com:TLabel ID="lblItems" Text="No existen items cargados del convenio" />
+						</td>
+					</tr>					
+				</thead>
+				<tbody>
+					<tr style="background-color:#CCC; font-size:10px;">
+									<td align="center"><strong>TOTALES</strong></td>
+									<td align="right"><strong><com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
+					</tr>
+				</tbody>
+					</table>
+			</com:TActivePanel>
+	</div>
+	<div>	
+			
 			<com:TActivePanel 
 				ID="pnlItemPadre"
 				Visible="false">
 				<span class="label">El Item es una Subcategoria de</span>
 				<com:TDropDownList 
-				ID="ddlItemPadre"
+				ID="ddlItemPadre2"
 				AutoPostBack="true"
 				OnSelectedIndexChanged="selectionChanged"
 				ToolTip="Seleccione"
@@ -52,116 +255,11 @@
 		       		DataTextField="Item"
 		       		DatavalueField="idContratoItemPadre"/>
 				<br />
-			</com:TActivePanel>
-			<span class="label">Este item incluye Subitems</span>
-	       	<com:TActiveCheckBox 
-	       		ID="chkEsPadre"
-	       		Visible = "false"
-	       		Checked="false"
-	       		OnCheckedChanged="chkEsPadre_OnCheckedChanged"
-	       		ClientSide.OnLoading="Element.show('callback_status')"
-		        ClientSide.OnComplete="Element.hide('callback_status')" />					    
-		    </br>
-			<span class="label required">Orden</span>
-			<com:TTextBox
-	       		ID="txtOrden"
-				CssClass="largest"
-				MaxLength="50"
-	            AutoTrim="True"
-	            Enabled="False"
-	       		ToolTip="Ingrese el orden del Item"/>
-	       	<com:TRequiredFieldValidator
-				ControlToValidate="txtOrden"
-				ErrorMessage="Debe ingresar orden del Item."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-			<br />
-			<span class="label required">Item</span>
-			<com:TTextBox
-	       		ID="txtItem"
-				CssClass="largest"
-				MaxLength="50"
-	            AutoTrim="True"
-	       		ToolTip="Ingrese la denominacion del Item"/>
-	       	<com:TRequiredFieldValidator
-				ControlToValidate="txtItem"
-				ErrorMessage="Debe ingresar la denominacion del Item."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-			<br />
+			</com:TActivePanel>	       			    
+		    </br>			
 			<com:TActivePanel 
-				ID="pnlItem">
-			<span class="label required">Unidad de Medida</span>
-			<com:TDropDownList 
-				ID="ddlUnidadDeMedida">
-					<com:TListItem Value="0" Text="gl."/>
-					<com:TListItem Value="1" Text="ml." />
-					<com:TListItem Value="2" Text="m2." />
-					<com:TListItem Value="3" Text="m3." />
-					<com:TListItem Value="4" Text="lt." />
-					<com:TListItem Value="5" Text="kg." />
-					<com:TListItem Value="6" Text="u." />
-					<com:TListItem Value="7" Text="pza." />
-					<com:TListItem Value="8" Text="cto." />
-					<com:TListItem Value="9" Text="ha." />
-			</com:TDropDownList>
-			<br />
-			<span class="label required">Cantidad</span>
-	       	<com:TTextBox
-		   		ID="txtCantidad"
-				CssClass="medium"
-				MaxLength="15"
-				AutoTrim="True"
-		   		ToolTip="Ingrese el precio unitario"
-				AutoCompleteType="Disabled" />
-			<com:TRequiredFieldValidator
-				ControlToValidate="txtCantidad"
-				ErrorMessage="Debe ingresar la cantidad de Items."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-			</br>
-			<span class="label required">Precio Unitario</span>
-	       	<com:TTextBox
-		   		ID="txtPrecioUnitario"
-				CssClass="medium"
-				MaxLength="15"
-				AutoTrim="True"
-		   		ToolTip="Ingrese el precio unitario"
-				AutoCompleteType="Disabled" />
-			<com:TRequiredFieldValidator
-				ControlToValidate="txtPrecioUnitario"
-				ErrorMessage="Debe ingresar el precio unitario del Item."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-			</br>
-			<span class="label required">Precio Total</span>
-	       	<com:TTextBox
-		   		ID="txtPrecioTotal"
-				CssClass="medium"
-				MaxLength="15"
-				AutoTrim="True"
-		   		ToolTip="Ingrese el precio total"
-				AutoCompleteType="Disabled" />
-			<com:TRequiredFieldValidator
-				ControlToValidate="txtPrecioTotal"
-				ErrorMessage="Debe ingresar el precio total del Item."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
-			<br />
-			<span class="label">Agregar Item</span>
-			<com:TImageButton
-				ID="btnAgregarItem"
-				ToolTip="Guardar"
-				ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
-				CssClass="imgbtn2-guardar"
-				OnClick="btnAgregarItem_OnClick"
-				Attributes.onclick="return confirm('¿Desea guardar los datos?');"
-				ValidationGroup="Register" />
+				ID="pnlItem">		
+
 					
 			</com:TActivePanel>	
 			<com:TActivePanel 
@@ -175,47 +273,7 @@
 			    </com:THyperLink>
 				<br />
 			</com:TActivePanel>
-<com:TActivePanel 
-				ID="pnlItemsDelConvenio"
-				Visible="true">
-				<br />
-				<table border="0" cellpadding="10px">
-					<tr>
-						<td valign="top">
-							<span class="maintitle2">Items del Convenio</span>							
-							<com:TActiveDataGrid
-							    ID="dgItems"
-								CssClass="TableForm"
-							    AlternatingItemStyle.BackColor="#EEEEEE"
-							    AutoGenerateColumns="false"
-					            AllowPaging="false"
-								AllowCustomPaging="false"
-						        AllowSorting="false"
-						        Width="600px">
-								<com:TBoundColumn DataField="IdContratoItem" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
-								<com:TBoundColumn DataField="IdContrato" Visible ="false" HeaderText="IdContrato" />
-								<com:TBoundColumn DataField="Orden" HeaderText="Orden" />
-								<com:TBoundColumn DataField="Item" HeaderText="Item" />
-								<com:TBoundColumn DataField="UnidadMedida" HeaderText="Unidad de Medida" />
-								<com:TBoundColumn DataField="PrecioUnitario" HeaderText="P. Unitario" />
-								<com:TBoundColumn DataField="PrecioTotal" HeaderText="P. Total" />
-								<com:TBoundColumn DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Right"/>
-								<com:TTemplateColumn ID="tcEditarItem" Visible ="false"HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
-						            <prop:ItemTemplate>
-								       	<com:TActiveHyperLink
-								            ID="hlEditar"
-								            ToolTip="Haga click aquí para editar"
-								            NavigateUrl="?page=Obra.Contrato.Item.Update&id=<%# $this->Parent->Data['IdContratoItem']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
-								            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
-								    	</com:TActiveHyperLink>
-						            </prop:ItemTemplate>
-				             	</com:TTemplateColumn>
-						  	</com:TActiveDataGrid>
-						  	<com:TLabel ID="lblItems" Text="No existen items cargados del convenio" />
-						</td>
-					<tr>
-					</table>
-			</com:TActivePanel>
+			
 
 
 

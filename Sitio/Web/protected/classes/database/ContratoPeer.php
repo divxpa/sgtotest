@@ -216,7 +216,9 @@ class ContratoPeer
               WHEN 8 THEN 'cto.'
               WHEN 9 THEN 'ha.'
               END as UnidadMedida,
-            ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra
+            ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra,
+            ROUND(((ci.PrecioTotal * 100) / c.Monto ), 2) as Incidencia
+
 				From 
 				    contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
 				Where

@@ -234,8 +234,8 @@
 										AllowCustomPaging="false" AllowSorting="true" OnSortCommand="sortDataGrid">
 										<com:TBoundColumn DataField="IdRendicionCuentas" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
 										<com:TBoundColumn DataField="IdCertificacion" Visible ="false" HeaderText="IdContrato" />
-										<com:TBoundColumn  ItemStyle.Width="44px" DataField="Estado" HeaderText="Estado" />
-										<com:TBoundColumn  ItemStyle.Width="44px" DataField="Orden" HeaderText="Nº de órden" />
+										<com:TBoundColumn ItemStyle.Width="44px" DataField="Estado" HeaderText="Estado" />
+										<com:TBoundColumn ItemStyle.Width="44px" DataField="Orden" HeaderText="Nº de órden" />
 										<com:TBoundColumn ItemStyle.Width="44px" DataField="Proyecto" HeaderText="Proyecto Nº" />
 										<com:TBoundColumn ItemStyle.Width="100px" DataField="Localidad" HeaderText="Localidad" />
 										<com:TBoundColumn ItemStyle.Width="100px" DataField="Empresa" HeaderText="Empresa" />
@@ -296,7 +296,7 @@
 						</thead>
 						<tbody>
 								<tr style="background-color:#CCC; font-size:10px;">
-									<td colspan="4" align="center"><strong>TOTALES</strong></td>
+									<td ><strong>TOTALES</strong></td>
 									<td align="right"><strong><com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
 									
 															

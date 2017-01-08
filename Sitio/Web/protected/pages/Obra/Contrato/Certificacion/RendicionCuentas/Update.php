@@ -100,7 +100,8 @@ class Update extends PageBaseSP{
 		$this->dtpFechaCancelacion->Text = "";
 		$this->txtOrdenPago->Text = "";
 		$this->txtMonto->Text = "";
-		$this->txtObservacion->Text = "";	
+		$this->txtObservacion->Text = "";
+
 	}
 
 	public function btnCancelar_OnClick($sender, $param){

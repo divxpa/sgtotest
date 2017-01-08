@@ -218,7 +218,7 @@ class HomeAdmin extends PageBaseSP{
 	}
 
 	public function MostrarControlesIngresosBrutos (){
-		$this->bcDenominacion->Visible = false;
+		//$this->bcDenominacion->Visible = false;
 	}
 
 
