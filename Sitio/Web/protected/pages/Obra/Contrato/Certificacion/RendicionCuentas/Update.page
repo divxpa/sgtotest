@@ -22,15 +22,7 @@
 				OnClick="btnAceptar_OnClick"
 				Attributes.onclick="return confirm('¿Desea guardar los datos?');"
 				ValidationGroup="Register" />
-		<span class="label">Agregar Cuenta</span>
-			<com:TImageButton
-				ID="btnAgregarRendicion"
-				ToolTip="Guardar"
-				ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
-				CssClass="imgbtn2-guardar"
-				OnClick="btnAgregarRendicion_OnClick"
-				Attributes.onclick="return confirm('¿Desea guardar la cuenta?');"
-				ValidationGroup="Register" />
+			
 			<com:TImageButton
 				ID="btnCancelar"
 				ToolTip="Cancelar"
@@ -55,6 +47,8 @@
 							<th width="44px" >Orden de Pago o Cheque Nro.</th>
 							<th width="65px" >Monto $</th>
 							<th width="150px" >Observaciones</th>
+							<th width="100px">Guardar Cuenta</th>
+							<th width="100px">Cancelar Cambios</th>
 						</tr>
 						<tr style="background-color:#CCC;">
 							<th width="44px" ><com:TTextBox
@@ -188,23 +182,29 @@
 							</th>
 							<th width="150px"><com:TTextBox
 					       		ID="txtObservacion" MaxLength="255" AutoTrim="True" ToolTip="Ingrese la observacion. "  style="width: 150px; font-size: 10px;"/>
-							</th>							
+							</th>
+							<th>
+								<com:TImageButton
+									ID="btnAgregarRendicion"
+									ToolTip="Guardar"
+									ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
+									CssClass="imgbtn2-guardar"
+									OnClick="btnAgregarRendicion_OnClick"
+									Attributes.onclick="return confirm('¿Desea guardar la cuenta?');"
+									ValidationGroup="Register" />
+							</th>
+							<th>
+								<com:TImageButton
+									ID="btnCancelarItem"
+									ToolTip="Cancelar"
+									ImageUrl="themes/serviciospublicos/images/invisible.png"
+									CssClass="imgbtn2-cancelar"
+									OnClick="btnCancelarItem_OnClick" />
+							</th>								
+
 						</tr>
 					</thead>
-					<tbody>
-						<tr style="background-color:#CCC; font-size:10px;">
-							<td colspan="4" align="center"><strong>TOTALES</strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblMontoAvanceTotal" /></strong></td>
-							<td>&nbsp;</td>
-							<td align="right"><strong><com:TActiveLabel ID="lblAnticipoFinancieroTotal" /></strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblDescuentoAnticipoTotal" /></strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblRetencionMultaTotal" /></strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblFondoReparoTotal" /></strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblRedeterminacionPreciosTotal" /></strong></td>
-							<td align="right"><strong><com:TActiveLabel ID="lblOtrosConceptosTotal" /></strong></td>
-													
-						</tr>
-					</tbody>	
+					
 			</table>
 							
 	      
@@ -234,22 +234,22 @@
 										AllowCustomPaging="false" AllowSorting="true" OnSortCommand="sortDataGrid">
 										<com:TBoundColumn DataField="IdRendicionCuentas" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
 										<com:TBoundColumn DataField="IdCertificacion" Visible ="false" HeaderText="IdContrato" />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="Estado" HeaderText="Estado" />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="Orden" HeaderText="Nº de órden" />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="Proyecto" HeaderText="Proyecto Nº" />
-										<com:TBoundColumn ItemStyle.Width="100px" DataField="Localidad" HeaderText="Localidad" />
+										<com:TBoundColumn ItemStyle.Width="30px" DataField="Estado" HeaderText="Estado" />
+										<com:TBoundColumn ItemStyle.Width="30px" DataField="Orden" HeaderText="Nº de órden" />
+										<com:TBoundColumn ItemStyle.Width="30px" DataField="Proyecto" HeaderText="Proyecto Nº" />
+										<com:TBoundColumn ItemStyle.Width="50px" DataField="Localidad" HeaderText="Localidad" />
 										<com:TBoundColumn ItemStyle.Width="100px" DataField="Empresa" HeaderText="Empresa" />
-										<com:TBoundColumn ItemStyle.Width="75px" DataField="Cuit" HeaderText="Nro. de Cuit/Cuil" />
-										<com:TBoundColumn ItemStyle.Width="75px" DataField="Factura" HeaderText="Factura Nro." />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="Recibo" HeaderText="Recibo Nro." />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="FechaEmision" HeaderText="Fecha de Emisión" />
+										<com:TBoundColumn ItemStyle.Width="50px" DataField="Cuit" HeaderText="Nro. de Cuit/Cuil" />
+										<com:TBoundColumn ItemStyle.Width="65px" DataField="Factura" HeaderText="Factura Nro." />
+										<com:TBoundColumn ItemStyle.Width="40px" DataField="Recibo" HeaderText="Recibo Nro." />
+										<com:TBoundColumn ItemStyle.Width="40px" DataField="FechaEmision" HeaderText="Fecha de Emisión" />
 										<com:TBoundColumn ItemStyle.Width="65px" DataField="Concepto" HeaderText="Concepto- Certificado Nro" />
-										<com:TBoundColumn ItemStyle.Width="44px" DataField="FechaCancelacion" HeaderText="Fecha de Cancelación" />
+										<com:TBoundColumn ItemStyle.Width="40px" DataField="FechaCancelacion" HeaderText="Fecha de Cancelación" />
 										<com:TBoundColumn ItemStyle.Width="65px" DataField="OrdenDePago" HeaderText="Orden de Pago o Cheque Nro." />
 										<com:TBoundColumn ItemStyle.Width="65px" DataField="Monto" HeaderText="Monto $" />
 										<com:TBoundColumn ItemStyle.Width="150px" DataField="Observaciones" HeaderText="Observaciones" />
 										
-										<com:TTemplateColumn ID="tcEditarCuenta2" Visible ="true" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="30px">
+										<com:TTemplateColumn ID="tcEditarCuenta2" Visible ="true" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
 								            <prop:ItemTemplate>
 										       	<com:TActiveHyperLink
 										            ID="hlEditar"
@@ -259,7 +259,7 @@
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>				             	
-						             	<com:TTemplateColumn ID="tcBorrarCuenta" Visible ="true" HeaderText="Borrar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="30px">
+						             	<com:TTemplateColumn ID="tcBorrarCuenta" Visible ="true" HeaderText="Borrar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
 								            <prop:ItemTemplate>
 								            		<com:TActiveHyperLink
 										            ID="hlEditar"
@@ -269,7 +269,7 @@
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>				
-						             	<com:TTemplateColumn ID="tcAprobarCuenta" Visible ="true" HeaderText="Aprobar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="30px">
+						             	<com:TTemplateColumn ID="tcAprobarCuenta" Visible ="true" HeaderText="Aprobar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
 								            <prop:ItemTemplate>
 								            		<com:TActiveHyperLink
 										            ID="hlEditar"
@@ -279,7 +279,7 @@
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>
-						             	<com:TTemplateColumn ID="tcRechazarCuenta" Visible ="true" HeaderText="Rechazar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="30px">
+						             	<com:TTemplateColumn ID="tcRechazarCuenta" Visible ="true" HeaderText="Rechazar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
 								            <prop:ItemTemplate>
 								            		<com:TActiveHyperLink
 										            ID="hlEditar"
@@ -296,8 +296,7 @@
 						</thead>
 						<tbody>
 								<tr style="background-color:#CCC; font-size:10px;">
-									<td ><strong>TOTALES</strong></td>
-									<td align="right"><strong><com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
+									<td><strong>TOTALES: <com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
 									
 															
 								</tr>

@@ -3,6 +3,9 @@ class Update extends PageBaseSP{
 
 	public function onLoad($param){
 		parent::onLoad($param);
+		//id='IdCertificacion
+		//ido='IdObra'
+		//idcontrato= IdContrato'
 
 		if(!$this->IsPostBack){
 			$idCertificacion = $this->Request["id"];
@@ -44,6 +47,7 @@ class Update extends PageBaseSP{
 		$this->ddlLocalidad->dataBind();
 
 		$this->hlkVolver->NavigateUrl .= "&idc=$idContrato&ido=$idObra";
+
 	}
 
 	public function Refresh($idCertificacion){
@@ -105,8 +109,19 @@ class Update extends PageBaseSP{
 	}
 
 	public function btnCancelar_OnClick($sender, $param){
+		$idObra = $this->Request["ido"];
+		$idContrato = $this->Request["idcontrato"];		
+		$idRendicion = $this->Request["idc"];
+
+		$this->Response->Redirect("?page=Obra.Contrato.Certificacion.HomeAdmin&idc=$idContrato&ido=$idObra");
+	}
+
+	public function btnCancelarItem_OnClick($sender, $param){
+		$idContrato = $this->Request["idcontrato"];
+		$idObra = $this->Request["ido"];
 		$idCertificacion = $this->Request["id"];
-		$this->Response->Redirect("?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=$idCertificacion");
+
+		$this->Response->Redirect("?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=$idCertificacion&ido=$idObra&idcontrato=$idContrato");	
 	}
 
 	public function btnAceptar_OnClick($sender, $param){
@@ -127,7 +142,6 @@ class Update extends PageBaseSP{
 				else{
 					$rendicioncuenta = new RendicionCuentasRecord();
 					$orden = $this->CreateDataSource("RendicionCuentasPeer", "ProximaOrderRendicionesByCertificacion", $idCertificacion);
-					//$orden[0]["proximo"]
 					//echo "<pre>";print_r($orden); die();
 					$rendicioncuenta->Orden = $orden[0]["proximo"];
 					$rendicioncuenta->IdCertificacion = $idCertificacion;
@@ -186,21 +200,28 @@ class Update extends PageBaseSP{
 	}
 
 	public function borrarRendicionCuentas($idRendicionCuentas){
+		$idObra = $this->Request["ido"];
+		$idContrato = $this->Request["idcontrato"];
+		$idCertificacion = $this->Request["id"];
+
 		$finder = RendicionCuentasRecord::finder();
 		$rendicioncuenta = $finder->findByPk($idRendicionCuentas);
 		$rendicioncuenta->Activo = 0;
 		try{
 				$rendicioncuenta->save();
-				//$this->Refresh($idCertificacion);
 				}
 
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
 			}
-
+		$this->Response->Redirect("?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&&id=$idCertificacion&ido=$idObra&idcontrato=$idContrato");	
 	}
 
 	public function cambiarEstadoRendicionCuentas($idRendicionCuentas,$aprobado,$rechazado){	
+		$idContrato = $this->Request["idcontrato"];
+		$idObra = $this->Request["ido"];
+		$idCertificacion = $this->Request["id"];
+
 		$finder = RendicionCuentasRecord::finder();
 		$rendicioncuenta = $finder->findByPk($idRendicionCuentas);
 
@@ -219,6 +240,9 @@ class Update extends PageBaseSP{
 			catch(exception $e){
 				$this->Log($e->getMessage(),true);
 			}			
+
+		$this->Response->Redirect("?page=Obra.Contrato.Certificacion.RendicionCuentas.Update&id=$idCertificacion&ido=$idObra&idcontrato=$idContrato");	
+
 	}
 
 	

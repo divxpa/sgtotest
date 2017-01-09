@@ -238,6 +238,17 @@ class ContratoPeer
           			ci.IdContrato = $idContrato";
         return $sql;
 	}
+	
+	public static function SiguienteNumeroOrdenSubitem($idContrato,$idItemPadre){
+		$sql = "Select				  
+				   max(ci.Orden) +1 as Orden
+				from
+				  contratoitem ci
+				where
+          			ci.IdContrato = $idContrato
+          			and ci.IdContratoItemPadre = $idItemPadre";
+        return $sql;
+	}
 
     public static function ItemsByContratoCertificacion ($idContrato,$periodo,$idCertificacion){
             
@@ -318,30 +329,6 @@ class ContratoPeer
 		return $sql;
 	}
 
-	// public static function ItemsByContratoConUnidadMedida ($idContrato){
-	// 	$sql = "Select
-	// 			    ci.IdContratoItem, ci.IdContrato, ci.Item, ci.Cantidad, 
-	// 			    CASE ci.UnidadMedida
- //              WHEN 0 THEN 'gl.'
- //              WHEN 1 THEN 'ml.'
- //              WHEN 2 THEN 'm2.'
- //              WHEN 3 THEN 'm3.'
- //              WHEN 4 THEN 'lt.'
- //              WHEN 5 THEN 'kg.'
- //              WHEN 6 THEN 'u.'
- //              WHEN 7 THEN 'pza'
- //              WHEN 8 THEN 'cto.'
- //              WHEN 9 THEN 'ha.'
- //              END as UnidadMedida,
- //            ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra
-	// 			From 
-	// 			    contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
-	// 			Where
-	// 			    ci.IdContrato = $idContrato
-	// 			Order by 
-	// 			    ci.Orden";
-	// 	return $sql;
-	// }
 
 	public static function RendicionesByCertificacion($idCertificacion){
 		$sql= "SELECT 
@@ -365,6 +352,11 @@ class ContratoPeer
 				  Activo 
 			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
 			WHERE idCertificacion = $idCertificacion and rendicioncuentas.Activo=1";
+		return $sql;
+	}
+
+	public static function TotalMontoItemsByContrato($idContrato){
+		$sql= "Select sum(preciototal) as monto from contratoitem where idContrato = $idContrato";	
 		return $sql;
 	}
 

@@ -158,3 +158,4 @@
 				  Activo 
 			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
 			WHERE idCertificacion =  and rendicioncuentas.Activo=1": SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'and rendicioncuentas.Activo=1' at line 21";
+20170109010450 	mmartinez	s:110:"Property 'ContratoItemRecord::$Orden' must not be null as defined by column 'Orden' in table '`contratoitem`'.";

@@ -232,8 +232,7 @@
 				</thead>
 				<tbody>
 					<tr style="background-color:#CCC; font-size:10px;">
-									<td align="center"><strong>TOTALES</strong></td>
-									<td align="right"><strong><com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
+						<td><strong>TOTALES: <com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
 					</tr>
 				</tbody>
 					</table>
