@@ -217,8 +217,7 @@ class ContratoPeer
               WHEN 9 THEN 'ha.'
               END as UnidadMedida,
             ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra,
-            ROUND(((ci.PrecioTotal * 100) / c.Monto ), 2) as Incidencia
-
+            ROUND(((ci.preciototal * 100)/c.monto), 2) as Incidencia
 				From 
 				    contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
 				Where
@@ -254,7 +253,7 @@ class ContratoPeer
             
         if(!empty($idCertificacion)) {
             $porcentajeActual = "(".
-            	"SELECT PorcentajeActual 
+            	"SELECT PorcentajeActual
             	FROM certificacionitem 
             	WHERE IdContratoItem=ci.IdcontratoItem AND IdCertificacion=$idCertificacion"
             .")";
@@ -270,37 +269,43 @@ class ContratoPeer
             .")";
         }
         else {
-            $porcentajeActual = "0";
-            $importeActual = "0";
-            $idCertificacionItem = "0";
+            $porcentajeActual = "0.0";
+            $importeActual = "0.0";
+            $idCertificacionItem = "0.0";
         }
-            
+           
+        // Desactivadas las '@variables' por algunos errores de precisión
+        $incidencia = "(ci.PrecioTotal/c.Monto)";
+        $importe_anterior = "(".
+        	"SELECT IFNULL(sum(cei.ImporteActual), 0) 
+			FROM certificacionitem cei 
+			INNER JOIN certificacion ce on ce.IdCertificacion=cei.IdCertificacion
+			WHERE cei.IdContratoItem=ci.IdContratoItem AND ce.Periodo < '$periodo'".
+		")";
+
 		$sql = "SELECT * FROM (
 					(SELECT 
 						$idCertificacionItem AS IdCertificacionItem,
-	                    -- ci.IdContratoItem, 
-	                    -- ci.IdContrato, 
-	                    -- ci.Cantidad, 
-				    	-- ci.UnidadMedida, 
-				    	-- ci.PrecioUnitario, 
-				    	CONCAT_WS('.',cip.orden,ci.orden) AS Orden,
+	                    ci.IdContratoItem, 
+	                    ci.IdContrato, 
+	                    ci.Cantidad, 
+				    	ci.UnidadMedida, 
+				    	ci.PrecioUnitario, 
+				    	IFNULL(cip.orden,ci.orden) AS OrdenItem,
+				    	IF(cip.orden,ci.orden,0) AS OrdenSubitem,
 				    	CONCAT(IF(cip.orden IS NULL,'','&nbsp;&nbsp;&nbsp;&nbsp;'), ci.Item) AS Item, -- , 
 				    	ci.PrecioTotal, 
-	                	@incidencia := (ci.PrecioTotal/c.Monto),
-	                	@incidencia * 1 AS Incidencia,
-	                    @incidencia * 100 AS IncidenciaPorcentaje,
-				    	@importe_anterior := (
-				    		SELECT IFNULL(sum(cei.ImporteActual), 0) 
-							FROM certificacionitem cei 
-							INNER JOIN certificacion ce on ce.IdCertificacion=cei.IdCertificacion
-							WHERE cei.IdContratoItem=ci.IdContratoItem AND ce.Periodo < '$periodo') AS ImporteAnterior,
-	                    (@importe_anterior / ci.PrecioTotal * 100) AS PorcentajeAnterior, 
-	                    @importe_actual := $importeActual AS ImporteActual,
-	                    @porcentaje_actual := $porcentajeActual AS PorcentajeActual, 
-	                    (@importe_anterior + @importe_actual) AS ImporteAcum,
-	                    ((@importe_anterior / ci.PrecioTotal * 100) + @porcentaje_actual) AS PorcentajeAcum,
+	                	$incidencia AS Incidencia,
+	                    $incidencia * 100 AS IncidenciaPorcentaje,
+				    	$importe_anterior AS ImporteAnterior,
+	                    ($importe_anterior / ci.PrecioTotal * 100) AS PorcentajeAnterior, 
+	                    $importeActual AS ImporteActual,
+	                    $porcentajeActual AS PorcentajeActual, 
+	                    ($importe_anterior + $importeActual) AS ImporteAcum,
+	                    (($importe_anterior / ci.PrecioTotal * 100) + $porcentajeActual) AS PorcentajeAcum,
 	                    IF(cip.orden IS NULL,1,3) as tipo, -- 1 as tipo,
-	                    CONCAT('hijo',ci.IdContratoItemPadre) AS claseVinculadora
+	                    CONCAT('hijo',ci.IdContratoItemPadre) AS claseVinculadora,
+	                    IFNULL(cip.orden,ci.orden) AS orderby
 					FROM 
 					    contratoitem AS ci 
 					    LEFT JOIN contratoitempadre AS cip ON ci.IdContratoItemPadre = cip.IdContratoItemPadre
@@ -312,19 +317,21 @@ class ContratoPeer
 					UNION
 					(SELECT 
 						cip.idcontratoitempadre AS IdCertificacionItem, 
-						cip.orden AS Orden,
+						0,0,0,0,0, -- de los 5 campos de ci que había comentado previamente
+						cip.orden AS OrdenItem,
+						0 AS OrdenSubitem,
 						cip.item AS Item,
 						0.0 AS PrecioTotal,
-						0.0,
 						0.0 AS Incidencia,
 						0.0,0.0,0.0,0.0,0.0,0.0,0.0,
 						2 as tipo,
-						CONCAT('padre',cip.idcontratoitempadre) AS claseVinculadora
+						CONCAT('padre',cip.idcontratoitempadre) AS claseVinculadora,
+	                    cip.orden AS orderby
 					FROM 
 						contratoitempadre AS cip
 					WHERE cip.IdContrato = $idContrato)
 				) AS t 
-				ORDER BY Orden";
+				ORDER BY OrdenItem, OrdenSubitem";
 
 		return $sql;
 	}

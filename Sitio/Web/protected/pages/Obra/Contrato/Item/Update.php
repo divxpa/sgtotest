@@ -82,68 +82,6 @@ class Update extends PageBaseSP{
 		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
-	// public function btnAceptar_OnClick($sender, $param)
-	// {
-	// 	$ido = $this->Request["ido"];
-	// 	$idc = $this->Request["idc"];
-	// 	if($this->IsValid){
-	// 		$id = $this->Request["id"];
-	// 		$idObra = $this->Request["ido"];
-	// 		$idContrato = $this->Request["idc"];
-
-	// 		if($this->chkEsPadre->Checked){
-	// 			if(!is_null($id)){
-	// 				$finder = ContratoItemPadreRecord::finder();
-	// 				$contratoitempadre = $finder->findByPk($id);
-	// 			}
-	// 			else{
-	// 				$contratoitempadre = new ContratoItemPadreRecord();
-	// 			}
-	// 			$contratoitempadre->IdContrato = $idContrato;
-	// 			$contratoitempadre->Item = $this->txtItem->Text;
-	// 			$contratoitempadre->Orden = $this->txtOrden->Text;
-	// 		}
-	// 		else
-	// 		{
-	// 			if(!is_null($id)){
-	// 				$finder = ContratoItemRecord::finder();
-	// 				$contratoitem = $finder->findByPk($id);
-	// 			}
-	// 			else{
-	// 				$contratoitem = new ContratoItemRecord();
-	// 				$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
-	// 	//Si $orden = 0, entonces que el Orden sea 1
-	// 	// $this->txtOrden->Text = $orden[0]["Orden"];
-	// 			}
-	// 			$contratoitem->IdContrato = $idContrato;
-
-	// 			$contratoitem->Orden = $this->txtOrden->Text;
-	// 			$contratoitem->Item = $this->txtItem->Text;
-	// 			$contratoitem->Cantidad = $this->txtCantidad->Text;
-	// 			$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
-	// 			$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
-	// 			$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
-	// 		}
-
-	// 		try{
-	// 			if($this->chkEsPadre->Checked){
-	// 				$contratoitempadre->save();
-	// 			}
-	// 			else
-	// 			{
-	// 				$contratoitem->save();
-	// 			}
-
-
-	// 			$contratoitem->save();
-	// 			//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
-	// 		}
-	// 		catch(exception $e){
-	// 			$this->Log($e->getMessage(),true);
-	// 		}
-	// 	}
-	// }
-
 	public function btnAgregarItem_OnClick($sender, $param)
 	{
 		if($this->IsValid){
@@ -170,7 +108,6 @@ class Update extends PageBaseSP{
 					$this->LimpiarCampos();
 					}
 				
-				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 				catch(exception $e){
 					$this->Log($e->getMessage(),true);				
 				}
@@ -189,11 +126,9 @@ class Update extends PageBaseSP{
 						$contratoitem->IdContratoItemPadre = $idItemPadre;
 						//echo "<pre>";print_r($orden); die();
 						if (!is_null($orden[0]["Orden"])){
-							//echo "<pre>";print_r("No tiene hijos"); die();
 							$contratoitem->Orden = $orden[0]["Orden"];	
 						}
 						else{
-							//echo "<pre>";print_r("Tiene hijos"); die();
 							$contratoitem->Orden = 1;
 						} 				
 					}
@@ -201,7 +136,6 @@ class Update extends PageBaseSP{
 					{
 						$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);	
 						$contratoitem->Orden = $orden[0]["Orden"];	
-						//echo "<pre>";print_r($contratoitem); die();	
 					}
 				}
 				$contratoitem->IdContrato = $idContrato;				
@@ -210,27 +144,25 @@ class Update extends PageBaseSP{
 				$contratoitem->UnidadMedida = $this->ddlUnidadDeMedida->SelectedValue;
 				$contratoitem->PrecioUnitario = $this->txtPrecioUnitario->Text;
 				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
-				//echo "<pre>";print_r($contratoitem); die();
+
 				try{
 					$contratoitem->save();
 					$this->Refresh($idContrato);
 					$this->LimpiarCampos();
 					}
 				
-				//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 				catch(exception $e){
 					$this->Log($e->getMessage(),true);
 				}
 			}
 		}
 		$this->Response->Redirect("?page=Obra.Contrato.Item.Update&idc=$idContrato&ido=$idObra");
-		//Contrato.Item.Update&idc=1644&ido=2054
 	}
 
 	public function chkEsPadre_OnCheckedChanged($sender, $param)
 	{		
 		if($this->chkEsPadre->Checked){
-
+			//$this->txtCantidad->Text = "1";
 			//$this->pnlItem->Display = "None";
 			//$this->pnlItemPadre->Display = "None";
 			//$this->ddlItemPadre->SelectedValue = 0;
@@ -272,10 +204,7 @@ class Update extends PageBaseSP{
     	$idContrato = $this->Request["idc"];
     	$finder = ContratoRecord::finder();
 		$contrato = $finder->findByPk($idContrato);
-		//ci.PrecioTotal * 100) / c.Monto 
-
     	$this->txtIncidencia->Text = number_format((($preciototal * 100) / ($contrato->Monto)),2 ,".","");
-		
 	}
 
 }

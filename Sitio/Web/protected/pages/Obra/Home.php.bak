@@ -22,9 +22,9 @@ class Home extends PageBaseSP{
 	}
 
 	public function LoadDataRelated(){
-		$idOrganismo = $this->Session["SPOrganismo"];
-		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
-		if ($idOrganismo == 12) // Personaliza la Visualizacion de las Columnas para Ingresos Brutos
+		//$idOrganismo = $this->Session["SPOrganismo"];
+		$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
+		if ($idOrganismo == 11) // Personaliza la Visualizacion de las Columnas para Ingresos Brutos
 			{
 				$this->MostrarControlesIngresosBrutos();
 			}

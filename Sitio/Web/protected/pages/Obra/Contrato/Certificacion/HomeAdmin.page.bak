@@ -78,7 +78,6 @@
 				            ID="hlImprimir"
 				            ToolTip="Haga click aquí para imprimir"
 				            Visible="TRUE"
-				            Target="_blank"
 				            NavigateUrl="?page=Obra.Contrato.Certificacion.PrintAdmin&id=<%# $this->Parent->Data['IdCertificacion']%>&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 				            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 				    	</com:TActiveHyperLink>
@@ -101,7 +100,7 @@
 				            ID="hlAdjuntos"
 				            ToolTip="Haga click aquí para Agregar la Documentación Adjunta"
 				            Visible="<%# $this->Parent->Data['EditarVisible']%>"
-				            NavigateUrl="?page=Obra.Contrato.Certificacion.Documentacion&id=<%# $this->Parent->Data['IdCertificacion']%>&ido=<%# $this->Parent->Data['IdObra']%>&idc=<%# $this->Parent->Data['IdContrato']%>">
+				            NavigateUrl="?page=Obra.Contrato.Certificacion.Documentacion&id=<%# $this->Parent->Data['IdCertificacion']%>&ido=<%# $this->Parent->Data['IdObra']%>&idcontrato=<%# $this->Parent->Data['IdContrato']%>">
 				            <img src="themes/serviciospublicos/images/btnEditar.png" border="0"/>
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>

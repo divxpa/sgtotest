@@ -10,7 +10,7 @@ class UpdateAdmin extends PageBaseSP{
 			$id = $this->Request["id"];
 
 			if (!is_null($id) and ($id!="")) {
-				$this->lblAccion->Text = "Modificar Contrato";
+				$this->lblAccion->Text = "Modificar Convenio";
 				//$this->txtNConvenio->Text = $id;
 				$this->Refresh($id, $idObra);
 			}

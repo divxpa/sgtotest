@@ -5,7 +5,7 @@
 			<com:THyperLink 
 				ID="hlkVolver"
 				NavigateUrl="?page=Obra.HomeAdmin" 
-				Text="Contratos"
+				Text="Convenios"
 				CssClass="maintitle volver" />
 	    	<com:TLabel
 		        ID="lblAccion"

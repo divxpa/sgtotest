@@ -18,6 +18,7 @@ class HomeAdmin extends PageBaseSP{
 			$this->txtBusqueda->Text = $this->GetSearchMemory($this->PagePath, $this->txtBusqueda->ID);
 
 			$idLocalidad = $this->Session["SPIdLocalidad"];
+			//$idLocalidad = $this->Session->get("usr_idLocalidad");
 			//Si el usuario es una Localidad, Oculto los controles
 			if(!is_null($idLocalidad)){
 				$this->ddlLocalidad->SelectedValue = $idLocalidad;
@@ -39,11 +40,10 @@ class HomeAdmin extends PageBaseSP{
 	}
 
 	public function LoadDataRelated(){
-
-		$this->btnVerTodos->Display = "None";
 		$this->btnVerTodos->Display = "None";
 
 		$idOrganismo = $this->Session["SPOrganismo"];
+		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
 		if ($idOrganismo == 12)
 			{$this->MostrarControlesIngresosBrutos();}
 		$localidades = $this->CreateDataSource("ObraAdministracionPeer","LocalidadesConObraSelect", $idOrganismo);
@@ -62,6 +62,7 @@ class HomeAdmin extends PageBaseSP{
 		$this->ddlFufi->dataBind();
 
 		$idRol = $this->Session["SPIdRol"];
+		//$roles = $this->Session->get("usr_roles");
 		$alarmas = $this->CreateDataSource("RolPeer","Alarmas", $idRol);
 		$this->setViewState("Alarmas", $alarmas);
 	}
@@ -69,6 +70,7 @@ class HomeAdmin extends PageBaseSP{
 	public function Refresh($idObra='')
 	{
 		$idOrganismo = $this->Session["SPOrganismo"];
+		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo")
 		$idLocalidad = $this->ddlLocalidad->SelectedValue;
 		$idFufi = $this->ddlFufi->SelectedValue;
 		$idEstado = $this->ddlEstado->SelectedValue;

@@ -1,5 +1,5 @@
 <?php
-class Home extends PageBaseSP{
+class HomeAdmin extends PageBaseSP{
 
 	public function onLoad($param){
 		parent::onLoad($param);
@@ -16,19 +16,37 @@ class Home extends PageBaseSP{
 			$this->ddlFufi->SelectedValue = $this->GetSearchMemory($this->PagePath, $this->ddlFufi->ID);
 			$this->ddlEstado->SelectedValue = $this->GetSearchMemory($this->PagePath, $this->ddlEstado->ID);
 			$this->txtBusqueda->Text = $this->GetSearchMemory($this->PagePath, $this->txtBusqueda->ID);
+
+			$idLocalidad = $this->Session["SPIdLocalidad"];
+			//Si el usuario es una Localidad, Oculto los controles
+			if(!is_null($idLocalidad)){
+				$this->ddlLocalidad->SelectedValue = $idLocalidad;
+				$this->lblLocalidad->Display ="None";
+				$this->ddlLocalidad->Display = "None";
+				$this->lblFufi->Display ="None";
+				$this->ddlFufi->Display = "None";
+				$this->btnVerTodos->Display = "None";
+				
+				$this->bcDenominacion->ItemStyle->CustomStyle="width: 500px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted";
+				$this->bcLocalidad->Visible = false;
+				$this->tcEditar->Visible = false;
+				$this->tcContratos->Visible = false;				
+				$this->tcItem->Visible = false;
+			}
+
 			$this->Refresh($idObra);
 		}
-
 	}
 
 	public function LoadDataRelated(){
+
+		$this->btnVerTodos->Display = "None";
+		$this->btnVerTodos->Display = "None";
+
 		$idOrganismo = $this->Session["SPOrganismo"];
-		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
-		if ($idOrganismo == 12) // Personaliza la Visualizacion de las Columnas para Ingresos Brutos
-			{
-				$this->MostrarControlesIngresosBrutos();
-			}
-		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesConObraSelect", $idOrganismo);
+		if ($idOrganismo == 12)
+			{$this->MostrarControlesIngresosBrutos();}
+		$localidades = $this->CreateDataSource("ObraAdministracionPeer","LocalidadesConObraSelect", $idOrganismo);
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
 
@@ -39,12 +57,11 @@ class Home extends PageBaseSP{
 		$this->ddlEstado->DataSource = $estados;
 		$this->ddlEstado->dataBind();
 
-		$fuentesfinanciamiento = $this->CreateDataSource("ObraPeer","FufisConObraSelect", $idOrganismo);
+		$fuentesfinanciamiento = $this->CreateDataSource("ObraAdministracionPeer","FufisConObraSelect", $idOrganismo);
 		$this->ddlFufi->DataSource = $fuentesfinanciamiento;
 		$this->ddlFufi->dataBind();
 
 		$idRol = $this->Session["SPIdRol"];
-		//$roles = $this->Session->get("usr_roles");
 		$alarmas = $this->CreateDataSource("RolPeer","Alarmas", $idRol);
 		$this->setViewState("Alarmas", $alarmas);
 	}
@@ -52,7 +69,6 @@ class Home extends PageBaseSP{
 	public function Refresh($idObra='')
 	{
 		$idOrganismo = $this->Session["SPOrganismo"];
-		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
 		$idLocalidad = $this->ddlLocalidad->SelectedValue;
 		$idFufi = $this->ddlFufi->SelectedValue;
 		$idEstado = $this->ddlEstado->SelectedValue;
@@ -60,21 +76,16 @@ class Home extends PageBaseSP{
 		$codigoOrganismo = $this->txtcodigoOrganismo->Text;
 		$codigoObra = $this->txtcodigoObra->Text;
 
-		// $data = $this->CreateDataSource("ObraPeer","ObrasHome", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra);
-		//Agregado busqueda por codigo
-		$data = $this->CreateDataSource("ObraPeer","ObrasHome", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra, $codigoOrganismo, $codigoObra);
-
+		$data = $this->CreateDataSource("ObraAdministracionPeer","ObrasHome", $idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra,$codigoOrganismo, $codigoObra);
 
 		$this->lblTitulo->Text = "Obras (". count($data) . ")";
 		$this->setViewState("Data",$data);
 
 		if(!isset($this->Session["ObraCurrentPage"])){
-		//if(!$this->Session->exists("ObraCurrentPage")){
 			$this->LoadDataPage($data, 0);
 		}
 		else{
 			$this->LoadDataPage($data, $this->Session["ObraCurrentPage"]);
-			//$this->LoadDataPage($data, $this->Session->get("ObraCurrentPage"));
 		}
 
 		
@@ -82,7 +93,6 @@ class Home extends PageBaseSP{
 
 	public function LoadDataPage($data, $page){
 		$this->Session["ObraCurrentPage"] = $page;
-		//$this->Session->set("ObraCurrentPage", $page);
 		$this->dgDatos->CurrentPageIndex= $page;
 		$this->dgDatos->DataSource = $data;
 		$this->dgDatos->dataBind();
@@ -117,7 +127,6 @@ class Home extends PageBaseSP{
 		}
 
 		$param->Pager->Controls->insertAt(0,"PÃ¡ginas " . $startPageIndex . " a " . $endPageIndex . " de " . $pageCount . ": ");
-		//$param->Pager->Controls->insertAt(0,"Páginas " . $startPageIndex . " a " . $endPageIndex . " de " . $pageCount . ": ");
 	}
 
 	public function btnBuscar_OnClick($sender, $param)
@@ -130,19 +139,17 @@ class Home extends PageBaseSP{
 		$this->SaveSearchMemory($this->PagePath, $this->txtBusqueda->ID, $this->txtBusqueda->Text);
 		//$this->dgDatos->CurrentPageIndex = 0;
 		$this->Session["ObraCurrentPage"] = 0;
-		//$this->Session->set("ObraCurrentPage", 0);
 		$this->Refresh();
 	}
 
 	public function btnVerTodos_OnClick($sender, $param)
 	{
 		$this->ddlLocalidad->SelectedValue = 
-		$this->ddlFufi->SelectedValue = 
+		$this->ddlFufi->SelectedValue = 0;
 		$this->ddlEstado->SelectedValue = 0;
 		$this->txtcodigoOrganismo->Text = "";
 		$this->txtcodigoObra->Text = "";
 		$this->txtBusqueda->Text = "";
-
 
 		$this->SaveSearchMemory($this->PagePath, $this->ddlLocalidad->ID, $this->ddlLocalidad->SelectedValue);
 		$this->SaveSearchMemory($this->PagePath, $this->ddlFufi->ID, $this->ddlFufi->SelectedValue);
@@ -153,7 +160,6 @@ class Home extends PageBaseSP{
 		
 		//$this->dgDatos->CurrentPageIndex = 0;
 		$this->Session["ObraCurrentPage"] = 0;
-		//$this->Session->set("ObraCurrentPage", 0);
 		$this->Refresh();
 	}
 
@@ -197,13 +203,11 @@ class Home extends PageBaseSP{
 				$param->Item->bcAlarma->Text = "";
 			}
 
-			$saldo = str_replace('.', '', $param->Item->bcSaldoCreditoPresup->Text);
-			//$saldo = str_replace('.', '', $param->Item->bcSaldoPresup->Text);
+			$saldo = str_replace('.', '', $param->Item->bcSaldoPresup->Text);
 			$saldo = floatval(str_replace(',', '.', $saldo));
 
 			if($saldo<0){
-				$param->Item->bcSaldoCreditoPresup->Style = 'color: red';
-				//$param->Item->bcSaldoPresup->Style = 'color: red';
+				$param->Item->bcSaldoPresup->Style = 'color: red';
 			}
 
 		}
@@ -214,13 +218,7 @@ class Home extends PageBaseSP{
 	}
 
 	public function MostrarControlesIngresosBrutos (){
-		$this->bcOrganismo->Visible = false;
-		$this->bcComitente->Visible = false;
-		$this->bcCreditoPresupuestarioAprobado->Visible = false;
-		$this->bcCantidadBeneficiarios->Visible = false;
-		$this->bcRefuerzoPartida->Visible = false;
-		$this->bcPresupuestoOficial->Visible = false;
-		$this->bcFechaPresupuestoOficial->Visible = false;
+		//$this->bcDenominacion->Visible = false;
 	}
 
 
