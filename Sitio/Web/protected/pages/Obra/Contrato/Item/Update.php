@@ -124,7 +124,6 @@ class Update extends PageBaseSP{
 						$idItemPadre = $this->ddlItemPadre->SelectedValue;
 						$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrdenSubitem", $idContrato,$idItemPadre);	
 						$contratoitem->IdContratoItemPadre = $idItemPadre;
-						//echo "<pre>";print_r($orden); die();
 						if (!is_null($orden[0]["Orden"])){
 							$contratoitem->Orden = $orden[0]["Orden"];	
 						}
@@ -135,7 +134,13 @@ class Update extends PageBaseSP{
 					else
 					{
 						$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);	
-						$contratoitem->Orden = $orden[0]["Orden"];	
+						if (!is_null($orden[0]["Orden"])){
+							$contratoitem->Orden = $orden[0]["Orden"];	
+						}
+						else{
+							$contratoitem->Orden = 1;
+						} 	
+						//$contratoitem->Orden = $orden[0]["Orden"];	
 					}
 				}
 				$contratoitem->IdContrato = $idContrato;				
@@ -146,9 +151,11 @@ class Update extends PageBaseSP{
 				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
 
 				try{
+					//echo "<pre>";print_r($contratoitem); die();
 					$contratoitem->save();
-					$this->Refresh($idContrato);
-					$this->LimpiarCampos();
+
+					//$this->Refresh($idContrato);
+					//$this->LimpiarCampos();
 					}
 				
 				catch(exception $e){

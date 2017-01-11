@@ -215,8 +215,8 @@
 								<com:TBoundColumn ItemStyle.Width="350px" DataField="Item" HeaderText="Item" ItemStyle.HorizontalAlign="Left"/>
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="UnidadMedida" HeaderText="Unidad de Medida" ItemStyle.HorizontalAlign="Center"/>
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Center"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="P. Unitario" ItemStyle.HorizontalAlign="Center"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="P. Total" ItemStyle.HorizontalAlign="Center"/>								
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="Precio Unitario" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="Precio Total" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>								
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Center"/>
 
 								<com:TTemplateColumn ID="tcEditarItem" Visible ="false" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">

@@ -140,7 +140,7 @@
 			    Display="Dynamic"
 			    ErrorMessage="El formato de fecha base de monto es inválido (dd/mm/yyyy)." />
 			<br />
-			<span class="label required">Nro. Convenio</span>
+			<span class="label required">Nro. Decreto</span>
 			<com:TTextBox
 	       		ID="txtNConvenio"
 				CssClass="small"
