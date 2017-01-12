@@ -36,13 +36,12 @@
 			<com:TLabel 
 				ID="lblObra" 
 				CssClass="labeldata"/>
-			<br />
-			<span class="label required">Número</span>
 			<com:TTextBox
 	       		ID="txtNumero"
 				CssClass="small"
 				MaxLength="10"
 	            AutoTrim="True"
+	            Display="None"
 	       		ToolTip="Ingrese el número de contrato"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtNumero"

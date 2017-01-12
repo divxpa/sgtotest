@@ -19,17 +19,20 @@ class HomeAdmin extends PageBaseSP{
 
 			$idLocalidad = $this->Session["SPIdLocalidad"];
 			//$idLocalidad = $this->Session->get("usr_idLocalidad");
+			//echo "<pre>";print_r($idLocalidad); die();
 			//Si el usuario es una Localidad, Oculto los controles
 			if(!is_null($idLocalidad)){
+
 				$this->ddlLocalidad->SelectedValue = $idLocalidad;
+				//echo "<pre>";print_r($this->ddlLocalidad->SelectedValue); die();
 				$this->lblLocalidad->Display ="None";
-				$this->ddlLocalidad->Display = "None";
+				//$this->ddlLocalidad->Display = "None";
 				$this->lblFufi->Display ="None";
 				$this->ddlFufi->Display = "None";
 				$this->btnVerTodos->Display = "None";
 				
 				$this->bcDenominacion->ItemStyle->CustomStyle="width: 500px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted";
-				$this->bcLocalidad->Visible = false;
+				//$this->bcLocalidad->Visible = false;
 				$this->tcEditar->Visible = false;
 				$this->tcContratos->Visible = false;				
 				$this->tcItem->Visible = false;
@@ -40,7 +43,7 @@ class HomeAdmin extends PageBaseSP{
 	}
 
 	public function LoadDataRelated(){
-		$this->btnVerTodos->Display = "None";
+		//$this->btnVerTodos->Display = "None";
 
 		$idOrganismo = $this->Session["SPOrganismo"];
 		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
@@ -146,7 +149,7 @@ class HomeAdmin extends PageBaseSP{
 
 	public function btnVerTodos_OnClick($sender, $param)
 	{
-		$this->ddlLocalidad->SelectedValue = 
+		$this->ddlLocalidad->SelectedValue = 0;
 		$this->ddlFufi->SelectedValue = 0;
 		$this->ddlEstado->SelectedValue = 0;
 		$this->txtcodigoOrganismo->Text = "";

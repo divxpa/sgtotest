@@ -1,11 +1,12 @@
 <?php
+
 class Update extends PageBaseSP{
+
 
 	public function onLoad($param){
 		parent::onLoad($param);
 
 		if(!$this->IsPostBack){
-			//$id = $this->Request["id"];
 			$idObra = $this->Request["ido"];
 			$idContrato = $this->Request["idc"];
 			$this->LoadDataRelated($idObra, $idContrato);
@@ -17,8 +18,6 @@ class Update extends PageBaseSP{
 	}
 
 	public function LoadDataRelated($idObra, $idContrato){
-		//Lista de Items padre
-		//Proximo nro de orden
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
 		$finder = OrganismoRecord::finder();
@@ -35,11 +34,9 @@ class Update extends PageBaseSP{
 
 	public function Refresh($idContrato){
 
-		$this->lblAccion->Text = "Nuevo item de Contrato";
+		$this->lblAccion->Text = "Items de Convenio";
 		$orden = $this->CreateDataSource("ContratoPeer", "SiguienteNumeroOrden", $idContrato);
-		//Si $orden = 0, entonces que el Orden sea 1
-		// $this->txtOrden->Text = $orden[0]["Orden"];
-		// if ($orden>1){					
+		
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Orden'] = 'asc';
 		$criteria = new TActiveRecordCriteria;
@@ -51,7 +48,6 @@ class Update extends PageBaseSP{
 		if (count($items) != 0) {
 			$this->ddlItemPadre->DataSource = $items;
 			$this->ddlItemPadre->dataBind();	
-			//$this->pnlItemPadre->Visible = "true";	
 		}					
 
 		$data = $this->CreateDataSource("ContratoPeer","ItemsByContratoConUnidadMedida", $idContrato);
@@ -62,7 +58,9 @@ class Update extends PageBaseSP{
 		}
 
 		$totalmonto = $this->CreateDataSource("ContratoPeer","TotalMontoItemsByContrato", $idContrato);
-		$this->lblTotal->Text = '$' . $totalmonto[0]["monto"];
+		$this->lblTotal->Text = $totalmonto[0]["monto"];
+		$totalincidencia = $this->CreateDataSource("ContratoPeer","TotalIncidenciaItemsByContrato", $idContrato);
+		$this->lblTotalIncidencia->Text = $totalincidencia[0]["incidencia"];
 	}
 
 	public function LimpiarCampos(){
@@ -78,7 +76,6 @@ class Update extends PageBaseSP{
 	{
 		$ido = $this->Request["ido"];
 		$idc = $this->Request["idc"];
-		//$this->Response->Redirect("?page=Obra.UpdateAdmin&id=$ido&idc=$idc");
 		$this->Response->Redirect("?page=Obra.HomeAdmin");
 	}
 
@@ -140,7 +137,6 @@ class Update extends PageBaseSP{
 						else{
 							$contratoitem->Orden = 1;
 						} 	
-						//$contratoitem->Orden = $orden[0]["Orden"];	
 					}
 				}
 				$contratoitem->IdContrato = $idContrato;				
@@ -151,11 +147,7 @@ class Update extends PageBaseSP{
 				$contratoitem->PrecioTotal = $this->txtPrecioTotal->Text;
 
 				try{
-					//echo "<pre>";print_r($contratoitem); die();
 					$contratoitem->save();
-
-					//$this->Refresh($idContrato);
-					//$this->LimpiarCampos();
 					}
 				
 				catch(exception $e){
@@ -169,16 +161,6 @@ class Update extends PageBaseSP{
 	public function chkEsPadre_OnCheckedChanged($sender, $param)
 	{		
 		if($this->chkEsPadre->Checked){
-			//$this->txtCantidad->Text = "1";
-			//$this->pnlItem->Display = "None";
-			//$this->pnlItemPadre->Display = "None";
-			//$this->ddlItemPadre->SelectedValue = 0;
-			//$this->ddlItemPadre->dataBind();
-			//Controlar el ID de ItemPadre
-		}
-		else{
-			//$this->pnlItem->Display = "Dynamic";
-			//$this->pnlItemPadre->Display = "Dynamic";
 		}
 	}
 
@@ -194,7 +176,7 @@ class Update extends PageBaseSP{
     }
 
     public function txtCantidad_OnTextChanged($sender, $param){
-		//$this->CalcularTotalItem();
+		$this->CalcularTotalItem();
 	}
 
 	    public function txtPrecioUnitario_OnTextChanged($sender, $param){
@@ -211,7 +193,7 @@ class Update extends PageBaseSP{
     	$idContrato = $this->Request["idc"];
     	$finder = ContratoRecord::finder();
 		$contrato = $finder->findByPk($idContrato);
-    	$this->txtIncidencia->Text = number_format((($preciototal * 100) / ($contrato->Monto)),2 ,".","");
+    	$this->txtIncidencia->Text = number_format((($preciototal * 100) / ($contrato->Monto)),2 ,".","") . " %";
 	}
 
 }

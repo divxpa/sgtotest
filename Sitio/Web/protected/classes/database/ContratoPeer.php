@@ -217,7 +217,7 @@ class ContratoPeer
               WHEN 9 THEN 'ha.'
               END as UnidadMedida,
             ci.PrecioUnitario, ci.PrecioTotal, ci.Orden ,c.IdObra,
-            ROUND(((ci.preciototal * 100)/c.monto), 2) as Incidencia
+            CONCAT(ROUND(((ci.preciototal * 100)/c.monto), 2),' %') as Incidencia            
 				From 
 				    contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
 				Where
@@ -364,6 +364,13 @@ class ContratoPeer
 
 	public static function TotalMontoItemsByContrato($idContrato){
 		$sql= "Select sum(preciototal) as monto from contratoitem where idContrato = $idContrato";	
+		return $sql;
+	}
+
+	public static function TotalIncidenciaItemsByContrato($idContrato){
+		$sql= "Select round((sum(ci.preciototal)*100)/c.monto,2) as incidencia 
+				From contratoitem ci inner join contrato c on c.idContrato = ci.IdContrato
+				Where ci.idContrato =  $idContrato";	
 		return $sql;
 	}
 

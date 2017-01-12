@@ -46,19 +46,19 @@
 	<br />
 	<div>
 	<fieldset>
+	<span class="maintitle2">Agregar item del Convenio</span>
 		<table>
 			<thead>
 				<tr style="background-color:#CCC; font-size:10px;">
 					<th width="250px">Item</th>
-					<th width="60px">Item con Subitem</th>
-					<th width="100px">Subitem del Item</th>
 					<th width="100px">Unidad de Medida</th>
 					<th width="100px">Cantidad</th>
 					<th width="100px">Precio Unitario</th>
 					<th width="100px">Precio Total</th>
 					<th width="100px">Incidencia</th>
+					<th width="60px">Item con Subitem</th>
+					<th width="100px">Subitem del Item</th>
 					<th width="100px">Guardar Item</th>
-
 				</tr>
 					<th width="250px">
 						<com:TTextBox
@@ -72,27 +72,7 @@
 							Display="Dynamic"
 							Text="*"
 							ValidationGroup="Register"/>
-					</th>
-					<th width="60px">
-								<com:TActiveCheckBox 
-						       		ID="chkEsPadre"
-						       		Visible = "true"
-						       		Checked="false"
-						       		OnCheckedChanged="chkEsPadre_OnCheckedChanged"
-						       		ClientSide.OnLoading="Element.show('callback_status')"
-							        ClientSide.OnComplete="Element.hide('callback_status')" />		
-					</th>
-					<th width="100px">
-						<com:TDropDownList 
-							ID="ddlItemPadre"
-							AutoPostBack="true"
-							OnSelectedIndexChanged="selectionChanged"
-							ToolTip="Seleccione"
-					       		PromptValue="0"
-					       		PromptText="Seleccione"
-					       		DataTextField="Item"
-					       		DatavalueField="idContratoItemPadre"/>
-					</th>
+					</th>					
 					<th width="100px">
 						<com:TDropDownList 
 							ID="ddlUnidadDeMedida" style="width: 100px; font-size: 12px;">
@@ -172,6 +152,26 @@
 							Text="*"
 							ValidationGroup="Register"/>
 					</th>
+					<th width="60px">
+								<com:TActiveCheckBox 
+						       		ID="chkEsPadre"
+						       		Visible = "true"
+						       		Checked="false"
+						       		OnCheckedChanged="chkEsPadre_OnCheckedChanged"
+						       		ClientSide.OnLoading="Element.show('callback_status')"
+							        ClientSide.OnComplete="Element.hide('callback_status')" />		
+					</th>
+					<th width="100px">
+						<com:TDropDownList 
+							ID="ddlItemPadre"
+							AutoPostBack="true"
+							OnSelectedIndexChanged="selectionChanged"
+							ToolTip="Seleccione"
+					       		PromptValue="0"
+					       		PromptText="Seleccione"
+					       		DataTextField="Item"
+					       		DatavalueField="idContratoItemPadre"/>
+					</th>
 					<th>
 						<com:TImageButton
 							ID="btnAgregarItem"
@@ -179,7 +179,7 @@
 							ImageUrl="themes/serviciospublicos/images/btn2nuevo.png"
 							CssClass="imgbtn2-guardar"
 							OnClick="btnAgregarItem_OnClick"
-							Attributes.onclick="return confirm('¿Desea guardar los datos 2?');"
+							Attributes.onclick="return confirm('¿Desea guardar los datos?');"
 							ValidationGroup="Register" />
 					</th>
 
@@ -217,7 +217,8 @@
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Center"/>
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="Precio Unitario" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>
 								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="Precio Total" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>								
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Center"
+								/>
 
 								<com:TTemplateColumn ID="tcEditarItem" Visible ="false" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
 						            <prop:ItemTemplate>
@@ -236,7 +237,9 @@
 				</thead>
 				<tbody>
 					<tr style="background-color:#CCC; font-size:10px;">
-						<td><strong>TOTALES: <com:TActiveLabel /><com:TLabel ID="lblTotal" Text="$1.123,00" /></strong></td>
+						<td><strong>Total: $ <com:TActiveLabel /><com:TLabel ID="lblTotal" Text="" /></strong>
+						<strong> - Total Incidencia: <com:TActiveLabel /><com:TLabel ID="lblTotalIncidencia" Text="" /> % </strong>
+						</td>						
 					</tr>
 				</tbody>
 					</table>

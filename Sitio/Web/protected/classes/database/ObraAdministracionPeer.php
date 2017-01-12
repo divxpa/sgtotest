@@ -119,8 +119,7 @@ class ObraAdministracionPeer
 					and o.PorAdministracion = 1 and o.activo = 1
 				order by
 				  Orden, o.Codigo";
-
-				echo "<pre>";print_r($sql); die();
+				//echo "<pre>";print_r($sql); die();  
 		return $sql;
 	}
 
