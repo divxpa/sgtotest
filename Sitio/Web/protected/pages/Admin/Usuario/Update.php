@@ -65,6 +65,7 @@ class Update extends PageBaseSP{
 		$this->ddlOrganismo->SelectedValue = $usuario->IdOrganismo;
 		$this->txtApellidoNombre->Text = $usuario->ApellidoNombre;
 		$this->txtUsername->Text = $usuario->Username;
+		$this->txtEmail->Text = $usuario->Email;
 		$this->ddlRol->SelectedValue = $usuario->IdRol;
 		$this->chkActivo->Checked = $usuario->Activo;
 		$this->txtPassword->Visible = false;
@@ -97,6 +98,31 @@ class Update extends PageBaseSP{
 
 	}
 
+	public function cvEmail_OnServerValidate($sender, $param)
+	{
+		$email = $this->txtEmail->Text;
+		$criteria = new TActiveRecordCriteria;
+		$criteria->Condition = 'Email like :email ';
+		$criteria->Parameters[':email'] = $email;
+		$id = $this->Request["id"];
+
+		if(!is_null($id)){
+			$criteria->Condition .=  ' AND IdUsuario <> :username';
+			$criteria->Parameters[':username'] = $id;
+		}
+
+		$finder = UsuarioRecord::finder();
+		$usuario = $finder->find($criteria);
+
+		if (is_object($usuario)) {
+			$param->IsValid = false;
+		}
+		else {
+			$param->IsValid = true;
+		}
+
+	}	
+
 	public function btnCancelar_OnClick($sender, $param)
 	{
 		$this->Response->Redirect("?page=Admin.Usuario.Home");
@@ -118,6 +144,7 @@ class Update extends PageBaseSP{
 
 			$usuario->ApellidoNombre = mb_strtoupper($this->txtApellidoNombre->Text, 'utf-8');
 			$usuario->Username = $this->txtUsername->Text;
+			$usuario->Email = $this->txtEmail->Text;
 
 			if($this->ddlOrganismo->SelectedValue!="" and $this->ddlOrganismo->SelectedValue!="0"){
 				$usuario->IdOrganismo = $this->ddlOrganismo->SelectedValue;

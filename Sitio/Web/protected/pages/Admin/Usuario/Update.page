@@ -69,6 +69,21 @@
 			  	OnServerValidate="cvUsername_OnServerValidate"
 			 	ValidationGroup="Register"/>
 			<br />
+			<span class="label">Email</span>
+			<com:TTextBox
+	       		ID="txtEmail"
+				CssClass="large"
+				MaxLength="50"
+	            AutoTrim="True"
+	       		ToolTip="Ingrese el Email del  usuario"/>
+			<com:TCustomValidator
+				ControlToValidate="txtUsername"
+	  			Text="*"
+		   		ErrorMessage="El Email del usuario ya existe."
+				Display="Dynamic"
+			  	OnServerValidate="cvEmail_OnServerValidate"
+			 	ValidationGroup="Register"/>
+			<br />
 			<span class="label required">Contraseña:</span>
 			<com:TLabel
 				ID="labelContrasena"
