@@ -43,8 +43,8 @@ class Update extends PageBaseSP{
 		$criteria->OrdersBy['Nombre'] = 'asc';
 		$finder = LocalidadRecord::finder();
 		$localidades = $finder->findAll($criteria);
-		//$this->ddlLocalidad->DataSource = $localidades;
-		//$this->ddlLocalidad->dataBind();
+		$this->ddlLocalidad->DataSource = $localidades;
+		$this->ddlLocalidad->dataBind();
 
 		$this->hlkVolver->NavigateUrl .= "&idc=$idContrato&ido=$idObra";
 
@@ -61,7 +61,9 @@ class Update extends PageBaseSP{
 		 		if(count($data)){
 		 		$this->lblCuentas->Visible = false;
 		 		$totalmonto = $this->CreateDataSource("RendicionCuentasPeer","TotalMontoRendicionesByCertificacion", $idCertificacion);
-		 		$this->lblTotal->Text = '$' . $totalmonto[0]["monto"]; 				 		
+
+		 		$this->lblTotal->Text = '$' . $totalmonto[0]["monto"];
+		 		
 		}
 
 	}
@@ -69,8 +71,8 @@ class Update extends PageBaseSP{
 	public function RefreshRendicionCuentas($idRendicionCuentas){
 		$finder = RendicionCuentasRecord::finder();
 		$RendicionCuentas = $finder->findByPk($idRendicionCuentas);
-		//$this->txtProyecto->Text = $RendicionCuentas->Proyecto;
-		//$this->ddlLocalidad->SelectedValue = $RendicionCuentas->IdLocalidad;
+		$this->txtProyecto->Text = $RendicionCuentas->Proyecto;
+		$this->ddlLocalidad->SelectedValue = $RendicionCuentas->IdLocalidad;
 		$this->txtEmpresa->Text = $RendicionCuentas->Empresa;
 		$this->txtCuit->Text = $RendicionCuentas->Cuit;
 		$this->txtFacturaNro->Text = $RendicionCuentas->Factura;
@@ -91,8 +93,8 @@ class Update extends PageBaseSP{
 	}
 
 	public function LimpiarCampos(){
-		//$this->txtProyecto->Text = "";
-		//$this->ddlLocalidad->SelectedValue=0;
+		$this->txtProyecto->Text = "";
+		$this->ddlLocalidad->SelectedValue=0;
 		$this->txtEmpresa->Text = "";
 		$this->txtCuit->Text = "";
 		$this->txtFacturaNro->Text = "";
@@ -146,8 +148,8 @@ class Update extends PageBaseSP{
 					$rendicioncuenta->Activo = 1;
 					$rendicioncuenta->Estado = 0;
 				}								
-				//$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
-				//$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
+				$rendicioncuenta->Proyecto = $this->txtProyecto ->Text;
+				$rendicioncuenta->IdLocalidad = $this->ddlLocalidad ->SelectedValue;
 				$rendicioncuenta->Empresa = $this->txtEmpresa ->Text;
 				$rendicioncuenta->Cuit = $this->txtCuit->Text;
 				$rendicioncuenta->Factura = $this->txtFacturaNro->Text;

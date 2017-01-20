@@ -23,7 +23,7 @@ class HomeAdmin extends PageBaseSP{
 		$idOrganismo = $this->Session["SPOrganismo"];
 		$this->btnAgregar->NavigateUrl.="&ido=$idObra&idc=$idContrato";
 		$this->btnAgregar->Visible = $this->ValidarComitente($idOrganismo, $idObra);
-		//$this->hlkVolver->NavigateUrl.="&id=$idObra";
+		$this->hlkVolver->NavigateUrl.="&id=$idObra";
 
 		$finder = ObraRecord::finder();
 		$obra = $finder->findByPk($idObra);
@@ -31,7 +31,7 @@ class HomeAdmin extends PageBaseSP{
 		$organismo = $finder->findByPk($obra->IdOrganismo);
 
 		if(!$this->ValidarObraOrganismo($idOrganismo, $idObra, true)){
-			$this->Response->Redirect("?page=Obra.Home");
+			$this->Response->Redirect("?page=Obra.HomeAdmin");
 		}
 
 		$finder = ContratoRecord::finder();

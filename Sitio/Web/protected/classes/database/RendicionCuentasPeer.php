@@ -5,9 +5,9 @@ class RendicionCuentasPeer
 		$sql= "SELECT 
 				  IdRendicionCuentas, 
 				  IdCertificacion, 
-				  Orden, 
-				  Proyecto,  
-				  localidad.Nombre as 'Localidad', 
+				  -- Orden, 
+				  -- Proyecto,  
+				  -- localidad.Nombre as 'Localidad', 
 				  Empresa, 
 				  Cuit, 
 				  Factura, 
@@ -26,7 +26,7 @@ class RendicionCuentasPeer
 		              END as Estado, 
 				  Revision, 
 				  Activo 
-			FROM rendicioncuentas inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
+			FROM rendicioncuentas -- inner join localidad on rendicioncuentas.IdLocalidad = localidad.IdLocalidad
 			WHERE idCertificacion = $idCertificacion and rendicioncuentas.Activo=1";
 		return $sql;
 	}

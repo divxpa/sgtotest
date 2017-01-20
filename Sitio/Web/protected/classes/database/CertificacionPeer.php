@@ -68,10 +68,12 @@ class CertificacionPeer
 				  obra o on co.IdObra=o.IdObra
 				$where 
 				order by
+				  ce.NroCertificado,
 				  ot.Numero,
 				  ce.Periodo,
 				  ce.NroCertificado";
 		return $sql;
+
 	}
 
 	public static function SiguienteNumeroCertificado($idContrato, $tipo="0", $idOrdenTrabajo=""){
@@ -246,8 +248,8 @@ class CertificacionPeer
 	}
 
 	public static function getCertificacion($idCertificacion){
-		$sql = "select 
-                                ce.*,
+		$sql = "SELECT 
+                	ce.*,
 					(case
 					  when ce.IdOrdenTrabajo is not null then
 					    ce.MontoAvance/(ot.Monto - ifnull((select sum(Importe) from ordentrabajodeductivo where IdOrdenTrabajo=ot.IdOrdenTrabajo),0))*100

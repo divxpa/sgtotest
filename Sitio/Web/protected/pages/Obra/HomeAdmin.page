@@ -152,7 +152,7 @@
 				            <prop:ItemTemplate>
 						       	<com:TActiveHyperLink
 						            ID="hlItems"
-						            ToolTip="Haga click aquí para ingresar a los intems del convenio"
+						            ToolTip="Haga click aquí para ingresar a los items del convenio"
 						            NavigateUrl="?page=Obra.Contrato.Item.Update&idc=<%# $this->Parent->Data['IdContrato']%>&ido=<%# $this->Parent->Data['IdObra']%>">
 						            <img src="themes/serviciospublicos/images/document.png" border="0"/>
 						    	</com:TActiveHyperLink>
