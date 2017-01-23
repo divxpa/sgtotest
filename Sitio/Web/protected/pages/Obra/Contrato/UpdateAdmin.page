@@ -36,19 +36,6 @@
 			<com:TLabel 
 				ID="lblObra" 
 				CssClass="labeldata"/>
-			<com:TTextBox
-	       		ID="txtNumero"
-				CssClass="small"
-				MaxLength="10"
-	            AutoTrim="True"
-	            Display="None"
-	       		ToolTip="Ingrese el número de contrato"/>
-	       	<com:TRequiredFieldValidator
-				ControlToValidate="txtNumero"
-				ErrorMessage="Debe ingresar el número de contrato."
-				Display="Dynamic"
-				Text="*"
-				ValidationGroup="Register"/>
 	       	<br />
 	       	<span class="label required">Proveedor</span>
 			<com:TActiveTextBox
@@ -56,7 +43,7 @@
          		Style="display:none;" />
 			<com:TAutoComplete
 				ID="acpProveedor"
-				Width="250px"
+				Width="350px"
 				MinChars="4"
 				Frequency="1"
 				OnSuggest="acpProveedor_OnSuggest"

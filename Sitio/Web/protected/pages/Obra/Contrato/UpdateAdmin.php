@@ -55,7 +55,7 @@ class UpdateAdmin extends PageBaseSP{
 		$finder = ContratoRecord::finder();
 		$contrato = $finder->findByPk($idContrato);
 
-		$this->txtNumero->Text = $contrato->Numero;
+		//$this->txtNumero->Text = $contrato->Numero;
 		/*$this->ddlProveedor->SelectedValue = $contrato->IdProveedor;
 		$this->ddlProveedor->Enabled = false;*/
 		$this->txtIdProveedor->Text = $contrato->IdProveedor;
@@ -166,7 +166,7 @@ class UpdateAdmin extends PageBaseSP{
 
 			//$contrato->IdProveedor = $this->ddlProveedor->SelectedValue;
 			$contrato->IdProveedor = $this->txtIdProveedor->Text;
-			$contrato->Numero = $this->txtNumero->Text;
+			//$contrato->Numero = $this->txtNumero->Text;
 			$fecha = explode("/", $this->dtpFecha->Text);
 			$contrato->Fecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
 			$contrato->Monto = $this->txtMonto->Text;
@@ -174,7 +174,8 @@ class UpdateAdmin extends PageBaseSP{
 			$contrato->FechaBaseMonto = $fecha[2]."-".$fecha[1]."-".$fecha[0];
 			$contrato->NormaLegalAutorizacion = $this->txtNConvenio->Text;
 			$contrato->NormaLegalAdjudicacion = $this->txtNConvenio->Text;
-			//$contrato->NormaLegalAutorizacion = $this->txtNLAutorizacion->Text;
+			$contrato->Numero = $this->txtNConvenio->Text;//Controlar
+
 			//$contrato->NormaLegalAdjudicacion = $this->txtNLAdjudicacion->Text;
 			
 			if($this->dtpFechaInicio->Text!=""){
