@@ -395,15 +395,6 @@ class ObraPeer
 	public static function ObrasByLocalidad($idLocalidad, $idOrganismo,$idEstadoObra,$fechaDesde, $fechaHasta){
 		$where = " where exists(select * from obralocalidad where IdObra=o.IdObra and IdLocalidad=$idLocalidad and Activo = 1) ";
 
-		
-		// Este filtro se agrego para que las obras que son por administracion se muestren en los reportes y las otras no
-		$where .= "and
-			(
-              ((o.IdOrganismo=12 or o.IdComitente=12) and o.poradministracion = 1)
-              or
-              ((o.IdOrganismo<>12 and o.IdComitente<>12) and o.poradministracion = 0)
-             )";
-
 		if($idOrganismo!="0" and $idOrganismo!=""){
 			$where .= " and (o.IdOrganismo=$idOrganismo or o.IdComitente=$idOrganismo) ";
 		}
