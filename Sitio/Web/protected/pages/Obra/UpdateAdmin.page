@@ -33,7 +33,7 @@
 				CssClass="small"
 				MaxLength="4"
 	            AutoTrim="True"
-	            Display= "None"
+	            Display= "Dynamic"
 	       		ToolTip="Ingrese el código de obra"/>
 	       	<com:TRequiredFieldValidator
 				ControlToValidate="txtCodigo"

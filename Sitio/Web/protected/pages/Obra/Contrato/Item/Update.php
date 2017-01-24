@@ -1,12 +1,13 @@
 <?php
 
 class Update extends PageBaseSP{
-
+protected $cambiando;//test
 
 	public function onLoad($param){
 		parent::onLoad($param);
 
 		if(!$this->IsPostBack){
+			$this->cambiando = false;//test
 			$idObra = $this->Request["ido"];
 			$idContrato = $this->Request["idc"];
 			$this->LoadDataRelated($idObra, $idContrato);
@@ -177,19 +178,62 @@ class Update extends PageBaseSP{
 
     public function txtCantidad_OnTextChanged($sender, $param){
 		$this->CalcularTotalItem();
-	}
+        
+    }
 
-	    public function txtPrecioUnitario_OnTextChanged($sender, $param){
+	public function txtPrecioUnitario_OnTextChanged($sender, $param){
 		$this->CalcularTotalItem();
+		/*
+		 if (!$this->cambiando)
+        {
+            $this->cambiando = true;
+            $cantidad = $sender->Text;
+            $sender->Text = $cantidad;
+            //echo "<pre>";print_r($sender); die();
+
+            $preciounitario = floatval($this->txtPrecioUnitario->Text);
+            
+            if ($cantidad) {
+            	$preciototal = number_format($cantidad * $preciounitario, 2, ".", "");
+                $this->txtPrecioTotal->Text = $preciototal;
+            }
+            //$this->CalcularTotales();
+            $this->cambiando = false;
+        }*/
+
+        //$this->CalcularNeto($sender);
+
 	}
 
+	public function CalcularNeto($sender){
+		/*$certificacion = floatval($sender->Parent->Parent->tcMontoAvance->txtMontoAvance->Text);
+		$anticipo = floatval($sender->Parent->Parent->tcAnticipoFinanciero->txtAnticipoFinanciero->Text);
+		$descuento = floatval($sender->Parent->Parent->tcDescuentoAnticipo->txtDescuentoAnticipo->Text);
+		$multa = floatval($sender->Parent->Parent->tcRetencionMulta->txtRetencionMulta->Text);
+		$fondoReparo = floatval($sender->Parent->Parent->tcFondoReparo->txtFondoReparo->Text);
+		$redeterminacionPrecios = floatval($sender->Parent->Parent->tcRedeterminacionPrecios->txtRedeterminacionPrecios->Text);
+		$otros = floatval($sender->Parent->Parent->tcOtrosConceptos->txtOtrosConceptos->Text);*/
+
+		$cantidad = floatval($this->txtCantidad->Text);
+		$preciounitario = floatval($this->Parent->txtPrecioUnitario->Text);
+
+		//$sender->Parent->txtPrecioTotal->Text = number_format($cantidad * $preciounitario, 2, ".", "");
+
+		/*
+		$sender->Parent->Parent->tcImporteNeto->txtImporteNeto->Text = number_format($certificacion + $anticipo - $descuento - $multa - $fondoReparo + $redeterminacionPrecios + $otros, 2, ".", "");
+		*/
+	}
+
+
+public function CalcularTotales(){
+
+	}
 
     public function CalcularTotalItem(){
     	$cantidad = floatval($this->txtCantidad->Text);
     	$preciounitario = floatval($this->txtPrecioUnitario->Text);
     	$preciototal = number_format($cantidad * $preciounitario, 2, ".", "");
     	$this->txtPrecioTotal->Text = $preciototal;
-
     	$idContrato = $this->Request["idc"];
     	$finder = ContratoRecord::finder();
 		$contrato = $finder->findByPk($idContrato);

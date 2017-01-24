@@ -15,7 +15,7 @@ class UpdateAdmin extends PageBaseSP{
 			}
 			else{
 				$idOrganismo = $this->Session["SPOrganismo"];
-				$codigo = $this->CreateDataSource("ObraPeer", "SiguienteCodigoObra", $idOrganismo);
+				$codigo = $this->CreateDataSource("ObraAdministracionPeer", "SiguienteCodigoObra", $idOrganismo);
 				$this->txtCodigo->Text = $codigo[0]["Codigo"];
 			}
 		}

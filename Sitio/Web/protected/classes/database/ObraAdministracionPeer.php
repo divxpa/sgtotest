@@ -129,7 +129,9 @@ class ObraAdministracionPeer
 				from
 				  obra
 				where
-				  IdOrganismo=$idOrganismo";
+				  IdOrganismo=$idOrganismo
+				  and poradministracion=1
+				  and activo=1";
 		return $sql;
 	}
 

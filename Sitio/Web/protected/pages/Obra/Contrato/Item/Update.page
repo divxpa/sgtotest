@@ -1,5 +1,5 @@
 <%@   Title="S.G.O. - Alteración de Contrato" %>
-<com:TContent ID="MainContent">
+<com:TContent ID="MainContent">		
 	<div style="height: 59px;">
 		<div style="display: inline;">
 			<com:THyperLink 
@@ -89,12 +89,14 @@
 						</com:TDropDownList>
 					</th>
 					<th width="100px">
-						<com:TTextBox
+						<com:TActiveTextBox
 					   		ID="txtCantidad"
 							MaxLength="15"
-							AutoTrim="True"
-							OnTextChanged="txtCantidad_OnTextChanged"
-							AutoPostBack="true"
+							AutoTrim="True"							
+							AutoPostBack="True"
+							OnTextChanged="Page.txtCantidad_OnTextChanged"
+							ClientSide.OnLoading="Element.show('callback_status')"
+							ClientSide.OnComplete="Element.hide('callback_status')"
 					   		ToolTip="Ingrese el precio unitario"
 							AutoCompleteType="Disabled" 
 							style="width: 100px; font-size: 12px;"/>
@@ -106,14 +108,17 @@
 							ValidationGroup="Register"/>
 					</th>
 					<th width="100px">
-						<com:TTextBox
+						<com:TActiveTextBox
 					   		ID="txtPrecioUnitario"
 							MaxLength="15"
 							AutoTrim="True"
-							OnTextChanged="txtPrecioUnitario_OnTextChanged"
+							OnTextChanged="Page.txtPrecioUnitario_OnTextChanged"
+							ClientSide.OnLoading="Element.show('callback_status')"
+							ClientSide.OnComplete="Element.hide('callback_status')"
 							AutoPostBack="true"
 					   		ToolTip="Ingrese el precio unitario"
 							AutoCompleteType="Disabled" style="width: 100px; font-size: 12px;"/>
+
 						<com:TRequiredFieldValidator
 							ControlToValidate="txtPrecioUnitario"
 							ErrorMessage="Debe ingresar el precio unitario del Item."
@@ -122,7 +127,7 @@
 							ValidationGroup="Register"/>
 					</th>
 					<th width="100px">
-						<com:TTextBox
+						<com:TActiveTextBox
 					   		ID="txtPrecioTotal"
 							MaxLength="15"
 							AutoTrim="True"
@@ -138,7 +143,7 @@
 							ValidationGroup="Register"/>
 					</th>
 					<th width="100px">
-						<com:TTextBox
+						<com:TActiveTextBox
 					   		ID="txtIncidencia"
 							MaxLength="15"
 							AutoTrim="True"
