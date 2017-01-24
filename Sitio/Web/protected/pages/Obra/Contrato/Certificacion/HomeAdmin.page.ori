@@ -47,17 +47,16 @@
 		        OnPagerCreated="dgDatos_OnPagerCreated">
 				<com:TBoundColumn DataField="NroCertificado" HeaderText="Nro." ItemStyle.HorizontalAlign="Right"/>
 				<com:TBoundColumn DataField="Periodo" HeaderText="Periodo" ItemStyle.HorizontalAlign="Center"/>
-				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Ant. Fin." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Dto. Ant." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fdo. Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="RedeterminacionPrecios" HeaderText="Red. Precios" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="OtrosConceptos" HeaderText="Otros" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Imp. Neto" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="ManoObraOcupada" HeaderText="M.Obra" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certifificado" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certifificado" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Anticipo Financiero" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Descuento Anticipo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fondo Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>				
+				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Importe Neto" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
+				
+				<com:THyperLinkColumn DataTextField="ImportePagado" DataTextFormatString="#number_format({0},2,',','.')" DataNavigateUrlField="IdCertificacion" DataNavigateUrlFormatString="javascript:OpenWindow('?page=Tesoreria.Pago.PagosByCertificado&id=%s',500,400)" HeaderText="Importe Pagado" ItemStyle.HorizontalAlign="Right"/>
 				<com:TBoundColumn DataField="FechaVtoPago" HeaderText="F. Vto. Pago" ItemStyle.HorizontalAlign="Center"/>
-				<com:THyperLinkColumn DataTextField="ImportePagado" DataTextFormatString="#number_format({0},2,',','.')" DataNavigateUrlField="IdCertificacion" DataNavigateUrlFormatString="javascript:OpenWindow('?page=Tesoreria.Pago.PagosByCertificado&id=%s',500,400)" HeaderText="Imp. Pagado" ItemStyle.HorizontalAlign="Right"/>
+				
 				<com:TBoundColumn DataField="Saldo" HeaderText="Saldo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
 				<com:TBoundColumn DataField="PorcentajeAvanceAcum" HeaderText="% Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
 				<com:TBoundColumn DataField="MontoAvanceAcum" HeaderText="$ Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>

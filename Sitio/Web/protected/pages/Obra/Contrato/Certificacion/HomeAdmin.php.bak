@@ -7,10 +7,16 @@ class HomeAdmin extends PageBaseSP{
 		if(!$this->IsPostBack){
 			$idObra = $this->Request["ido"];
 			$idContrato = $this->Request["idc"];
-			$this->Refresh($idObra, $idContrato);
+			if (!is_null($idContrato)){
+				$this->Refresh($idObra, $idContrato);
+			}
+			else{
+				$this->lblTitulo->Text = "Para agregar una certificacion, primero debe crear un contrato";
+			}			
 		}
-
 	}
+
+	
 
 	public function Refresh($idObra, $idContrato)
 	{
