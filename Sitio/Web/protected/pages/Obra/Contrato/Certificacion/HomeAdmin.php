@@ -34,6 +34,11 @@ class HomeAdmin extends PageBaseSP{
 		$finder = ProveedorRecord::finder();
 		$proveedor = $finder->findByPk($contrato->IdProveedor);
 
+		$totales = $this->CreateDataSource("ObraPeer","TotalesCertificacion", $idContrato);
+		$this->lblporcentajeavance->Text = $totales[0]["porcentajeavance"];
+		$this->lblmontoavance->Text = $totales[0]["montoavance"];
+		$this->lbldescuentoanticipo->Text = $totales[0]["descuentoanticipo"];
+
 		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesPorObra", $idObra);
 		$this->lblObra->Text = $organismo->PrefijoCodigo . '-' . $obra->Codigo . ' ' . $obra->Denominacion . " - " .$localidades[0]["Localidades"];
 		$this->lblContrato->Text = $contrato->Numero . " - " . $proveedor->Cuit . " " . $proveedor->RazonSocial;

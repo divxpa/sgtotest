@@ -29,39 +29,57 @@
 	<com:TLabel 
 		ID="lblContrato"
 		CssClass="maintitle2" />
-	<div>
-		<div>
+	<com:TActivePanel ID="pnlDatos">
+		<div>	
+	        <table class="TableForm" style="width: 1200px; display:none;">
+				<thead>
+					<tr>
+							<td width="20px" style="padding: 1px 2px;">Nro.</th>
+							<td width="50px" style="padding: 1px 2px;">Periodo</th>
+							<td width="50px" style="padding: 1px 2px;">% Certif.</th>
+							<td width="75px" style="padding: 1px 2px;">$ Certif.</th>
+							<td width="50px" style="padding: 1px 2px;">Ant. Fin.</th>
+							<td width="50px" style="padding: 1px 2px;">Dto. Ant.</th>
+							<td width="50px" style="padding: 1px 2px;">Fdo. Reparo</th>
+							<td width="100px" style="padding: 1px 2px;">Imp. Neto</th>
+							<td width="100px" style="padding: 1px 2px;">Imp. Pagado</th>
+							<td width="100px" style="padding: 1px 2px;">Saldo</th>
+							<td width="50px" style="padding: 1px 2px;">% Acum.</th>
+							<td width="75px" style="padding: 1px 2px;">$ Acum.</th>
+							<td width="50px" style="padding: 1px 2px;">Editar</th>
+							<td width="50px" style="padding: 1px 2px;">Imprimir</th>
+							<td width="50px" style="padding: 1px 2px;">Rendicion de Cuentas</th>
+							<td width="50px" style="padding: 1px 2px;">Documentación Adjunta</th>
+					</tr>
+				</thead>
+			</table>
+	    </div>
+		<div >
 			<com:TActiveDataGrid
 			    ID="dgDatos"
 				CssClass="TableForm"
 			    AlternatingItemStyle.BackColor="#EEEEEE"
-			    AutoGenerateColumns="false"
-	            AllowPaging="true"
+			    AutoGenerateColumns="false"	            
 				AllowCustomPaging="false"
-				PageSize="15"
-		        PagerStyle.Mode="Numeric"
-		        PagerStyle.HorizontalAlign="Right"
-				PagerStyle.CssClass="pager"
+
 		        AllowSorting="false"
+		        ShowHeader="true"
+            	Width="1200px">
 		        OnPageIndexChanged="dgDatos_OnPageIndexChanged"
 		        OnPagerCreated="dgDatos_OnPagerCreated">
-				<com:TBoundColumn DataField="NroCertificado" HeaderText="Nro." ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="Periodo" HeaderText="Periodo" ItemStyle.HorizontalAlign="Center"/>
-				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Ant. Fin." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Dto. Ant." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fdo. Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="RedeterminacionPrecios" HeaderText="Red. Precios" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="OtrosConceptos" HeaderText="Otros" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Imp. Neto" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="ManoObraOcupada" HeaderText="M.Obra" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="FechaVtoPago" HeaderText="F. Vto. Pago" ItemStyle.HorizontalAlign="Center"/>
-				<com:THyperLinkColumn DataTextField="ImportePagado" DataTextFormatString="#number_format({0},2,',','.')" DataNavigateUrlField="IdCertificacion" DataNavigateUrlFormatString="javascript:OpenWindow('?page=Tesoreria.Pago.PagosByCertificado&id=%s',500,400)" HeaderText="Imp. Pagado" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="Saldo" HeaderText="Saldo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="PorcentajeAvanceAcum" HeaderText="% Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TBoundColumn DataField="MontoAvanceAcum" HeaderText="$ Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right"/>
-				<com:TTemplateColumn ID="tcEditar" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
+				<com:TBoundColumn DataField="NroCertificado" HeaderText="Nro." ItemStyle.Width="20px"/>
+				<com:TBoundColumn DataField="Periodo" HeaderText="Periodo" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif."  DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="75px"/>
+				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Ant. Fin." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Dto. Ant." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fdo. Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>			
+				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Importe Neto" DataFormatString="#number_format({0},2,',','.')"  ItemStyle.Width="100px"/>				
+				<com:THyperLinkColumn DataTextField="ImportePagado" DataTextFormatString="#number_format({0},2,',','.')" DataNavigateUrlField="IdCertificacion" DataNavigateUrlFormatString="javascript:OpenWindow('?page=Tesoreria.Pago.PagosByCertificado&id=%s',500,400)" HeaderText="Imp. Pagado" ItemStyle.HorizontalAlign="Right" ItemStyle.Width="100px"/>
+				<com:TBoundColumn DataField="Saldo" HeaderText="Saldo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="100px"/>
+				<com:TBoundColumn DataField="PorcentajeAvanceAcum" HeaderText="% Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="MontoAvanceAcum" HeaderText="$ Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.Width="75px"/>
+				<com:TTemplateColumn ID="tcEditar" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="50px">
 		            <prop:ItemTemplate>
 				       	<com:TActiveHyperLink
 				            ID="hlEditar"
@@ -72,7 +90,7 @@
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>
              	</com:TTemplateColumn>
-				<com:TTemplateColumn ID="tcImprimir" HeaderText="Imprimir" ItemStyle.HorizontalAlign="Center">
+				<com:TTemplateColumn ID="tcImprimir" HeaderText="Imprimir" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="50px">
 		            <prop:ItemTemplate>
 				       	<com:TActiveHyperLink
 				            ID="hlImprimir"
@@ -84,7 +102,7 @@
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>
              	</com:TTemplateColumn>
-             	<com:TTemplateColumn ID="tcRendicionCuentas" HeaderText="Rendicion de Cuentas" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
+             	<com:TTemplateColumn ID="tcRendicionCuentas" HeaderText="Rendicion de Cuentas" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="50px">
 		            <prop:ItemTemplate>
 				       	<com:TActiveHyperLink
 				            ID="hlEditar"
@@ -95,7 +113,7 @@
 				    	</com:TActiveHyperLink>
 		            </prop:ItemTemplate>
              	</com:TTemplateColumn>
-             	<com:TTemplateColumn ID="tcDocumentacionAdjunta" HeaderText="Documentación Adjunta" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
+             	<com:TTemplateColumn ID="tcDocumentacionAdjunta" HeaderText="Documentación Adjunta" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="50px">
 		            <prop:ItemTemplate>
 				       	<com:TActiveHyperLink
 				            ID="hlAdjuntos"
@@ -108,5 +126,26 @@
              	</com:TTemplateColumn>
 		  	</com:TActiveDataGrid>
 		</div>
-	</div>
+		<div>	
+	        <table class="TableForm" style="width: 1200px">
+				<tbody>
+					<tr style="background-color:#CCC; ">
+						<td width="20px" style="text-align:right"></td>
+						<td width="50px" style="padding: 1px 2px;text-align:right"></td>
+						<td width="50px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblporcentajeavance" /></strong></td>
+						<td width="75px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblmontoavance" /></strong></td>
+						<td width="50px" style="padding: 1px 2px;text-aling:right"></td>
+						<td width="50px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbldescuentoanticipo" /></strong></td>
+						<td width="50px" style="padding: 1px 2px;text-aling:right"></td>
+						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
+						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
+						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
+
+						<td width="390px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbl1" /></strong></td>
+						
+					</tr>
+			</tbody>
+		</table>
+    </div>
+</com:TActivePanel>
 </com:TContent>

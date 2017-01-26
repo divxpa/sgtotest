@@ -567,5 +567,14 @@ class ObraPeer
 		return $sql;
 	}
 
+	public static function TotalesCertificacion($idContrato){
+		$sql = "Select
+				round(sum(porcentajeavance),2) as porcentajeavance,
+				sum(montoavance) as montoavance,
+				sum(descuentoanticipo) as descuentoanticipo
+				From certificacion
+				Where idcontrato = $idContrato";
+		return $sql;
+	}
 }
 ?>
