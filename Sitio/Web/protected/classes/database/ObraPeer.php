@@ -335,7 +335,7 @@ class ObraPeer
 		return $sql;
 	}
 
-	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados){
+	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados, $idFufi){
 		$where = "";
 
 		if($idOrganismo!=""){
@@ -363,6 +363,18 @@ class ObraPeer
 			$where .= " and o.Expediente like '%$expediente%' ";	
 		}
 
+		if($idFufi!="" and $idFufi!="0"){
+			$where .= " and exists(select * from obralocalidad where IdObra=o.IdObra and IdLocalidad=$idLocalidad) ";
+		}
+
+		// Este filtro se agrego para que las obras que son por administracion se muestren en los reportes y las otras no
+		$where .= " and
+			(
+              ((o.IdOrganismo=12 or o.IdComitente=12) and o.poradministracion = 1)
+              or
+              ((o.IdOrganismo<>12 and o.IdComitente<>12) and o.poradministracion = 0)
+             )";
+
 		$sql = "select
 				  o.IdObra,
 				  c.IdContrato,
@@ -385,6 +397,7 @@ class ObraPeer
 				  organismo og on o.IdOrganismo = og.IdOrganismo left join 
 				  proveedor p on c.IdProveedor = p.IdProveedor inner join
 				  estadoobra eo on o.IdEstadoObra=eo.IdEstadoObra
+				  obrafuentefinanciamiento 
 				where  (o.Activo = 1)
 				$where
 				order by

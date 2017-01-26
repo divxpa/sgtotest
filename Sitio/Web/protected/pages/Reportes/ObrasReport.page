@@ -32,6 +32,15 @@
 		       		DataTextField="Nombre"
 		       		DataValueField="IdLocalidad" />
 		       	<br />
+		       	<span>Fuente de Financiamiento: </span>
+				<com:TActiveDropDownList
+		       		ID="ddlFufi"
+		       		ToolTip="Seleccione"
+		       		PromptValue="0"
+		       		PromptText="Seleccione"
+		       		DataTextField="Descripcion"
+		       		DataValueField="IdFufi" />
+		       	<br />
 		       	<table>
 		       		<tr>
 		       			<td valign="top">

@@ -16,6 +16,10 @@ class ObrasReport extends PageBaseSP{
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
 
+		$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect", $idOrganismo);
+		$this->ddlFufi->DataSource = $fuentesfinanciamiento;
+		$this->ddlFufi->dataBind();
+
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Descripcion'] = 'asc';
 		$finder = EstadoObraRecord::finder();
@@ -63,6 +67,8 @@ class ObrasReport extends PageBaseSP{
 		$denominacion = $this->txtDenominacion->Text;
 		$expediente = $this->txtExpediente->Text;
 
+		$idFufi = $this->ddlFufi->SelectedValue;
+
 		if(is_object($this->ddlLocalidad->SelectedItem)){
 			$localidad = $this->ddlLocalidad->SelectedItem->Text;
 		}
@@ -87,16 +93,16 @@ class ObrasReport extends PageBaseSP{
 
 		}
 
-		$data = $this->getData($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $selectedValues);
+		$data = $this->getData($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $selectedValues, $idFufi);
 
-		$filters = array($codigo, $denominacion, $expediente, $localidad, $estado);
+		$filters = array($codigo, $denominacion, $expediente, $localidad, $estado, $fufi);	
 		$file = $this->GenerarReporte("ObrasReport", "A4-L", $filters, $data);
 		$this->CallbackClient->callClientFunction("Imprimir",array($file));
 	}
 
 	public function getData($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados)
 	{
-		$data = $this->CreateDataSource("ObraPeer","ObrasReport", $idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados);
+		$data = $this->CreateDataSource("ObraPeer","ObrasReport", $idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados, $idFufi);
 
 		if($this->chkCertificaciones->Checked){
 
