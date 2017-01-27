@@ -16,9 +16,9 @@ class ObrasReport extends PageBaseSP{
 		$this->ddlLocalidad->DataSource = $localidades;
 		$this->ddlLocalidad->dataBind();
 
-		$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect", $idOrganismo);
-		$this->ddlFufi->DataSource = $fuentesfinanciamiento;
-		$this->ddlFufi->dataBind();
+		//$fuentesfinanciamiento = $this->CreateDataSource("FuenteFinanciamientoPeer","FuentesFinanciamientoSelect", $idOrganismo);
+		//$this->ddlFufi->DataSource = $fuentesfinanciamiento;
+		//$this->ddlFufi->dataBind();
 
 		$criteria = new TActiveRecordCriteria;
 		$criteria->OrdersBy['Descripcion'] = 'asc';
@@ -67,7 +67,7 @@ class ObrasReport extends PageBaseSP{
 		$denominacion = $this->txtDenominacion->Text;
 		$expediente = $this->txtExpediente->Text;
 
-		$idFufi = $this->ddlFufi->SelectedValue;
+		//$idFufi = $this->ddlFufi->SelectedValue;
 
 		if(is_object($this->ddlLocalidad->SelectedItem)){
 			$localidad = $this->ddlLocalidad->SelectedItem->Text;

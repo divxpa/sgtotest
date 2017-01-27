@@ -20,18 +20,19 @@ class ObraPeer
 		if ($idEstado != "" && $idEstado != "0")
 			$arr_where[] = "o.IdEstadoObra=$idEstado";
 
+
 		if ($codigoOrganismo!="")
 			$arr_where[] = " (og.PrefijoCodigo = $codigoOrganismo) ";			
 
-		if ($codigoObra!="")
+
+		if($codigoObra!="")
 			$arr_where[] = " (o.Codigo = $codigoObra)";	
 
 		if ($busqueda != "")
 			$arr_where[] = "(o.Denominacion LIKE '%$busqueda%' OR o.Expediente LIKE '%$busqueda%')";
 
-		if ($idObra!='')
+		if($idObra!='')
 			$arr_where[] = "o.IdObra = $idObra";
-		
 		
 		$where = sizeof($arr_where) ? "WHERE ".implode(" AND ", $arr_where) : "";
 
@@ -343,11 +344,11 @@ class ObraPeer
 		return $sql;
 	}
 
-	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados){
+	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados, $idFufi){
 		$where = "";
 
 		if($idOrganismo!=""){
-			$where .= " and (o.IdOrganismo=$idOrganismo or o.IdComitente=$idOrganismo) ";
+			$where .= " 	";
 		}
 
 		if($idLocalidad!="" and $idLocalidad!="0"){
@@ -371,9 +372,9 @@ class ObraPeer
 			$where .= " and o.Expediente like '%$expediente%' ";	
 		}
 
-		/*if($idFufi!="" and $idFufi!="0"){
+		if($idFufi!="" and $idFufi!="0"){
 			$where .= " and exists(select * from obralocalidad where IdObra=o.IdObra and IdLocalidad=$idLocalidad) ";
-		}*/
+		}
 
 		// Este filtro se agrego para que las obras que son por administracion se muestren en los reportes y las otras no
 		$where .= " and
@@ -405,6 +406,7 @@ class ObraPeer
 				  organismo og on o.IdOrganismo = og.IdOrganismo left join 
 				  proveedor p on c.IdProveedor = p.IdProveedor inner join
 				  estadoobra eo on o.IdEstadoObra=eo.IdEstadoObra
+				  obrafuentefinanciamiento 
 				where  (o.Activo = 1)
 				$where
 				order by
