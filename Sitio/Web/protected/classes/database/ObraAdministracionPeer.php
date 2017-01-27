@@ -95,6 +95,7 @@ class ObraAdministracionPeer
 				  o.PresupuestoOficial,
 				  date_format(o.FechaPresupuestoOficial,'%d/%m/%Y') as FechaPresupuestoOficial,
 				  eo.Descripcion as Estado,
+				  ifnull((select sum(pc.importe) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato inner join pagocertificacion pc on pc.IdCertificacion = ce.IdCertificacion where co.IdObra=o.IdObra),0) as Pagado,
 				  ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0)/ifnull((select sum(Monto+ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=contrato.IdContrato),0)) from contrato where IdObra=o.IdObra), 0)*100 as PorcentajeAvance,
 				  ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) as MontoAvance,
 				  ifnull(o.CreditoPresupuestarioAprobado, 0) + ifnull((select sum(Importe) from refuerzopartida where IdObra=o.IdObra) ,0) - ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) - ifnull((select sum(redeterminacionprecios) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) as SaldoCreditoPresup,
