@@ -59,7 +59,8 @@ protected $cambiando;//test
 		}
 
 		$totalmonto = $this->CreateDataSource("ContratoPeer","TotalMontoItemsByContrato", $idContrato);
-		$this->lblTotal->Text = $totalmonto[0]["monto"];
+		//"$ " . number_format($totalmonto[0]["monto"], 2, ",", "."); ;
+		$this->lblTotal->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); ;
 		$totalincidencia = $this->CreateDataSource("ContratoPeer","TotalIncidenciaItemsByContrato", $idContrato);
 		$this->lblTotalIncidencia->Text = $totalincidencia[0]["incidencia"];
 	}
