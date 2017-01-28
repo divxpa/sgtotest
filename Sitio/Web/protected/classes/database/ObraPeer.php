@@ -20,19 +20,18 @@ class ObraPeer
 		if ($idEstado != "" && $idEstado != "0")
 			$arr_where[] = "o.IdEstadoObra=$idEstado";
 
-
 		if ($codigoOrganismo!="")
 			$arr_where[] = " (og.PrefijoCodigo = $codigoOrganismo) ";			
 
-
-		if($codigoObra!="")
+		if ($codigoObra!="")
 			$arr_where[] = " (o.Codigo = $codigoObra)";	
 
 		if ($busqueda != "")
 			$arr_where[] = "(o.Denominacion LIKE '%$busqueda%' OR o.Expediente LIKE '%$busqueda%')";
 
-		if($idObra!='')
+		if ($idObra!='')
 			$arr_where[] = "o.IdObra = $idObra";
+		
 		
 		$where = sizeof($arr_where) ? "WHERE ".implode(" AND ", $arr_where) : "";
 
@@ -76,6 +75,7 @@ class ObraPeer
 
 	}
 
+/*
 	public static function ObrasHomeViejo($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra=''){
 		$where = "";
 
@@ -170,7 +170,7 @@ class ObraPeer
 				order by
 				  Orden, o.Codigo";
 		return $sql;
-	}
+	}*/
 
 	public static function ObrasHome2($idOrganismo, $idLocalidad, $idFufi, $idEstado, $busqueda, $idObra='', $codigoOrganismo, $codigoObra){
 		$where = "";
@@ -303,6 +303,14 @@ class ObraPeer
 		return $sql;
 	}
 
+	public static function FufiPorObra($idObra){
+		$sql = "SELECT 
+			fnCodigosFufixObra($idObra) as Codigo,
+			fnDescripcionesFufixObra($idObra) AS Nombre";
+		return $sql;
+		//>> REEMPLAZAR ESTAS FUNCIONES POR GROUP_CONCAT!! es más rápido y más legible
+	}
+
 	public static function LocalidadesConObraSelect($idOrganismo){
 		$sql = "select
 				  l.IdLocalidad,
@@ -335,11 +343,11 @@ class ObraPeer
 		return $sql;
 	}
 
-	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados, $idFufi){
+	public static function ObrasReport($idOrganismo, $codigo, $denominacion, $expediente, $idLocalidad, $idEstados){
 		$where = "";
 
 		if($idOrganismo!=""){
-			$where .= " 	";
+			$where .= " and (o.IdOrganismo=$idOrganismo or o.IdComitente=$idOrganismo) ";
 		}
 
 		if($idLocalidad!="" and $idLocalidad!="0"){
@@ -363,9 +371,9 @@ class ObraPeer
 			$where .= " and o.Expediente like '%$expediente%' ";	
 		}
 
-		if($idFufi!="" and $idFufi!="0"){
+		/*if($idFufi!="" and $idFufi!="0"){
 			$where .= " and exists(select * from obralocalidad where IdObra=o.IdObra and IdLocalidad=$idLocalidad) ";
-		}
+		}*/
 
 		// Este filtro se agrego para que las obras que son por administracion se muestren en los reportes y las otras no
 		$where .= " and
@@ -397,7 +405,6 @@ class ObraPeer
 				  organismo og on o.IdOrganismo = og.IdOrganismo left join 
 				  proveedor p on c.IdProveedor = p.IdProveedor inner join
 				  estadoobra eo on o.IdEstadoObra=eo.IdEstadoObra
-				  obrafuentefinanciamiento 
 				where  (o.Activo = 1)
 				$where
 				order by
@@ -405,6 +412,7 @@ class ObraPeer
 		return $sql;
 	}
 
+	// Utilizado en el Calendario
 	public static function ObrasByLocalidad($idLocalidad, $idOrganismo,$idEstadoObra,$fechaDesde, $fechaHasta){
 		$where = " where exists(select * from obralocalidad where IdObra=o.IdObra and IdLocalidad=$idLocalidad and Activo = 1) ";
 
