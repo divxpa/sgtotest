@@ -205,55 +205,37 @@
 		</table>		
 	</div>
 	<br>
-	<fieldset>
-		<com:TActivePanel ID="pnlItemsDelConvenio" Visible="true">
-			<div>	
-		        <table class="TableForm" style="width: 1200px; display:none;">
-					<thead>
-						<tr>
-								<td width="20px" style="padding: 1px 2px;">Nro.</th>
-								<td width="50px" style="padding: 1px 2px;">Periodo</th>
-								<td width="50px" style="padding: 1px 2px;">% Certif.</th>
-								<td width="75px" style="padding: 1px 2px;">$ Certif.</th>
-								<td width="50px" style="padding: 1px 2px;">Ant. Fin.</th>
-								<td width="50px" style="padding: 1px 2px;">Dto. Ant.</th>
-								<td width="50px" style="padding: 1px 2px;">Fdo. Reparo</th>
-								<td width="100px" style="padding: 1px 2px;">Imp. Neto</th>
-								<td width="100px" style="padding: 1px 2px;">Imp. Pagado</th>
-								<td width="100px" style="padding: 1px 2px;">Saldo</th>
-								<td width="50px" style="padding: 1px 2px;">% Acum.</th>
-								<td width="75px" style="padding: 1px 2px;">$ Acum.</th>
-								<td width="50px" style="padding: 1px 2px;">Editar</th>
-								<td width="50px" style="padding: 1px 2px;">Imprimir</th>
-								<td width="50px" style="padding: 1px 2px;">Rendicion de Cuentas</th>
-								<td width="50px" style="padding: 1px 2px;">Documentación Adjunta</th>
-						</tr>
-					</thead>
-				</table>
-	    	</div>	
-		<div>
-			<span class="maintitle2">Items del Convenio</span>							
-			<com:TActiveDataGrid
-				ID="dgItems"
-				CssClass="TableForm"
-				AlternatingItemStyle.BackColor="#EEEEEE"
-				AutoGenerateColumns="false"
-				AllowPaging="false"
-				AllowCustomPaging="false"
-				AllowSorting="false"
-				Width="1000px">
+	<div>
+		<fieldset>
+			<com:TActivePanel 
+				ID="pnlItemsDelConvenio"
+				Visible="true">
+				<table border="0" cellpadding="10px">
+				<thead>
+					<tr>
+						<td valign="top">
+							<span class="maintitle2">Items del Convenio</span>							
+							<com:TActiveDataGrid
+							    ID="dgItems"
+								CssClass="TableForm"
+							    AlternatingItemStyle.BackColor="#EEEEEE"
+							    AutoGenerateColumns="false"
+					            AllowPaging="false"
+								AllowCustomPaging="false"
+						        AllowSorting="false"
+						        >
 								<com:TBoundColumn DataField="IdContratoItem" Visible ="false" HeaderText="IdContratoItem" ItemStyle.HorizontalAlign="Center" />
 								<com:TBoundColumn DataField="IdContrato" Visible ="false" HeaderText="IdContrato" />
 								<com:TBoundColumn ItemStyle.Width="60px" DataField="Orden" HeaderText="Orden" ItemStyle.HorizontalAlign="Center"/>
 								<com:TBoundColumn ItemStyle.Width="350px" DataField="Item" HeaderText="Item" ItemStyle.HorizontalAlign="Left"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="UnidadMedida" HeaderText="Unidad de Medida" ItemStyle.HorizontalAlign="Right"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Right"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="Precio Unitario" ItemStyle.HorizontalAlign="Right" DataFormatString="#number_format({0},2,',','.')"/>
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="Precio Total" ItemStyle.HorizontalAlign="Right" DataFormatString="#number_format({0},2,',','.')"/>								
-								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Right"
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="UnidadMedida" HeaderText="Unidad de Medida" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="Cantidad" HeaderText="Cantidad" ItemStyle.HorizontalAlign="Center"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioUnitario" HeaderText="Precio Unitario" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="PrecioTotal" HeaderText="Precio Total" ItemStyle.HorizontalAlign="Center" DataFormatString="#number_format({0},2,',','.')"/>								
+								<com:TBoundColumn ItemStyle.Width="100px" DataField="Incidencia" HeaderText="Incidencia" ItemStyle.HorizontalAlign="Center"
 								/>
 
-								<com:TTemplateColumn ID="tcEditarItem" Visible ="true" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="25px">
+								<com:TTemplateColumn ID="tcEditarItem" Visible ="true" HeaderText="Editar" ItemStyle.HorizontalAlign="Center">
 						            <prop:ItemTemplate>
 								       	<com:TActiveHyperLink
 								            ID="hlEditar"
@@ -273,25 +255,7 @@
 										    	</com:TActiveHyperLink>
 								            </prop:ItemTemplate>
 						             	</com:TTemplateColumn>	
-			</com:TActiveDataGrid>
-		</div>
-		<div>
-			<table class="TableForm" style="width: 1000px">
-				<tbody>
-					<tr style="background-color:#CCC; ">
-						<td width="60px" style="padding: 1px 2px;text-align:center"><strong>Totales</strong></td>
-						<td width="350px" style="padding: 1px 2px;text-align:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblmontoavance" style="padding: 1px 2px;text-aling:right"/></strong></td>
-						<td width="100px" style="padding: 1px 2px;"><strong><com:TActiveLabel ID="lblporcentajeavance" style="padding: 1px 2px;text-aling:right"/></strong></td>			
-						<td width="25px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbl1" /></strong></td>
-						
-					</tr>
-				</tbody>
-			</table>
-		<div>
+						  	</com:TActiveDataGrid>
 						  	<com:TLabel ID="lblItems" Text="No existen items cargados del convenio" />
 						</td>
 					</tr>					
@@ -303,12 +267,9 @@
 						</td>						
 					</tr>
 				</tbody>
-			</table>
-		</div>
-		<div>
-		</div>
-		</com:TActivePanel>
-	</fieldset>
+					</table>
+			</com:TActivePanel>
+	</div>
 	<div>	
 			
 			<com:TActivePanel 
@@ -347,6 +308,8 @@
 
 
 
+
+		</fieldset>
 	</div>
 	<com:TValidationSummary
 		ShowMessageBox="false"

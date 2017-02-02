@@ -95,10 +95,12 @@ class ObraAdministracionPeer
 				  o.PresupuestoOficial,
 				  date_format(o.FechaPresupuestoOficial,'%d/%m/%Y') as FechaPresupuestoOficial,
 				  eo.Descripcion as Estado,
+				  contrato.Monto as Monto,
 				  ifnull((select sum(pc.importe) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato inner join pagocertificacion pc on pc.IdCertificacion = ce.IdCertificacion where co.IdObra=o.IdObra),0) as Pagado,
 				  ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0)/ifnull((select sum(Monto+ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=contrato.IdContrato),0)) from contrato where IdObra=o.IdObra), 0)*100 as PorcentajeAvance,
 				  ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) as MontoAvance,
-				  ifnull(o.CreditoPresupuestarioAprobado, 0) + ifnull((select sum(Importe) from refuerzopartida where IdObra=o.IdObra) ,0) - ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) - ifnull((select sum(redeterminacionprecios) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) as SaldoCreditoPresup,
+				  ifnull(o.CreditoPresupuestarioAprobado, 0) + ifnull((select sum(Importe) from refuerzopartida where IdObra=o.IdObra) ,0) - ifnull((select sum(montoavance) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) - ifnull((select sum(redeterminacionprecios) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),0) as SaldoCreditoPresup2,
+				  ifnull((select c.Monto - (select sum(pc.importe) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato inner join pagocertificacion pc on pc.IdCertificacion = ce.IdCertificacion where co.IdObra=o.IdObra) from contrato c where c.IdObra=o.IdObra),0) as SaldoCreditoPresup,
 				  ifnull((select concat(substring(max(Periodo),5,2), '/', substring(max(Periodo),1,4)) from certificacion ce inner join contrato co on ce.IdContrato=co.IdContrato where co.IdObra=o.IdObra),'-') as UltimoCertificado,
 				  (case
 				  	when o.IdOrganismo=o.IdComitente then 'true'
@@ -143,7 +145,7 @@ class ObraAdministracionPeer
 				from
 				  localidad l
 				where
-				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo and o.poradministracion = 1)
+				  exists(select * from obra o inner join obralocalidad ol on o.IdObra = ol.IdObra where ol.IdLocalidad=l.IdLocalidad and o.IdOrganismo=$idOrganismo and o.poradministracion = 1 and o.activo = 1)
 				order by
 				  l.Nombre";
 		return $sql;
@@ -156,7 +158,7 @@ class ObraAdministracionPeer
 				from
 				  fuentefinanciamiento f
 				where
-				  exists(select * from obra o inner join obrafuentefinanciamiento of on o.IdObra = of.IdObra where of.IdFuenteFinanciamiento=f.IdFuenteFinanciamiento and o.IdOrganismo=$idOrganismo)
+				  exists(select * from obra o inner join obrafuentefinanciamiento of on o.IdObra = of.IdObra where of.IdFuenteFinanciamiento=f.IdFuenteFinanciamiento and o.IdOrganismo=$idOrganismo and o.activo = 1)
 				order by
 				  f.CodigoFufi";
 		return $sql;

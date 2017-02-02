@@ -144,8 +144,8 @@
 						<td width="390px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbl1" /></strong></td>
 						
 					</tr>
-			</tbody>
-		</table>
-    </div>
+				</tbody>
+			</table>
+    	</div>
 </com:TActivePanel>
 </com:TContent>

@@ -22,8 +22,6 @@ class CertificacionPeer
 				  end) as PorcentajeAvance,
 				  ce.MontoAvance,
 				  ce.AnticipoFinanciero,
-				  -- LA SIGUIENTE LINEA SELECCIONA AL MAXIMO, QUE DEBERIA SER EL VALOR DE LA 1ra Certif, O BIEN cero
-				  --(SELECT max(ce.AnticipoFinanciero) from certificacion ce where ce.IdContrato = co.IdContrato) as AnticipoFinanciero,
 				  ce.DescuentoAnticipo,
 				  ce.RetencionMulta,
 				  ce.RetencionFondoReparo,

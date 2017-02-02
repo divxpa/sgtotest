@@ -37,7 +37,7 @@ class HomeAdmin extends PageBaseSP{
 		$totales = $this->CreateDataSource("ObraPeer","TotalesCertificacion", $idContrato);
 		$this->lblporcentajeavance->Text = $totales[0]["porcentajeavance"] ."%";
 		$this->lblmontoavance->Text = "$ " . number_format($totales[0]["montoavance"], 2, ",", "."); ;
-		$this->lbldescuentoanticipo->Text = "$ " . number_format($totales[0]["descuentoanticipo"], 2, ",", "."); ;
+		$this->lbldescuentoanticipo->Text = "$" . number_format($totales[0]["descuentoanticipo"], 2, ",", "."); ;
 
 		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesPorObra", $idObra);
 		$this->lblObra->Text = $organismo->PrefijoCodigo . '-' . $obra->Codigo . ' ' . $obra->Denominacion . " - " .$localidades[0]["Localidades"];

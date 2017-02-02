@@ -125,30 +125,43 @@ class Update extends PageBaseSP{
 
 	public function cvOrdenPago_OnServerValidate($sender, $param)
 	{
+		// Se saco la limitacion de que una orden de pago no pueda estar duplicada porque
+		// nos comentaron que una misma orden de pago
+
 		$idOrganismo = $this->Session["SPOrganismo"];
-		$ordenPago = $this->txtOrdenPago->Text;
+		// $idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
 		
-		$criteria = new TActiveRecordCriteria;
-		$criteria->Condition = 'IdOrganismo = :idorganismo AND OrdenPago like :ordenpago ';
-		$criteria->Parameters[':idorganismo'] = $idOrganismo;
-		$criteria->Parameters[':ordenpago'] = $ordenPago;
+		if ($idOrganismo == 12){
+		$ordenPago = $this->txtOrdenPago->Text;
+				
+				$criteria = new TActiveRecordCriteria;
+				$criteria->Condition = 'IdOrganismo = :idorganismo AND OrdenPago like :ordenpago ';
+				$criteria->Parameters[':idorganismo'] = $idOrganismo;
+				$criteria->Parameters[':ordenpago'] = $ordenPago;
 
-		$id = $this->Request["id"];
+				$id = $this->Request["id"];
 
-		if(!is_null($id)){
-			$criteria->Condition .=  ' AND IdPago <> :idpago';
-			$criteria->Parameters[':idpago'] = $id;
+				if(!is_null($id)){
+					$criteria->Condition .=  ' AND IdPago <> :idpago';
+					$criteria->Parameters[':idpago'] = $id;
+				}
+
+				$finder = PagoRecord::finder();
+				$pago = $finder->find($criteria);
+
+				if (is_object($pago)) {
+					$param->IsValid = false;
+				}
+				else {
+					$param->IsValid = true;
+				}
 		}
-
-		$finder = PagoRecord::finder();
-		$pago = $finder->find($criteria);
-
-		if (is_object($pago)) {
-			$param->IsValid = false;
-		}
-		else {
+		else
+		{
 			$param->IsValid = true;
 		}
+
+		
 
 	}
 

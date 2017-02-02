@@ -19,7 +19,7 @@ class ProveedorPeer
 				from
 					proveedor
 				where
-					exists(select * from obra o inner join contrato c on o.IdObra = c.IdObra where c.IdProveedor=proveedor.IdProveedor and o.IdComitente=$idOrganismo)
+					exists(select * from obra o inner join contrato c on o.IdObra = c.IdObra where c.IdProveedor=proveedor.IdProveedor and o.IdComitente=$idOrganismo and o.activo = 1)
 				order by
 					RazonSocial";
 		return $sql;

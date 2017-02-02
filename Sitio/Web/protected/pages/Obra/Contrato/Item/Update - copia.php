@@ -67,10 +67,7 @@ class Update extends PageBaseSP{
 		$totalmonto = $this->CreateDataSource("ContratoPeer","TotalMontoItemsByContrato", $idContrato);
 		$this->lblTotal->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); ;
 		$totalincidencia = $this->CreateDataSource("ContratoPeer","TotalIncidenciaItemsByContrato", $idContrato);
-		$this->lblmontoavance->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); ;
 		$this->lblTotalIncidencia->Text = $totalincidencia[0]["incidencia"];
-		$this->lblporcentajeavance->Text = $totalincidencia[0]["incidencia"];
-		
 	}
 
 	public function LimpiarCampos(){
