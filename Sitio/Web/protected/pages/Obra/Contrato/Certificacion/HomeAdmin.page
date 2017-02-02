@@ -67,18 +67,19 @@
             	Width="1200px">
 		        OnPageIndexChanged="dgDatos_OnPageIndexChanged"
 		        OnPagerCreated="dgDatos_OnPagerCreated">
-				<com:TBoundColumn DataField="NroCertificado" HeaderText="Nro." ItemStyle.Width="20px"/>
-				<com:TBoundColumn DataField="Periodo" HeaderText="Periodo" ItemStyle.Width="50px"/>
-				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
-				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif."  DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="75px"/>
-				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Ant. Fin." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
-				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Dto. Ant." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
-				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fdo. Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>			
-				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Importe Neto" DataFormatString="#number_format({0},2,',','.')"  ItemStyle.Width="100px"/>				
+				<com:TBoundColumn DataField="NroCertificado" HeaderText="Nro." ItemStyle.Width="20px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="Periodo" HeaderText="Periodo" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif."  DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="75px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="AnticipoFinanciero" HeaderText="Ant. Fin." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="DescuentoAnticipo" HeaderText="Dto. Ant." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="RetencionFondoReparo" HeaderText="Fdo. Reparo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>			
+				<com:TBoundColumn DataField="ImporteNeto" HeaderText="Importe Neto" DataFormatString="#number_format({0},2,',','.')"  ItemStyle.Width="100px" ItemStyle.HorizontalAlign="Right"/>				
 				<com:THyperLinkColumn DataTextField="ImportePagado" DataTextFormatString="#number_format({0},2,',','.')" DataNavigateUrlField="IdCertificacion" DataNavigateUrlFormatString="javascript:OpenWindow('?page=Tesoreria.Pago.PagosByCertificado&id=%s',500,400)" HeaderText="Imp. Pagado" ItemStyle.HorizontalAlign="Right" ItemStyle.Width="100px"/>
-				<com:TBoundColumn DataField="Saldo" HeaderText="Saldo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="100px"/>
-				<com:TBoundColumn DataField="PorcentajeAvanceAcum" HeaderText="% Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px"/>
+				<com:TBoundColumn DataField="Saldo" HeaderText="Saldo" DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="100px" ItemStyle.HorizontalAlign="Right"/>
+				<com:TBoundColumn DataField="PorcentajeAvanceAcum" HeaderText="% Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.Width="50px ItemStyle.HorizontalAlign="Right"/>
 				<com:TBoundColumn DataField="MontoAvanceAcum" HeaderText="$ Acum." DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.Width="75px"/>
+				<com:TBoundColumn DataField="Estado" HeaderText="Estado" ItemStyle.Width="50px" ItemStyle.HorizontalAlign="Right"/>
 				<com:TTemplateColumn ID="tcEditar" HeaderText="Editar" ItemStyle.HorizontalAlign="Center" ItemStyle.Width="50px">
 		            <prop:ItemTemplate>
 				       	<com:TActiveHyperLink
@@ -127,21 +128,28 @@
 		  	</com:TActiveDataGrid>
 		</div>
 		<div>	
-	        <table class="TableForm" style="width: 1200px">
-				<tbody>
-					<tr style="background-color:#CCC; ">
-						<td width="20px" style="text-align:right"></td>
-						<td width="50px" style="padding: 1px 2px;text-align:right"></td>
-						<td width="50px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblporcentajeavance" /></strong></td>
-						<td width="75px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblmontoavance" /></strong></td>
-						<td width="50px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="50px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbldescuentoanticipo" /></strong></td>
-						<td width="50px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
-						<td width="100px" style="padding: 1px 2px;text-aling:right"></td>
+	        <table  class="TableForm" style="width: 1200px;">
+				<tbody >
+					<tr style="background-color:#CCC;">
+						<td width="20px"></td>
+						<td width="50px"></td>
+						<td width="50px"><strong><com:TActiveLabel ID="lblporcentajeavance" style="text-align: right;"/></strong></td>
+						<td width="75px"><strong><com:TActiveLabel ID="lblmontoavance" /></strong></td>
+						<td width="50px"></td>
+						<td width="50px"><strong><com:TActiveLabel ID="lbldescuentoanticipo" /></strong></td>
+						<td width="50px"></td>
+						<td width="100px"></td>
+						<td width="100px"></td>
+						<td width="100px"></td>
+						<td width="50px"></td>
+						<td width="75px"></td>
+						<td width="50px"></td>
+						<td width="50px"></td>
+						<td width="50px"></td>
+						<td width="50px"></td>
+						<td width="50px"></td>
 
-						<td width="390px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lbl1" /></strong></td>
+						
 						
 					</tr>
 				</tbody>

@@ -23,8 +23,7 @@ class CertificacionRecord extends TActiveRecord
 	public $IdOrdenTrabajo;
 	public $Alcance;
 	public $FechaMedicion;
-    public $PorcentajeAvanceReal;
-	public $Aprobada;
+        public $PorcentajeAvanceReal;
 
 	public static function finder($className=__CLASS__)
 	{

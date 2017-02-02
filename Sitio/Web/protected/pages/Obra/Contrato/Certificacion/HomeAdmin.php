@@ -42,7 +42,7 @@ class HomeAdmin extends PageBaseSP{
 		$localidades = $this->CreateDataSource("ObraPeer","LocalidadesPorObra", $idObra);
 		$this->lblObra->Text = $organismo->PrefijoCodigo . '-' . $obra->Codigo . ' ' . $obra->Denominacion . " - " .$localidades[0]["Localidades"];
 		$this->lblContrato->Text = $contrato->Numero . " - " . $proveedor->Cuit . " " . $proveedor->RazonSocial;
-		$data = $this->CreateDataSource("CertificacionPeer","CertificacionesHome", $idContrato, $idOrganismo);
+		$data = $this->CreateDataSource("CertificacionPeer","CertificacionesHomeAdmin", $idContrato, $idOrganismo);
 		$this->dgDatos->DataSource = $data;
 		$this->lblTitulo->Text = "Certificaciones de Convenio (". count($data) . ")";
 		$this->dgDatos->dataBind();

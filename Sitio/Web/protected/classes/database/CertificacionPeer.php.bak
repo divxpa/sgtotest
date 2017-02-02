@@ -22,6 +22,8 @@ class CertificacionPeer
 				  end) as PorcentajeAvance,
 				  ce.MontoAvance,
 				  ce.AnticipoFinanciero,
+				  -- LA SIGUIENTE LINEA SELECCIONA AL MAXIMO, QUE DEBERIA SER EL VALOR DE LA 1ra Certif, O BIEN cero
+				  --(SELECT max(ce.AnticipoFinanciero) from certificacion ce where ce.IdContrato = co.IdContrato) as AnticipoFinanciero,
 				  ce.DescuentoAnticipo,
 				  ce.RetencionMulta,
 				  ce.RetencionFondoReparo,
@@ -66,6 +68,82 @@ class CertificacionPeer
 				  	when o.IdComitente=$idOrganismo then 'false'
 				  	else 'true' 
 				  end) as EditarVisible
+				from
+				  certificacion ce inner join
+				  contrato co on ce.IdContrato=co.IdContrato left join
+				  ordentrabajo ot on ce.IdOrdenTrabajo=ot.IdOrdenTrabajo inner join
+				  obra o on co.IdObra=o.IdObra
+				$where 
+				order by
+				  ce.NroCertificado,
+				  ot.Numero,
+				  ce.Periodo,
+				  ce.NroCertificado";
+		return $sql;
+
+	}
+
+	public static function CertificacionesHomeAdmin($idContrato, $idOrganismo){
+		$where = " where ce.IdContrato=$idContrato ";
+
+		$sql = "SELECT
+				  ce.IdCertificacion,
+				  ce.IdContrato,
+				  co.IdObra,
+				  (case
+				  	when ce.IdOrdenTrabajo is null then ce.NroCertificado
+				  	else concat(ce.NroCertificado,' - OT ', ot.Numero)
+				  end) as NroCertificado,
+				  concat(substring(ce.Periodo, 5, 2), '/', substring(ce.Periodo, 1, 4)) as Periodo,
+				  (case
+				    when ce.IdOrdenTrabajo is not null then
+				      ce.MontoAvance/(ot.Monto - ifnull((select sum(Importe) from ordentrabajodeductivo where IdOrdenTrabajo=ot.IdOrdenTrabajo),0))*100
+				    else
+				      ce.MontoAvance/(co.Monto+ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=co.IdContrato),0))*100
+				  end) as PorcentajeAvance,
+				  ce.MontoAvance,
+				  ce.AnticipoFinanciero,
+				  ce.DescuentoAnticipo,
+				  ce.RetencionMulta,
+				  ce.RetencionFondoReparo,
+				  ce.RedeterminacionPrecios,
+				  ce.OtrosConceptos,
+				  ce.ImporteNeto,
+				  (case
+				    when ce.IdOrdenTrabajo is not null then
+				      (select sum(MontoAvance) from certificacion where IdContrato=ce.IdContrato and Periodo <= ce.Periodo and IdOrdenTrabajo=ce.IdOrdenTrabajo)/(ot.Monto - ifnull((select sum(Importe) from ordentrabajodeductivo where IdOrdenTrabajo=ot.IdOrdenTrabajo),0))*100
+				    else
+				      (select sum(MontoAvance) from certificacion where IdContrato=ce.IdContrato and Periodo <= ce.Periodo)/(co.Monto+ifnull((select sum(Importe*(case when AdicionalDeductivo=0 then 1 else -1 end)) from alteracion where IdContrato=co.IdContrato),0))*100
+				  end) as PorcentajeAvanceAcum,
+				  (case
+				    when ce.IdOrdenTrabajo is not null then
+				      (select sum(MontoAvance) from certificacion where IdContrato=ce.IdContrato and Periodo <= ce.Periodo and IdOrdenTrabajo=ce.IdOrdenTrabajo)
+				    else
+				      (select sum(MontoAvance) from certificacion where IdContrato=ce.IdContrato and Periodo <= ce.Periodo)
+				  end) as MontoAvanceAcum,
+				  date_format(ce.FechaVtoPago, '%d/%m/%Y') as FechaVtoPago,
+				  ifnull((select sum(Importe) from pagocertificacion where IdCertificacion=ce.IdCertificacion),0) as ImportePagado,
+				CASE
+		            When ImporteNeto > 0
+		            Then (ImporteNeto - ifnull((select sum(Importe) from pagocertificacion where IdCertificacion=ce.IdCertificacion),0)) -- as Saldo,
+		            Else '0'
+		          END AS Saldo,
+				  ce.ManoObraOcupada,
+				  (case
+				  	when ce.TipoCertificado=0 then 'Obra'
+				  	when ce.TipoCertificado=1 then 'Anticipo'
+				  	when ce.TipoCertificado=2 then 'Redeterminación'
+				  	when ce.TipoCertificado=3 then 'Adicional'
+				  end) as TipoCertificado,
+				(case
+				  	when o.IdOrganismo=o.IdComitente then 'true'
+				  	when o.IdComitente=$idOrganismo then 'false'
+				  	else 'true' 
+				  end) as EditarVisible,
+				(case
+				  	when ce.Aprobada=0 then 'Pendiente'
+				  	when ce.Aprobada=1 then 'Aprobada'				  	
+				end) as Estado
 				from
 				  certificacion ce inner join
 				  contrato co on ce.IdContrato=co.IdContrato left join

@@ -297,11 +297,7 @@
 					</tr>					
 				</thead>
 				<tbody>
-					<tr style="background-color:#CCC; font-size:10px;">
-						<td><strong>Total: $ <com:TActiveLabel /><com:TLabel ID="lblTotal" Text="" /></strong>
-						<strong> - Total Incidencia: <com:TActiveLabel /><com:TLabel ID="lblTotalIncidencia" Text="" /> % </strong>
-						</td>						
-					</tr>
+					
 				</tbody>
 			</table>
 		</div>
