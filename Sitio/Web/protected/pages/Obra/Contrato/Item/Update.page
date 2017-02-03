@@ -37,9 +37,14 @@
 				ID="lblObra" 
 				CssClass="labeldata"/>
 			<br />
-			<span class="label">Contrato</span>
+			<span class="label">Convenio</span>
 			<com:TLabel 
 				ID="lblContrato" 
+				CssClass="labeldata"/>
+			<br />
+			<span class="label">Monto del Convenio</span>
+			<com:TLabel 
+				ID="lblMontoContrato" 
 				CssClass="labeldata"/>
 			<br />
 	</div>

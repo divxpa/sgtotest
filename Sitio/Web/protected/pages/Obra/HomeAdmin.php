@@ -21,21 +21,13 @@ class HomeAdmin extends PageBaseSP{
 			//$idLocalidad = $this->Session->get("usr_idLocalidad");
 			//echo "<pre>";print_r($idLocalidad); die();
 			//Si el usuario es una Localidad, Oculto los controles
-			if(!is_null($idLocalidad)){
+			
 
-				$this->ddlLocalidad->SelectedValue = $idLocalidad;
-				//echo "<pre>";print_r($this->ddlLocalidad->SelectedValue); die();
-				$this->lblLocalidad->Display ="None";
-				//$this->ddlLocalidad->Display = "None";
-				$this->lblFufi->Display ="None";
-				$this->ddlFufi->Display = "None";
-				$this->btnVerTodos->Display = "None";
-				
-				$this->bcDenominacion->ItemStyle->CustomStyle="width: 500px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted";
-				//$this->bcLocalidad->Visible = false;
-				$this->tcEditar->Visible = false;
-				$this->tcContratos->Visible = false;				
-				$this->tcItem->Visible = false;
+			//$this->MunicipioAdmin = in_array("11", $this->Session->get("usr_roles"));
+			$MunicipioAdmin =  $this->Session["SPIdRol"];
+
+			if($MunicipioAdmin == 8){
+				$this->OcultarControlesMunicipios();				
 			}
 
 			$this->Refresh($idObra);
@@ -44,7 +36,6 @@ class HomeAdmin extends PageBaseSP{
 
 	public function LoadDataRelated(){
 		//$this->btnVerTodos->Display = "None";
-
 		$idOrganismo = $this->Session["SPOrganismo"];
 		//$idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
 		if ($idOrganismo == 12)
@@ -224,6 +215,25 @@ class HomeAdmin extends PageBaseSP{
 
 	public function MostrarControlesIngresosBrutos (){
 		//$this->bcDenominacion->Visible = false;
+	}
+
+	public function OcultarControlesMunicipios (){
+		//$this->bcDenominacion->Visible = false;
+		$this->bcDenominacion->Visible = false;
+
+		$this->ddlLocalidad->SelectedValue = $idLocalidad;
+				//echo "<pre>";print_r($this->ddlLocalidad->SelectedValue); die();
+				$this->lblLocalidad->Display ="None";
+				//$this->ddlLocalidad->Display = "None";
+				$this->lblFufi->Display ="None";
+				$this->ddlFufi->Display = "None";
+				$this->btnVerTodos->Display = "None";
+				
+				$this->bcDenominacion->ItemStyle->CustomStyle="width: 500px; min-width: 250px; max-width: 250px; word-wrap: break-word; text-wrap: unrestricted";
+				$this->bcLocalidad->Visible = false;
+				$this->tcEditar->Visible = false;
+				$this->tcContratos->Visible = false;				
+				$this->tcItem->Visible = false;
 	}
 
 

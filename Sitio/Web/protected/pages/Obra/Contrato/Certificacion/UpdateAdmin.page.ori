@@ -31,7 +31,6 @@
 	</div>
 	<div>
 		<fieldset>
-
 			<span class="label required">Obra</span>
 			<com:TLabel 
 				ID="lblObra" 
@@ -44,10 +43,6 @@
 				CssClass="small"
 				MaxLength="10"
 	            AutoTrim="True"
-	            AutoPostBack="true"
-	            OnTextChanged="txtNumero_OnTextChanged"
-				ClientSide.OnLoading="Element.show('callback_status')"
-				ClientSide.OnComplete="Element.hide('callback_status')"
 	       		ToolTip="Ingrese el número de certificado"/>
 			<com:TDataTypeValidator
 				ControlToValidate="txtNumero"
@@ -65,17 +60,15 @@
 				Culture="es"
 				InputMode="DropDownList"
 				FromYear="2000"
-                OnTextChanged="dtpPeriodo_OnTextChanged"
+                                OnTextChanged="dtpPeriodo_OnTextChanged"
 				ClientSide.OnLoading="Element.show('callback_status')"
-                ClientSide.OnComplete="Element.hide('callback_status')"  />
-
+                                ClientSide.OnComplete="Element.hide('callback_status')"  />
 			<com:TRequiredFieldValidator
 				ControlToValidate="dtpPeriodo"
 				ErrorMessage="Debe ingresar el periodo de certificación."
 				Display="Dynamic"
 				Text="*"
 				ValidationGroup="Register"/>
-
 			<com:TDataTypeValidator
 			    ValidationGroup="Register"
 			    ControlToValidate="dtpPeriodo"
@@ -84,7 +77,6 @@
 			    Text="*"
 			    Display="Dynamic"
 			    ErrorMessage="El formato de periodo es inválido (mm/yyyy)." />
-
 		<com:TCustomValidator
 				ControlToValidate="dtpPeriodo"
 	  			Text="*"
@@ -98,8 +90,8 @@
 			<com:TDatePicker
 				ID="dtpFechaMedicion"
 				DateFormat="dd/MM/yyyy"
-				Culture="es" />
-				
+				Culture="es"
+				 />
 			<com:TDataTypeValidator
 			    ValidationGroup="Register"
 			    ControlToValidate="dtpFechaMedicion"
@@ -111,21 +103,14 @@
 	
 </div>
 <div style="display:inline-block">
-	<span class="label required">Físico Aprobado Real</span>
-	<com:TActiveTextBox
-	    ID="txtPorcentajeAvanceReal"
-	    CssClass="small"/>
-    <com:TRequiredFieldValidator
-		ControlToValidate="txtPorcentajeAvanceReal"
-		ErrorMessage="Debe ingresar el porcentaje de avance."
-		Display="Dynamic"
-		Text="*"
-		ValidationGroup="Register"/>
-
+<span class="label">% avance obra real</span>
+<com:TActiveTextBox
+    ID="txtPorcentajeAvanceReal"
+    CssClass="small"/>
 </div>
 <br>
 <div style="display:inline-block">
-	<span class="label" style="width: 250px;">Municipalidad/comisión de fomento</span>
+	<span class="label" style="width: 250px;">Municipalidad/comición de fomento</span>
 			<com:TLabel 
 				ID="lblLocalidades" 
 				CssClass="labeldata"/>
@@ -192,18 +177,14 @@ AutoPostBack="true"
 
 
 <div style="display:inline-block">
-	<span class="label" style="width: 250px;">Fecha de pago del anticipo financiero</span>
-
-
-	<com:TActiveLabel
-		ID="lblFechaPagoAnticipoFinanciero"
-		CssClass="labelData"/>
-
-
+<span class="label" style="width: 250px;">Fecha de pago del anticipo financiero</span>
+   <com:TLabel
+    ID="lblFechaPagoAnticipoFinanciero"
+    CssClass="labelData"/>
 </div>
 <br>
 <div style="display:inline-block">
-<span class="label" style="width:250px">Importe certificado anterior</span>
+<span class="label" style="width:250px">Importe certificado anteriormente</span>
 
     $<com:TActiveTextBox
         ID="txtImporteCertifAnterior"
@@ -222,32 +203,14 @@ AutoPostBack="true"
         CssClass="labelData"/>
 		
 </div>
-
-<br />
-
-<com:TActiveHiddenField ID="hdnAprobada" />
-<com:TActiveHiddenField ID="hdnCamposHabiles" />
-
-
-<com:TButton
-	ID="btnAprobarCertificacion"
-	ToolTip="Aprobar Certificación"
-	Text="Aprobar Certificación"
-	OnClick="btnAprobarCertificacion_OnClick" />	
-
-<com:TButton
-	ID="btnCancelarAprobacion"
-	ToolTip="Cancelar Aprobacion"
-	Text="Cancelar Aprobacion"
-	Visible="False"
-	Enabled="False"
-	OnClick="btnCancelarAprobacion_OnClick" />		
+		
+			<br />
 
 <com:TActiveHiddenField ID="cambios" />
 
 <com:TActivePanel ID="pnlDatos">
 	<div>	
-        <table class="TableForm" style="/*width: 1200*/">
+        <table class="TableForm" style="width: 1200">
 			<thead>
 				<tr>
 					<th width="50px" style="padding: 1px 2px;">Nº</th>
@@ -255,7 +218,7 @@ AutoPostBack="true"
 					<th width="100px" style="padding: 1px 2px;">Monto Total</th>
 					<th width="65px" style="padding: 1px 2px;">Incidencia</th>
 					<th width="65px" style="padding: 1px 2px;">Incidencia %</th>
-					<th width="65px" style="padding: 1px 2px;">Certif. acumulados anteriores en %</th>
+					<th width="65px" style="padding: 1px 2px;">Certff. acumulados anteriores en %</th>
 					<th width="65px" style="padding: 1px 2px;">Certif. acumulados anteriores en $</th>
 					<th width="65px" style="padding: 1px 2px;">Certificado actual %</th>
 					<th width="65px" style="padding: 1px 2px;">Certificado actual $</th>
@@ -264,7 +227,6 @@ AutoPostBack="true"
 				</tr>
 			</thead>
 		</table>
-
     </div>
     <div style="overflow-y: auto;max-height:500px;">
 		<com:TActiveDataGrid
@@ -276,16 +238,8 @@ AutoPostBack="true"
             AllowCustomPaging="false"
             AllowSorting="false"
             ShowHeader="false"
-            ><!--  Width="1200px" -->
-            <com:TTemplateColumn ID="tcOrden" ItemStyle.Width="50px">
-	            <prop:ItemTemplate>
-
-	            	<%# $this->Parent->Data['OrdenItem'] %>
-	            	<%# $this->Parent->Data['OrdenSubitem'] ? ".".$this->Parent->Data['OrdenSubitem'] : "" %>
-
-				</prop:ItemTemplate>
-			</com:TTemplateColumn>
-			
+            Width="1200px">
+			<com:TBoundColumn DataField="Orden" ItemStyle.Width="50px"/>
 			<com:TBoundColumn DataField="Item" ItemStyle.Width="250px"/>
 
 			<com:TTemplateColumn ID="tcPrecioTotal" ItemStyle.Width="100px">
@@ -295,11 +249,10 @@ AutoPostBack="true"
 			        <com:TActiveTextBox
 			            ID="txtPrecioTotal"
 			            CssClass="small53 minfont importeAnterior <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Monto Total"
-			            Text="<%# number_format($this->Parent->Data['PrecioTotal'] ,2,',','.') %>"
+			            Text="<%# $this->Parent->Data['PrecioTotal']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 			    </prop:ItemTemplate>
@@ -310,7 +263,6 @@ AutoPostBack="true"
 			        <com:TActiveTextBox
 			            ID="txtIncidencia"
 			            CssClass="small53 minfont incidencia <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Incidencia"
@@ -325,11 +277,10 @@ AutoPostBack="true"
 			        <com:TActiveTextBox
 			            ID="txtIncidenciaPorcentaje"
 			            CssClass="small53 minfont incidenciaPorcentaje <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Incidencia %"
-			            Text="<%# number_format($this->Parent->Data['IncidenciaPorcentaje'],2) %>"
+			            Text="<%# $this->Parent->Data['IncidenciaPorcentaje']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 					<com:TDataTypeValidator
@@ -347,11 +298,10 @@ AutoPostBack="true"
 			       	<com:TActiveTextBox
 			            ID="txtPorcentajeAnterior"
 			            CssClass="small53 minfont porcentajeAnterior <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Certif. acumulados anteriores en %"
-			            Text="<%# number_format($this->Parent->Data['PorcentajeAnterior'],2) %>"
+			            Text="<%# $this->Parent->Data['PorcentajeAnterior']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 			    </prop:ItemTemplate>
@@ -362,11 +312,10 @@ AutoPostBack="true"
 			      	<com:TActiveTextBox
 			            ID="txtImporteAnterior"
 			            CssClass="small53 minfont importeAnterior <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Certif. acumulados anteriores en $"
-			            Text="<%# number_format($this->Parent->Data['ImporteAnterior'] ,2,',','.') %>"
+			            Text="<%# $this->Parent->Data['ImporteAnterior']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 			    </prop:ItemTemplate>
@@ -377,11 +326,10 @@ AutoPostBack="true"
 	         		<com:TActiveTextBox
 				   		ID="txtPorcentajeActual"
 						CssClass="small53 minfont porcentajeActual <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 						MaxLength="15"
 						AutoTrim="True"
 				   		ToolTip="Ingrese el % de certificación"
-				   		Text="<%# number_format($this->Parent->Data['PorcentajeActual'],2) %>"
+				   		Text="<%# $this->Parent->Data['PorcentajeActual'] %>"
 						AutoCompleteType="Disabled"
 						AutoPostBack="true"
 						OnTextChanged="Page.txtPorcentajeActual_OnTextChanged"
@@ -403,19 +351,30 @@ AutoPostBack="true"
              		<com:TActiveTextBox
 				   		ID="txtImporteActual"
 						CssClass="small53 minfont importeActual <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 						MaxLength="15"
 						AutoTrim="True"
 				   		ToolTip="Ingrese el $ de certificación"
-				   		Text="<%# number_format($this->Parent->Data['ImporteActual'] ,2,',','.') %>"
+				   		Text="<%# $this->Parent->Data['ImporteActual'] %>"
 						AutoCompleteType="Disabled"
 						AutoPostBack="true"
 						OnTextChanged="Page.txtImporteActual_OnTextChanged"
 						ClientSide.OnLoading="Element.show('callback_status')"
-						ClientSide.OnComplete="Element.hide('callback_status')"
-						Enabled="true" />
-					
-				   	
+						ClientSide.OnComplete="Element.hide('callback_status')" />
+					<com:TCustomValidator
+						ControlToValidate="txtImporteActual"
+						ErrorMessage="Debe ingresar el $ de certificación."
+						Display="Dynamic"
+						Text="*"
+						ValidationGroup="Register"
+						EnableClientScript="True"
+						ClientValidationFunction="ImporteValidate"/>
+				   	<com:TDataTypeValidator
+						ControlToValidate="txtImporteActual"
+						ErrorMessage="Debe ingresar un número válido."
+						DataType="Float"
+						Display="Dynamic"
+						Text="*"
+						ValidationGroup="Register"/>
 				</prop:ItemTemplate>
          	</com:TTemplateColumn>
 
@@ -424,11 +383,10 @@ AutoPostBack="true"
 			       	<com:TActiveTextBox
 			            ID="txtPorcentajeAcum"
 			            CssClass="small53 minfont porcentajeAcum <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Certificado acumuelado total en %"
-			            Text="<%# number_format($this->Parent->Data['PorcentajeAcum'],2) %>"
+			            Text="<%# $this->Parent->Data['PorcentajeAcum']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 					<com:TDataTypeValidator
@@ -446,11 +404,10 @@ AutoPostBack="true"
 			       	<com:TActiveTextBox
 			            ID="txtImporteAcum"
 			            CssClass="small53 minfont importeAcum <%# $this->Parent->Data['claseVinculadora']%>"
-				   		Style="text-align: right; float: right;"
 			            MaxLength="9"
 			            AutoTrim="True"
 			            ToolTip="Certificado acumuelado total en $"
-			            Text="<%# number_format($this->Parent->Data['ImporteAcum'] ,2,',','.') %>"
+			            Text="<%# $this->Parent->Data['ImporteAcum']%>"
 			            AutoCompleteType="Disabled"
 			            Enabled="false" />
 			    </prop:ItemTemplate>
@@ -459,26 +416,25 @@ AutoPostBack="true"
         </com:TActiveDataGrid>    
     </div>
 	<div>	
-        <table class="TableForm" style="/*width: 1200*/">
+        <table class="TableForm" style="width: 1200">
 			<tbody>
 				<tr style="background-color:#CCC; ">
 					<td width="290px" style="padding: 1px 10px;text-align:right">TOTALES</td>
 					<td width="100px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblPrecioTotal" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblIncidenciaTotal" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblIncidenciaPorcentajeTotal" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeAnterior" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaImporteAnterior" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeActual" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaImporteActual" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeAcum" /></strong></td>
-					<td width="65px" style="padding: 1px 2px;text-align:right"><strong><com:TActiveLabel ID="lblSumaImporteAcum" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblIncidenciaTotal" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblIncidenciaPorcentajeTotal" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeAnterior" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaImporteAnterior" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeActual" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaImporteActual" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaPorcentajeAcum" /></strong></td>
+					<td width="65px" style="padding: 1px 2px;text-aling:right"><strong><com:TActiveLabel ID="lblSumaImporteAcum" /></strong></td>
 				</tr>
 			</tbody>
 		</table>
     </div>
 </com:TActivePanel>
 
-<com:THiddenField ID="hdnCambiando" />
 <com:THiddenField ID="hdnSumaImporteActual" />
 <com:THiddenField ID="hdnSumaPorcentajeActual" />
 <div style="width:100%">
@@ -487,7 +443,7 @@ AutoPostBack="true"
         <com:TActiveTextBox
             ID="txtAnticipoOtorgadoProv"
             CssClass="small100"
-            Enabled="False"/>
+            Enabled="false"/>
     </div>
     
     <div>
@@ -503,11 +459,11 @@ AutoPostBack="true"
         <com:TActiveTextBox
             ID="txtDescuentoAnticipoActual"
             CssClass="small100"
-			AutoPostBack="true"
-			OnTextChanged="Page.txtDescuentoAnticipoActual_OnTextChanged"
-			ClientSide.OnLoading="Element.show('callback_status')"
-			ClientSide.OnComplete="Element.hide('callback_status')"
-          	Enabled="false"/>
+AutoPostBack="true"
+	OnTextChanged="Page.txtDescuentoAnticipoActual_OnTextChanged"
+	ClientSide.OnLoading="Element.show('callback_status')"
+	ClientSide.OnComplete="Element.hide('callback_status')"
+          />
     </div>
 
     <div>
@@ -543,7 +499,7 @@ AutoPostBack="true"
     </tr>
     <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
     <tr>
-        <td style="text-align:center">TOTAL A PAGAR  POR EL GOBIERNO PROVINCIAL CORRESP. AL CERTIFICADO ACTUAL</td>
+        <td style="text-aling:center">TOTAL A PPAGAR  POR EL GOBIERNO PROVINCIAL CORRESP. AL CERTIFICADO ACUAL</td>
         <td style="text-align:center"> 
                 <com:TActiveTextBox
                     ID="txtTotalPagoProvincia"
@@ -608,15 +564,6 @@ AutoPostBack="true"
 
 		});
 
-	</script>
-
-	<script type="text/javascript">
-	function ImporteValidate(sender, parameter)
-	{
-		var regExCurr = /^\d{1,3}(.\d{3})*(,\d{1,2})?$/;
-
-		return regExCurr.test(parameter);
-	}
 	</script>
 
 </com:TContent>

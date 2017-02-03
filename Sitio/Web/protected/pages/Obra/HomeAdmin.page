@@ -124,6 +124,7 @@
 						<com:TBoundColumn DataField="Monto" HeaderText="Monto Total" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 70px; min-width: 70px; max-width: 90px; word-wrap: break-word; text-wrap: unrestricted"/>
 
 						<com:TBoundColumn DataField="Pagado" HeaderText="Total Pagado a la fecha" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 70px; min-width: 70px; max-width: 90px; word-wrap: break-word; text-wrap: unrestricted"/>
+						<com:TBoundColumn ID="bcFufi" DataField="Fufi" HeaderText="Fufi" ItemStyle.CustomStyle="width: 39px; min-width: 39px; max-width: 39px; word-wrap: break-word; text-wrap: unrestricted"/>
 
 						<com:TBoundColumn DataField="PorcentajeAvance" HeaderText="% Certif. Acumulado" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 30px; min-width: 30px; max-width: 30px; word-wrap: break-word; text-wrap: unrestricted"/>
 						<com:TBoundColumn DataField="MontoAvance" HeaderText="$ Certif. Acumulado" DataFormatString="#number_format({0},2,',','.')" ItemStyle.HorizontalAlign="Right" ItemStyle.CustomStyle="width: 69px; min-width: 69px; max-width: 69px; word-wrap: break-word; text-wrap: unrestricted"/>

@@ -126,11 +126,11 @@ class Update extends PageBaseSP{
 	public function cvOrdenPago_OnServerValidate($sender, $param)
 	{
 		// Se saco la limitacion de que una orden de pago no pueda estar duplicada porque
-		// nos comentaron que una misma orden de pago pueden cargar varios pagos
+		// nos comentaron que una misma orden de pago
 
 		$idOrganismo = $this->Session["SPOrganismo"];
 		// $idOrganismo = $this->Session->get("usr_sgo_idOrganismo");
-		//Ingresos Publicos es el organismo 12
+		
 		if ($idOrganismo != 12){
 		$ordenPago = $this->txtOrdenPago->Text;
 				

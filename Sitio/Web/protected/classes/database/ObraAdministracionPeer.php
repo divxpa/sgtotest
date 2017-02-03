@@ -80,6 +80,7 @@ class ObraAdministracionPeer
 
 		$sql = "select
 				  o.IdObra,
+				  ifnull((Select GROUP_CONCAT(ff.CodigoFufi SEPARATOR ', ') From obrafuentefinanciamiento off inner join fuentefinanciamiento ff on off.IdFuenteFinanciamiento = ff.IdFuenteFinanciamiento Where off.idobra = o.IdObra),0) as Fufi,   
 				  contrato.IdContrato,
 				  concat(og.PrefijoCodigo,'-',o.Codigo) as Codigo,
 				  og.Nombre as Organismo,

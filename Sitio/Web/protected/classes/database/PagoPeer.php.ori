@@ -202,8 +202,7 @@ class PagoPeer
 		return $sql;
 	}
 
-	public static function PagosByCertificado($idCertificacion)
-	{
+	public static function PagosByCertificado($idCertificacion){
 		$sql = "select
 				  date_format(p.Fecha, '%d/%m/%Y') as Fecha,
 				  p.OrdenPago,
@@ -215,30 +214,6 @@ class PagoPeer
 				  pc.IdCertificacion=$idCertificacion
 				order by
 				  p.Fecha";
-		return $sql;
-	}
-
-	public static function PagosByCertificadoAnterior($idCertificacion, $idContrato)
-	{
-		// Ordenado por número de certificado
-
-		$sql = "SELECT
-				  date_format(p.Fecha, '%d/%m/%Y') as Fecha,
-				  p.OrdenPago,
-				  pc.Importe
-				from
-				  pago p 
-				  inner join pagocertificacion pc on p.IdPago = pc.IdPago
-				  inner join certificacion c on 
-				  	c.IdCertificacion = pc.IdCertificacion 
-				  	and c.IdContrato = $idContrato
-
-				where
-				  c.IdCertificacion < $idCertificacion
-				order by
-				  c.IdCertificacion desc 
-				limit 1";
-				
 		return $sql;
 	}
 

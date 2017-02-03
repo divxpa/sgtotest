@@ -37,6 +37,7 @@ class Update extends PageBaseSP{
 		$finder = ProveedorRecord::finder();
 		$proveedor = $finder->findByPk($contrato->IdProveedor);
 		$this->lblContrato->Text = $contrato->Numero . " - " . $proveedor->Cuit . " " . $proveedor->RazonSocial;
+		$this->lblMontoContrato->Text = "$".number_format($contrato->Monto, 2, ",", "."); 
 	}
 
 	public function Refresh($idContrato){
@@ -67,7 +68,7 @@ class Update extends PageBaseSP{
 		$totalmonto = $this->CreateDataSource("ContratoPeer","TotalMontoItemsByContrato", $idContrato);
 		//$this->lblTotal->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); ;
 		$totalincidencia = $this->CreateDataSource("ContratoPeer","TotalIncidenciaItemsByContrato", $idContrato);
-		$this->lblmontoavance->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); ;
+		$this->lblmontoavance->Text = number_format($totalmonto[0]["monto"], 2, ",", "."); 
 		//$this->lblTotalIncidencia->Text = $totalincidencia[0]["incidencia"];
 		$this->lblporcentajeavance->Text = $totalincidencia[0]["incidencia"];
 		

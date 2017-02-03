@@ -374,20 +374,4 @@ class ContratoPeer
 		return $sql;
 	}
 
-	public static function FechaPagoAnticipoFinanciero($idContrato)
-	{
-		$sql = "SELECT 
-			date_format(p.Fecha, '%d/%m/%Y') as Fecha
-		FROM 
-			pago p
-			INNER JOIN pagocertificacion pc on p.IdPago = pc.IdPago
-			INNER JOIN certificacion c on pc.IdCertificacion = c.IdCertificacion and c.NroCertificado = 0
-		WHERE 
-			c.IdContrato = '$idContrato'
-		ORDER BY 
-			p.Fecha DESC
-		LIMIT 1";
-
-		return $sql;
-	}
 }
